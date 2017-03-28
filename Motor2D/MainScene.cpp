@@ -38,6 +38,7 @@ bool MainScene::Start()
 	App->map->Load("zelda_moba2.tmx");
 
 	fog_of_war = new FogOfWar(); 
+	fog_of_war->AddPlayer(player); 
 
 	return ret;
 }
@@ -52,6 +53,8 @@ bool MainScene::PreUpdate()
 bool MainScene::Update(float dt)
 {
 	bool ret = true;
+	vector<iPoint*> test; 
+	fog_of_war->GetEntitiesVisibleArea(test); 
 
 	App->map->Draw();
 

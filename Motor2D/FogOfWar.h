@@ -6,6 +6,7 @@
 #include <list>
 #include <vector>
 #include "Entity.h"
+#include "Player.h"
 
 class FogOfWar 
 {
@@ -15,7 +16,7 @@ public:
 
 	~FogOfWar();
 
-	bool AddEntity(Entity* new_entity);
+	bool AddPlayer(Player* new_entity);
 	uint Get(int x, int y); 
 	void GetEntitiesVisibleArea(vector<iPoint*>& current_visited_points);
 
@@ -23,7 +24,7 @@ private:
 
 	uint* data; 
 
-	list<Entity*>		entities_on_fog; 
+	list<Player*>		players_on_fog;
 	vector<iPoint*>		current_visited_points; 
 
 };

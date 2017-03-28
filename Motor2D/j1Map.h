@@ -127,6 +127,9 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
+	//Research
+	void PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes);
+
 private:
 
 	bool LoadMap();
@@ -145,6 +148,7 @@ public:
 	MapData data;
 	SDL_Rect fit_square;
 
+	//Research
 	FogOfWar* fog_of_war = nullptr;
 
 

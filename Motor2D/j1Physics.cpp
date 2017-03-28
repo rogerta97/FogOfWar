@@ -24,7 +24,7 @@ j1Physics::j1Physics()
 {
 	world = NULL;
 	mouse_joint = NULL;
-	debug = true;
+	debug = true; 
 }
 
 // Destructor

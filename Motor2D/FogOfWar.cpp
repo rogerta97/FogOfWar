@@ -1,5 +1,7 @@
 #include "FogOfWar.h"
 #include "j1Scene.h"
+#include "p2Log.h"
+#include "Entity.h"
 #include "MainScene.h"
 #include "j1Map.h"
 #include "GameObject.h"
@@ -20,12 +22,12 @@ FogOfWar::~FogOfWar()
 {
 }
 
-bool FogOfWar::AddEntity(Entity* new_entity)
+bool FogOfWar::AddPlayer(Player* new_entity)
 {
 	if (new_entity == nullptr)
 		return false; 
 	
-	entities_on_fog.push_back(new_entity);
+	players_on_fog.push_back(new_entity);
 	return true;
 }
 
@@ -36,5 +38,27 @@ uint FogOfWar::Get(int x, int y)
 
 void FogOfWar::GetEntitiesVisibleArea(vector<iPoint*>& current_visited_points)
 {
+	vector<iPoint> origins;
+	vector<iPoint> seen_nodes; 
+	
+	for (int y = 0; y < App->map->data.height; ++y)
+	{
+		for (int x = 0; x < App->map->data.width; ++x)
+		{			
+			for (list<Player*>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
+			{
+				if (iPoint(x, y) == iPoint(App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y)))
+				{
+					origins.push_back(iPoint(x, y)); 
+				}
+			}
+			
+		}
+	}
+
+	for (vector<iPoint>::iterator it = origins.begin(); it != origins.end(); it++)
+	{
+		App->map->PropagateBFS(*it, seen_nodes);
+	}
 
 }
