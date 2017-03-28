@@ -53,8 +53,9 @@ bool MainScene::PreUpdate()
 bool MainScene::Update(float dt)
 {
 	bool ret = true;
-	vector<iPoint*> test; 
-	fog_of_war->GetEntitiesVisibleArea(test); 
+	vector<iPoint> test; 
+
+	fog_of_war->GetEntitiesVisibleArea(test, 30); 
 
 	App->map->Draw();
 

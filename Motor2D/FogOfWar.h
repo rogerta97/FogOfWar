@@ -18,7 +18,7 @@ public:
 
 	bool AddPlayer(Player* new_entity);
 	uint Get(int x, int y); 
-	void GetEntitiesVisibleArea(vector<iPoint*>& current_visited_points);
+	void GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, int limit);
 
 private:
 
