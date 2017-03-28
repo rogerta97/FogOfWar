@@ -68,18 +68,14 @@ void FogOfWar::GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, in
 
 	// Update the data matrix in order to draw 
 
-	for (int y = 0; y < App->map->data.height; ++y)
+	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
 	{
-		for (int x = 0; x < App->map->data.width; ++x)
-		{
-			// We check if every point is inside of the points in that moment 
-			for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
-			{
-				if (iPoint(x, y) == *it)
-					data[y*App->map->data.width + x] = 2; 
-			}
-		}
+		int x = it->x; 
+		int y = it->y; 
+
+		data[y*App->map->data.width + x] = 2; 
 	}
+	
 
 	// ----
 }

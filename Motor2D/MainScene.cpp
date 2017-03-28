@@ -55,9 +55,13 @@ bool MainScene::Update(float dt)
 	bool ret = true;
 	vector<iPoint> test; 
 
-	fog_of_war->GetEntitiesVisibleArea(test, 30); 
+	if (prev_pos != App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y))
+		fog_of_war->GetEntitiesVisibleArea(test, 1); 
+
+	prev_pos = App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y); 
 
 	App->map->Draw();
+
 
 	return ret;
 }

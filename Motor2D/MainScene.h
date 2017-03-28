@@ -30,7 +30,9 @@ public:
 
 	Player* player;
 
-	FogOfWar* fog_of_war = nullptr; 
+	//Research
+	FogOfWar*	fog_of_war = nullptr; 
+	iPoint		prev_pos = iPoint(0,0);	//for optimization 
 
 };
 

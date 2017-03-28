@@ -10,6 +10,7 @@
 #include "j1Map.h"
 #include "j1Viewports.h"
 #include <math.h>
+#include <cmath>
 #include <queue>
 #include "j1Window.h"
 #include "Functions.h"
@@ -621,15 +622,20 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	return ret;
 }
 
-void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int limit)
+void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of_view)
 {
-	queue<iPoint> frontier; 
-	vector<iPoint>  visited; 
+	queue<iPoint>		frontier; 
+	vector<iPoint>		visited; 
+
 	frontier.push(origin); 
+	visited.push_back(origin); 
 
 	int count = 0; 
 
-	while(count < limit)
+	int current_layer = 0; 
+	int layer_done = 4; 
+	
+	while(count < pow(field_of_view, 4))
 	{
 		iPoint curr = frontier.back(); 
 		bool is_on_list = false;
@@ -637,17 +643,20 @@ void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int limit)
 		if (curr != iPoint(0,0))
 		{
 			iPoint neighbors[4];
-			neighbors[0].create(curr.x + 1, curr.y + 0);
-			neighbors[1].create(curr.x + 0, curr.y + 1);
-			neighbors[2].create(curr.x - 1, curr.y + 0);
-			neighbors[3].create(curr.x + 0, curr.y - 1);
+			neighbors[0].create(curr.x + 1, curr.y);
+			neighbors[1].create(curr.x, curr.y + 1);
+			neighbors[2].create(curr.x - 1, curr.y);
+			neighbors[3].create(curr.x, curr.y - 1);
 
 			for (uint i = 0; i < 4; ++i)
-			{
+			{		
 				for(vector<iPoint>::const_iterator it = visited.cbegin(); it != visited.cend(); it++)
 				{
 					if (neighbors[i] == *it)
-						is_on_list = true; 
+					{
+						is_on_list = true;
+						break;
+					}						
 				}
 
 				if (!is_on_list)
@@ -655,8 +664,14 @@ void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int limit)
 					frontier.push(neighbors[i]);
 					visited.push_back(neighbors[i]);
 				}
+				
+				count++;
 			}
-			count++; 
+
+			if(count == layer_done)
+			{
+				
+			}
 		}
 	}
 
