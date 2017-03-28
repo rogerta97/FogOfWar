@@ -1,0 +1,98 @@
+<!-- Config file for the game -->
+
+<file>
+   <animations texture ="textures/link_spritesheet.png">
+      <anim speed = "10" name = "run_down" loop = "true">
+	       <rect x = "0" y = "156" w = "32" h = "48"/>
+	       <rect x = "36" y = "156" w = "32" h = "48"/>
+	       <rect x = "72" y = "156" w = "32" h = "48"/>
+         <rect x = "108" y = "156" w = "32" h = "48"/>
+	       <rect x = "144" y = "156" w = "32" h = "48"/>
+	       <rect x = "180" y = "156" w = "32" h = "48"/>
+	       <rect x = "216" y = "156" w = "32" h = "48"/>
+	       <rect x = "252" y = "156" w = "32" h = "48"/>
+      </anim>
+      <anim speed = "10" name = "run_up" loop = "true">
+	       <rect x = "0" y = "206" w = "34" h = "48"/>
+	       <rect x = "36" y = "206" w = "34" h = "48"/>
+	       <rect x = "72" y = "206" w = "34" h = "48"/>
+         <rect x = "108" y = "206" w = "34" h = "48"/>
+	       <rect x = "144" y = "206" w = "34" h = "48"/>
+	       <rect x = "180" y = "206" w = "34" h = "48"/>
+	       <rect x = "216" y = "206" w = "34" h = "48"/>
+	       <rect x = "252" y = "206" w = "34" h = "48"/>
+      </anim>
+      <anim speed = "10" name = "run_lateral" loop = "true">
+	       <rect x = "0" y = "256" w = "38" h = "48"/>
+	       <rect x = "38" y = "256" w = "36" h = "48"/>
+	       <rect x = "74" y = "256" w = "38" h = "48"/>
+         <rect x = "112" y = "256" w = "38" h = "48"/>
+	       <rect x = "150" y = "256" w = "36" h = "48"/>
+	       <rect x = "186" y = "256" w = "36" h = "48"/>
+	       <rect x = "222" y = "256" w = "36" h = "48"/>
+	       <rect x = "258" y = "256" w = "38" h = "48"/>
+      </anim>
+      <anim speed = "10" name = "idle_lateral" loop = "true">
+	       <rect x = "112" y = "258" w = "38" h = "46"/>
+      </anim>
+      <anim speed = "10" name = "idle_up" loop = "true">
+	       <rect x = "108" y = "206" w = "34" h = "48"/>
+      </anim>
+      <anim speed = "10" name = "idle_down" loop = "true">
+	       <rect x = "108" y = "156" w = "32" h = "48"/>
+      </anim>
+     <anim speed = "10" name = "basic_attack_down" loop = "false">
+         <rect x = "0" y = "324" w = "40" h = "66"/>
+         <rect x = "42" y = "319" w = "40" h = "68"/>
+         <rect x = "86" y = "313" w = "40" h = "77"/>
+     </anim>
+     <anim speed = "10" name = "basic_attack_up" loop = "false">
+       <rect x = "146" y = "310" w = "40" h = "80"/>
+       <rect x = "188" y = "314" w = "40" h = "75"/>
+       <rect x = "232" y = "316" w = "40" h = "74"/>
+     </anim>
+     <anim speed = "10" name = "basic_attack_right" loop = "false">
+       <rect x = "40" y = "395" w = "60" h = "45"/>
+       <rect x = "120" y = "395" w = "80" h = "45"/>
+       <rect x = "214" y = "395" w = "85" h = "45"/>
+     </anim>
+     <anim speed = "10" name = "basic_attack_left" loop = "false">
+       <rect x = "40" y = "395" w = "70" h = "45"/>
+       <rect x = "89" y = "395" w = "100" h = "45"/>
+       <rect x = "187" y = "395" w = "100" h = "45"/>
+     </anim>
+     <anim speed = "60" name = "spin_attack" loop = "false">
+       <rect x = "4" y = "442" w = "103" h = "109"/>
+       <rect x = "109" y = "442" w = "103" h = "109"/>
+       <rect x = "211" y = "442" w = "100" h = "109"/>
+       
+       <rect x = "5" y = "550" w = "103" h = "109"/>
+       <rect x = "110" y = "551" w = "103" h = "109"/>
+       <rect x = "211" y = "551" w = "100" h = "109"/>
+
+       <rect x = "3" y = "659" w = "103" h = "109"/>
+       <rect x = "109" y = "659" w = "103" h = "109"/>
+       <rect x = "209" y = "658" w = "103" h = "108"/>
+
+       <rect x = "1" y = "766" w = "103" h = "109"/>
+       <rect x = "107" y = "766" w = "103" h = "109"/>
+       <rect x = "211" y = "768" w = "101" h = "109"/>
+
+       <rect x = "6" y = "876" w = "103" h = "109"/>
+       <rect x = "108" y = "876" w = "103" h = "109"/>
+       <rect x = "210" y = "876" w = "101" h = "109"/>
+
+       <rect x = "6" y = "984" w = "100" h = "109"/> 
+       <rect x = "109" y = "982" w = "95" h = "109"/>
+       <rect x = "209" y = "982" w = "100" h = "109"/>
+
+       <rect x = "9" y = "1090" w = "100" h = "109"/>
+       <rect x = "110" y = "1090" w = "100" h = "109"/>
+       <rect x = "208" y = "1090" w = "100" h = "109"/>
+
+       <rect x = "6" y = "1198" w = "100" h = "90"/>
+       <rect x = "110" y = "1198" w = "100" h = "90"/>
+       <rect x = "208" y = "1198" w = "97" h = "90"/>
+     </anim>
+   </animations>
+</file>

@@ -1,0 +1,10 @@
+<!-- Config file for the game -->
+
+<file>
+   <animations>
+      <idle>
+	 <rect x = "1" y = "2" w = "3" h = "4"/>
+         <rect x = "5" y = "6" w = "7" h = "8"/>
+      </idle>
+   </animations>
+</file>

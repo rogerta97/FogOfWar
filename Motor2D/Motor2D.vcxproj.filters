@@ -1,0 +1,233 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="j1Window.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Audio.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1App.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Input.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Main.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Textures.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1FileSystem.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="PugiXml\src\pugixml.cpp">
+      <Filter>Engine\5. Tools ===========\PuguiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Map.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Pathfinding.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Timer.cpp">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1PerfTimer.cpp">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Fonts.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Gui.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Render.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Console.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Engine\3. Scenes ==========\MainScene</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Physics.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="p2Log.cpp">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClCompile>
+    <ClCompile Include="Functions.cpp">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Entity.cpp">
+      <Filter>Engine\4. Entities ==========</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine\4. Entities ==========\Player1</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Scene.cpp">
+      <Filter>Engine\3. Scenes ==========</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Viewports.cpp">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClCompile>
+    <ClCompile Include="FogOfWar.cpp">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="j1Window.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Audio.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1App.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Input.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Module.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Render.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Textures.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1FileSystem.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
+      <Filter>Engine\5. Tools ===========\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugixml.hpp">
+      <Filter>Engine\5. Tools ===========\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Map.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Pathfinding.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Timer.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1PerfTimer.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Fonts.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Gui.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Console.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Scene.h">
+      <Filter>Engine\3. Scenes ==========</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Engine\3. Scenes ==========\MainScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Engine\3. Scenes ==========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Physics.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Defs.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2DynArray.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2List.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Log.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2PQueue.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="p2SString.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="Functions.h">
+      <Filter>Engine\5. Tools ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Entity.h">
+      <Filter>Engine\4. Entities ==========</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Engine\4. Entities ==========</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Engine\4. Entities ==========\Player1</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionFilters.h">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Viewports.h">
+      <Filter>Engine\1. Modules =========</Filter>
+    </ClInclude>
+    <ClInclude Include="FogOfWar.h">
+      <Filter>Engine\2. Components ======</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{cb944693-b9d0-484c-bad2-02d5a7cdbec6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\1. Modules =========">
+      <UniqueIdentifier>{244722d1-90ce-423d-8e7a-556211865a32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\2. Components ======">
+      <UniqueIdentifier>{1f876cd5-245d-4ca8-a70a-e144dbbc8c53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3. Scenes ==========">
+      <UniqueIdentifier>{e07660eb-d36f-4cc9-af59-324d31c2f2f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\3. Scenes ==========\MainScene">
+      <UniqueIdentifier>{11114207-2dc8-4d4e-8574-9953eccbdbc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\4. Entities ==========">
+      <UniqueIdentifier>{1fe24bf0-1db6-45b2-aa68-fef0607a5a12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\5. Tools ===========">
+      <UniqueIdentifier>{42c748be-4a37-49de-970f-5be811d06b38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\5. Tools ===========\PuguiXML">
+      <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\4. Entities ==========\Player1">
+      <UniqueIdentifier>{649f33ab-cba0-4e3f-9d04-df22ae53d381}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Game\player.xml">
+      <Filter>Engine\4. Entities ==========\Player1</Filter>
+    </Xml>
+  </ItemGroup>
+</Project>
