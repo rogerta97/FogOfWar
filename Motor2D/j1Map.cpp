@@ -633,9 +633,9 @@ void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of
 	int count = 0; 
 
 	int current_layer = 0; 
-	int layer_done = 4; 
-	
-	while(count < pow(field_of_view, 4))
+	int layer_done = 1;
+
+	while(current_layer < field_of_view)
 	{
 		iPoint curr = frontier.back(); 
 		bool is_on_list = false;
@@ -664,14 +664,16 @@ void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of
 					frontier.push(neighbors[i]);
 					visited.push_back(neighbors[i]);
 				}
-				
-				count++;
-			}
+			}			
+		}
 
-			if(count == layer_done)
-			{
-				
-			}
+		count++;
+
+		if (count == layer_done)
+		{
+			layer_done = layer_done * 4;
+			count = 0;
+			current_layer++;
 		}
 	}
 
