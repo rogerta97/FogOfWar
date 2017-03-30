@@ -624,20 +624,20 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 
 void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of_view)
 {
-	queue<iPoint>		frontier; 
+	list<iPoint>		frontier; 
 	vector<iPoint>		visited; 
 
-	frontier.push(origin); 
+	frontier.push_back(origin); 
 	visited.push_back(origin); 
 
 	int count = 0; 
 
 	int current_layer = 0; 
-	int layer_done = 1;
+	int layer_done = 4;
 
 	while(current_layer < field_of_view)
 	{
-		iPoint curr = frontier.back(); 
+		iPoint curr = frontier.front(); 
 		bool is_on_list = false;
 
 		if (curr != iPoint(0,0))
@@ -648,10 +648,14 @@ void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of
 			neighbors[2].create(curr.x - 1, curr.y);
 			neighbors[3].create(curr.x, curr.y - 1);
 
-			for (uint i = 0; i < 4; ++i)
+			frontier.pop_front();
+
+			for (uint i = 0; i < 4; i++)
 			{		
 				for(vector<iPoint>::const_iterator it = visited.cbegin(); it != visited.cend(); it++)
 				{
+					is_on_list = false;
+
 					if (neighbors[i] == *it)
 					{
 						is_on_list = true;
@@ -661,17 +665,16 @@ void j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of
 
 				if (!is_on_list)
 				{
-					frontier.push(neighbors[i]);
+					frontier.push_back(neighbors[i]);
 					visited.push_back(neighbors[i]);
-				}
+					count++;
+				}				
 			}			
 		}
 
-		count++;
-
 		if (count == layer_done)
 		{
-			layer_done = layer_done * 4;
+			layer_done = layer_done + 4;
 			count = 0;
 			current_layer++;
 		}

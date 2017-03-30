@@ -41,20 +41,11 @@ void FogOfWar::GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, in
 	vector<iPoint> origins;
 	vector<iPoint> seen_nodes; 
 	
-	// We check where are the players in order to extend the BFS.
-				
-	for (list<Player*>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
-	{		
-		origins.push_back(iPoint(App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y)));		
-	}
-		
-	// ----
-
 	// We extend the BFS for every origin, each origin means each player.
 
-	for (vector<iPoint>::iterator it = origins.begin(); it != origins.end(); it++)
+	for (list<Player*>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{
-		App->map->PropagateBFS(*it, seen_nodes, limit);
+		App->map->PropagateBFS(App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y), seen_nodes, limit);
 
 		// Passing each visible area to the total amount of visible tiles
 

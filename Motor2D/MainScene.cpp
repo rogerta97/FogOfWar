@@ -56,7 +56,7 @@ bool MainScene::Update(float dt)
 	vector<iPoint> test; 
 
 	if (prev_pos != App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y))
-		fog_of_war->GetEntitiesVisibleArea(test, 2); 
+		fog_of_war->GetEntitiesVisibleArea(test, FOW_RADIUM); 
 
 	prev_pos = App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y); 
 

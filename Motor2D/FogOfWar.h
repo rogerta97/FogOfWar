@@ -8,6 +8,8 @@
 #include "Entity.h"
 #include "Player.h"
 
+#define FOW_RADIUM 4
+
 class FogOfWar 
 {
 public:
