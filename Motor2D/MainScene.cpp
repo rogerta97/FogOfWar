@@ -53,8 +53,7 @@ bool MainScene::PreUpdate()
 bool MainScene::Update(float dt)
 {
 	bool ret = true;
-	vector<iPoint> test; 
-
+	
 	if (prev_pos != App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y))
 		fog_of_war->GetEntitiesVisibleArea(test, FOW_RADIUM); 
 

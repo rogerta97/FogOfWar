@@ -149,7 +149,8 @@ public:
 	SDL_Rect fit_square;
 
 	//Research
-	FogOfWar* fog_of_war = nullptr;
+	FogOfWar*			fog_of_war = nullptr;
+	SDL_Texture*		fog_of_war_texture = nullptr; 
 
 
 private:

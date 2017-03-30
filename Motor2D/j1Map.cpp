@@ -35,6 +35,8 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	offset = 0;
 
+	fog_of_war_texture = App->tex->LoadTexture(PATH(folder.c_str(), "meta.png"));
+
 	fit_square.x = fit_square.y = 0;
 	uint w, h;
 	App->win->GetWindowSize(w, h);
@@ -78,8 +80,12 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 
-						App->view->LayerBlit(1, tileset->texture, pos, r, i); //fps drop a lot !!!!!
-						//App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+						App->view->LayerBlit(1, tileset->texture, pos, r, i);
+
+						if (visibility == 1) {
+							r = { 4 * 32,7 * 32,32, 32 };
+							App->view->LayerBlit(1, tileset->texture, pos, r, i);
+						}					
 					}
 				}
 				count++;

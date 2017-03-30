@@ -31,8 +31,9 @@ public:
 	Player* player;
 
 	//Research
-	FogOfWar*	fog_of_war = nullptr; 
-	iPoint		prev_pos = iPoint(0,0);	//for optimization 
+	FogOfWar*				fog_of_war = nullptr; 
+	vector<iPoint>			test;
+	iPoint					prev_pos = iPoint(0,0);	//for optimization 
 
 };
 

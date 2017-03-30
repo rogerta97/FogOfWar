@@ -2,6 +2,7 @@
 #include "j1Scene.h"
 #include "p2Log.h"
 #include "Entity.h"
+#include "j1Textures.h"
 #include "MainScene.h"
 #include "j1Map.h"
 #include "GameObject.h"
@@ -15,6 +16,7 @@ FogOfWar::FogOfWar()
 	data = new uint[size];
 
 	memset(data, 0, size*sizeof(uint)); 
+
 
 }
 
@@ -40,6 +42,8 @@ void FogOfWar::GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, in
 {
 	vector<iPoint> origins;
 	vector<iPoint> seen_nodes; 
+	bool repeated = false; 
+	bool opaque = false; 
 	
 	// We extend the BFS for every origin, each origin means each player.
 
@@ -47,11 +51,22 @@ void FogOfWar::GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, in
 	{
 		App->map->PropagateBFS(App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y), seen_nodes, limit);
 
-		// Passing each visible area to the total amount of visible tiles
+		// Passing each visible area to the total amount of visible tiles (if they are not yet)
 
 		for (vector<iPoint>::iterator it = seen_nodes.begin(); it != seen_nodes.end(); it++)
 		{			
-			current_visited_points.push_back(*it); 
+			repeated = false; 
+
+			for (vector<iPoint>::iterator it2 = current_visited_points.begin(); it2 != current_visited_points.end(); it2++)
+			{
+				if (*it == *it2) 
+				{
+					repeated = true;
+					break; 
+				}			
+			}
+			if(!repeated)
+				current_visited_points.push_back(*it);		
 		}
 	}
 
@@ -61,10 +76,18 @@ void FogOfWar::GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, in
 
 	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
 	{
-		int x = it->x; 
-		int y = it->y; 
+		opaque = false; 
 
-		data[y*App->map->data.width + x] = 2; 
+		data[it->y*App->map->data.width + it->x] = 2;
+
+		for (vector<iPoint>::iterator it2 = seen_nodes.begin(); it2 != seen_nodes.end(); it2++)
+		{
+			if (*it == *it2)
+				opaque = true; 
+		}
+
+		if(!opaque)
+			data[it->y*App->map->data.width + it->x] = 1;
 	}
 	
 

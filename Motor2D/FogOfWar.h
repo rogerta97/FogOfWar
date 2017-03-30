@@ -24,7 +24,7 @@ public:
 
 private:
 
-	uint* data; 
+	uint*				data; 
 
 	list<Player*>		players_on_fog;
 	vector<iPoint*>		current_visited_points; 
