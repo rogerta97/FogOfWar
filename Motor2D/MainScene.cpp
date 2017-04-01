@@ -40,6 +40,10 @@ bool MainScene::Start()
 	fog_of_war = new FogOfWar(); 
 	fog_of_war->AddPlayer(player); 
 
+	fog_of_war->Start(FOW_RADIUM);
+
+	prev_pos = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
+
 	return ret;
 }
 
@@ -54,10 +58,10 @@ bool MainScene::Update(float dt)
 {
 	bool ret = true;
 	
-	if (prev_pos != App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y))
-		fog_of_war->GetEntitiesVisibleArea(test, FOW_RADIUM); 
+	if (prev_pos != App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y))
+		fog_of_war->Update(fog_of_war->current_visited_points);
 
-	prev_pos = App->map->MapToWorld(player->player_go->GetPos().x, player->player_go->GetPos().y); 
+	prev_pos = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
 
 	App->map->Draw();
 

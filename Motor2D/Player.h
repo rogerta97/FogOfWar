@@ -40,10 +40,12 @@ public:
 	//Set Camera to this player. 1<=id<=4
 	void SetCamera(int id);
 
+	bool flip = false;
+
 public:
 	GameObject* player_go = nullptr;
 
-	bool flip = false;
+	
 	bool on_ground = false;
 	bool going_up = false;
 

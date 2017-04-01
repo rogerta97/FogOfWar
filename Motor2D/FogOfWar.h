@@ -10,24 +10,55 @@
 
 #define FOW_RADIUM 4
 
+// This is not necessary, but will make a more readable code and will simplify stuff
+
+enum fow_directions
+{
+	fow_up,
+	fow_down, 
+	fow_left, 
+	fow_right
+};
+
 class FogOfWar 
 {
 public:
 
 	FogOfWar(); 
 
+	void Start(int radium); 
+
+	void Update(vector<iPoint>& current_points); 
+
 	~FogOfWar();
 
 	bool AddPlayer(Player* new_entity);
 	uint Get(int x, int y); 
-	void GetEntitiesVisibleArea(vector<iPoint>& current_visited_points, int limit);
+
+	// Called at the beggining for knowing the first clear tiles 
+
+	void GetEntitiesVisibleArea(int limit);
+
+	// Called for modifying the position of the clear area (without BFS (opt.))
+
+	void UpdateEntitiesVisibleArea();
+
+	// This function updates the matrix in order to draw properly 
+
+	void UpdateMatrix(); 
+
+	// This is the core function of moving areas
+
+	void MoveArea(int player_id, fow_directions axis, vector<iPoint>& current_points);
+
+	vector<iPoint>		current_visited_points;
 
 private:
 
 	uint*				data; 
+	vector<Player*>		players_on_fog;
 
-	list<Player*>		players_on_fog;
-	vector<iPoint*>		current_visited_points; 
+	 
 
 };
 
