@@ -10,7 +10,6 @@
 
 FogOfWar::FogOfWar()
 {
-	//iPoint player_pos = App->map->WorldToMap(App->scene->main_scene->player->player_go->GetPos().x, App->scene->main_scene->player->player_go->GetPos().y);
 
 	int size = App->map->data.width*App->map->data.height;
 	data = new uint[size];
@@ -39,7 +38,6 @@ uint FogOfWar::Get(int x, int y)
 void FogOfWar::Start(int radium)
 {
 	GetEntitiesVisibleArea(radium);
-	//current_visited_points = start_visited_points; 
 }
 
 void FogOfWar::Update(vector<iPoint>& current_points)
@@ -104,23 +102,7 @@ void FogOfWar::UpdateMatrix()
 
 	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
 	{
-
-
-		data[it->y*App->map->data.width + it->x] = 2;
-
-
-
-	/*aaa	opaque = false; 
-
-		
-
-	
-			if (*it == *it2)
-				opaque = true; 
-	
-
-		if(!opaque)
-		data[it->y*App->map->data.width + it->x] = 1;*/
+		data[it->y*App->map->data.width + it->x] = 1;
 	}
 
 }

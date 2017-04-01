@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#define FOW_RADIUM 4
+#define FOW_RADIUM 8
 
 // This is not necessary, but will make a more readable code and will simplify stuff
 
