@@ -35,7 +35,7 @@ uint FogOfWar::Get(int x, int y)
 	return data[(y*App->map->data.width) + x];
 }
 
-void FogOfWar::Start(int radium)
+void FogOfWar::Start()
 {
 	GetEntitiesVisibleArea(radium);
 }
@@ -98,12 +98,41 @@ void FogOfWar::UpdateEntitiesVisibleArea()
 
 void FogOfWar::UpdateMatrix()
 {
-	bool opaque = false; 
+	bool dim = true;
 
-	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
+	iPoint ini_p = App->map->WorldToMap(players_on_fog.at(0)->player_go->GetPos().x, players_on_fog.at(0)->player_go->GetPos().y);
+	ini_p.y -= radium + 1; ini_p.x -= radium + 1;
+
+	iPoint end_p = App->map->WorldToMap(players_on_fog.at(0)->player_go->GetPos().x, players_on_fog.at(0)->player_go->GetPos().y);
+	end_p.y += radium + 2; end_p.x += radium + 2;
+
+	for (int x = ini_p.x; x < end_p.x; x++)
 	{
-		data[it->y*App->map->data.width + it->x] = 1;
+		for (int y = ini_p.y; y < end_p.y; y++)
+		{
+			dim = true;
+
+			for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
+				if (iPoint(x, y) == *it) 
+					dim = false;
+									 	
+			if (data[y*App->map->data.width + x] == 0 && dim)
+				data[y*App->map->data.width + x] = 0;
+			else
+				data[y*App->map->data.width + x] = 1; 
+
+			if(!dim)
+				data[y*App->map->data.width + x] = 2;		
+		}
 	}
+
+	
+
+	//for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
+	//{
+	//	
+	//	data[it->y*App->map->data.width + it->x] = 2;
+	//}
 
 }
 

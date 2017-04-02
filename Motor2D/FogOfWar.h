@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#define FOW_RADIUM 8
+#define FOW_RADIUM 4
 
 // This is not necessary, but will make a more readable code and will simplify stuff
 
@@ -26,7 +26,7 @@ public:
 
 	FogOfWar(); 
 
-	void Start(int radium); 
+	void Start(); 
 
 	void Update(vector<iPoint>& current_points); 
 
@@ -55,6 +55,7 @@ public:
 
 private:
 
+	int					radium = FOW_RADIUM; 
 	uint*				data; 
 	vector<Player*>		players_on_fog;
 

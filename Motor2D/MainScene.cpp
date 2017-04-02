@@ -40,7 +40,7 @@ bool MainScene::Start()
 	fog_of_war = new FogOfWar(); 
 	fog_of_war->AddPlayer(player); 
 
-	fog_of_war->Start(FOW_RADIUM);
+	fog_of_war->Start();
 
 	prev_pos = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
 
