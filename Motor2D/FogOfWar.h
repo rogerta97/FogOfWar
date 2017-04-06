@@ -52,11 +52,11 @@ public:
 	void MoveArea(int player_id, fow_directions axis, vector<iPoint>& current_points);
 
 	vector<iPoint>		current_visited_points;
+	uint*				data;
 
 private:
 
 	int					radium = FOW_RADIUM; 
-	uint*				data; 
 	vector<Player*>		players_on_fog;
 
 	 

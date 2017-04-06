@@ -35,8 +35,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 
 	offset = 0;
 
-	fog_of_war_texture = App->tex->LoadTexture(PATH(folder.c_str(), "meta.png"));
-
 	fit_square.x = fit_square.y = 0;
 	uint w, h;
 	App->win->GetWindowSize(w, h);
@@ -63,6 +61,7 @@ void j1Map::Draw()
 			int x_ini = 0, x_end = data.width;
 			TilesToDraw_x(x_ini, x_end, *item);
 			int count = 0;
+
 			for (int x = x_ini; x < x_end + 1; ++x)
 			{
 				int y_ini, y_end;
@@ -70,7 +69,9 @@ void j1Map::Draw()
 
 				for (int y = y_ini; y < y_end + 1; ++y)
 				{
+
 					int tile_id = layer->Get(x, y);
+
 					int visibility = App->scene->main_scene->fog_of_war->Get(x,y);
 
 					if (tile_id > 0 && visibility != 0)
@@ -80,12 +81,11 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 
-						App->view->LayerBlit(1, tileset->texture, pos, r, i);
+						if (layer->name == "FogOfWar" && visibility == 2)
+							continue; 
 
-						if (visibility == 1) {
-							r = { 4 * 32,7 * 32,32, 32 };
-							App->view->LayerBlit(1, tileset->texture, pos, r, i);
-						}					
+						App->view->LayerBlit(1, tileset->texture, pos, r, i);
+											
 					}
 				}
 				count++;

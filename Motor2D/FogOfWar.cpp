@@ -10,11 +10,18 @@
 
 FogOfWar::FogOfWar()
 {
+	list<MapLayer*>::iterator it = App->map->data.layers.begin();
+	it++;
+	it++;
+	it++; 
+
 
 	int size = App->map->data.width*App->map->data.height;
 	data = new uint[size];
+	
+	memset((*it)->data, 0, size * sizeof(uint));
 
-	memset(data, 0, size * sizeof(uint));
+	data = (*it)->data; 
 }
 
 FogOfWar::~FogOfWar()
@@ -119,10 +126,10 @@ void FogOfWar::UpdateMatrix()
 			if (data[y*App->map->data.width + x] == 0 && dim)
 				data[y*App->map->data.width + x] = 0;
 			else
-				data[y*App->map->data.width + x] = 1; 
+				data[y*App->map->data.width + x] = 2462;
 
 			if(!dim)
-				data[y*App->map->data.width + x] = 2;		
+				data[y*App->map->data.width + x] = 2;
 		}
 	}
 
