@@ -126,16 +126,7 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_top_right;
 		}
 
-		if (Get((*it).x + 1, (*it).y) == dim_middle && Get((*it).x, (*it).y + 1) == dim_middle)
-		{
-			if (Get((*it).x - 1, (*it).y) == dim_middle)
-			{
-				data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_right; // must to be changed
-				continue;
-			}
-
-			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_right;
-		}
+	
 
 		if (Get((*it).x - 1, (*it).y) == dim_middle && Get((*it).x, (*it).y + 1) == dim_middle)
 		{
@@ -145,6 +136,17 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 				continue;
 			}
 			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_left;
+		}
+
+		if (Get((*it).x + 1, (*it).y) == dim_middle && Get((*it).x, (*it).y + 1) == dim_middle)
+		{
+			if (Get((*it).x - 1, (*it).y) == dim_middle)
+			{
+				data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_right; // must to be changed
+				continue;
+			}
+
+			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_right;
 		}
 			
 	}

@@ -69,7 +69,6 @@ void j1Map::Draw()
 
 				for (int y = y_ini; y < y_end + 1; ++y)
 				{
-
 					int tile_id = layer->Get(x, y);
 
 					int visibility = App->scene->main_scene->fog_of_war->Get(x,y);
