@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#define FOW_RADIUM 4
+#define FOW_RADIUM 7
 
 // This is not necessary, but will make a more readable code and will simplify stuff
 
@@ -37,7 +37,11 @@ public:
 
 	// Called at the beggining for knowing the first clear tiles 
 
-	void GetEntitiesVisibleArea(int limit);
+	list<iPoint> GetEntitiesVisibleArea(int limit);
+
+	// This function will soft the edges
+
+	uint RemoveJaggies(list<iPoint> point);
 
 	// Called for modifying the position of the clear area (without BFS (opt.))
 
@@ -58,6 +62,8 @@ private:
 
 	int					radium = FOW_RADIUM; 
 	vector<Player*>		players_on_fog;
+
+	list<iPoint>		frontier; 
 
 	 
 
