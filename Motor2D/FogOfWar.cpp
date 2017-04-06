@@ -127,7 +127,6 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 		}
 
 	
-
 		if (Get((*it).x - 1, (*it).y) == dim_middle && Get((*it).x, (*it).y + 1) == dim_middle)
 		{
 			if (Get((*it).x, (*it).y + 1) == dim_middle)
