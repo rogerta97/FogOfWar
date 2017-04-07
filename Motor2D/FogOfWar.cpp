@@ -108,6 +108,8 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 
 	for(list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
 	{
+		if ((*it).x == 7)
+			LOG(""); 
 
 		if (Get((*it).x - 1, (*it).y) == dim_middle && Get((*it).x, (*it).y - 1) == dim_middle) 
 		{
@@ -121,7 +123,9 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 
 	
 			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_top_left;
-			data[((*it).y + 1)*App->map->data.width + (*it).x] = dim_top_left;
+
+			if(data[((*it).y + 2 )*App->map->data.width + (*it).x] == dim_clear)
+				data[((*it).y + 1)*App->map->data.width + (*it).x] = dim_top_left;
 			
 	
 
@@ -177,8 +181,21 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 			
 		
 		}
-			
 	}
+
+	iPoint right = App->map->WorldToMap(App->scene->main_scene->player->player_go->GetPos().x, App->scene->main_scene->player->player_go->GetPos().y); 
+	right.x += 4; 
+
+	iPoint left = App->map->WorldToMap(App->scene->main_scene->player->player_go->GetPos().x, App->scene->main_scene->player->player_go->GetPos().y);
+	left.x -= 4;
+
+	data[right.y*App->map->data.width + right.x] = dim_middle; 
+	data[right.y*App->map->data.width + right.x - 1] = dim_right;
+
+	data[left.y*App->map->data.width + left.x] = dim_middle;
+	data[left.y*App->map->data.width + left.x + 1] = dim_left;
+
+
 
 
 
