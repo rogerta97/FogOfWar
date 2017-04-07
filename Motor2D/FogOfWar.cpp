@@ -24,6 +24,10 @@ enum fow_id
 	dim_inner_top_right,
 	dim_inner_bottom_left,
 	dim_inner_bottom_right, 
+	dim_closed_up,
+	dim_closed_down, 
+	dim_closed_right, 
+	dim_closed_left,
 	dim_clear, 
 };
 
@@ -107,7 +111,7 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 		{
 			if (Get((*it).x + 1, (*it).y) == dim_middle) 
 			{
-				data[(*it).y*App->map->data.width + (*it).x] = dim_inner_top_left; // must to be changed
+				data[(*it).y*App->map->data.width + (*it).x] = dim_closed_up; // must to be changed
 				continue; 
 			}
 			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_top_left;
@@ -117,7 +121,7 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 		{
 			if (Get((*it).x , (*it).y + 1) == dim_middle)
 			{
-				data[(*it).y*App->map->data.width + (*it).x] = dim_inner_top_right; // must to be changed
+				data[(*it).y*App->map->data.width + (*it).x] = dim_closed_left; 
 				continue;
 			}
 			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_top_right;
@@ -126,9 +130,9 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 	
 		if (Get((*it).x - 1, (*it).y) == dim_middle && Get((*it).x, (*it).y + 1) == dim_middle)
 		{
-			if (Get((*it).x, (*it).y + 1) == dim_middle)
+			if (Get((*it).x, (*it).y - 1) == dim_middle)
 			{
-				data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_left; // must to be changed
+				data[(*it).y*App->map->data.width + (*it).x] = dim_closed_right; 
 				continue;
 			}
 			data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_left;
@@ -138,7 +142,7 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 		{
 			if (Get((*it).x - 1, (*it).y) == dim_middle)
 			{
-				data[(*it).y*App->map->data.width + (*it).x] = dim_inner_bottom_right; // must to be changed
+				data[(*it).y*App->map->data.width + (*it).x] = dim_closed_down; 
 				continue;
 			}
 
