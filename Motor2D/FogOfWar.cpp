@@ -10,8 +10,8 @@
 
 enum fow_id
 {
-	clear = 2,
-	dim_middle = 2462,
+	fow_null,
+	dim_middle,
 	dim_left,
 	dim_right,
 	dim_up,
@@ -23,23 +23,20 @@ enum fow_id
 	dim_inner_top_left,
 	dim_inner_top_right,
 	dim_inner_bottom_left,
-	dim_inner_bottom_right
+	dim_inner_bottom_right, 
+	dim_clear, 
 };
 
 FogOfWar::FogOfWar()
 {
-	list<MapLayer*>::iterator it = App->map->data.layers.begin();
-	it++;
-	it++;
-	it++; 
-
 
 	int size = App->map->data.width*App->map->data.height;
 	data = new uint[size];
 	
-	memset((*it)->data, 0, size * sizeof(uint));
+	memset(data, 0, size * sizeof(uint));
 
-	data = (*it)->data; 
+	fog_of_war_texture = App->tex->LoadTexture("maps/Fow_meta.png"); 
+
 }
 
 FogOfWar::~FogOfWar()
@@ -66,7 +63,7 @@ void FogOfWar::Start()
 	RemoveJaggies(frontier);
 }
 
-void FogOfWar::Update(vector<iPoint>& current_points)
+void FogOfWar::Update()
 {
 	UpdateEntitiesVisibleArea(); 
 	UpdateMatrix(); 
@@ -95,7 +92,7 @@ list<iPoint> FogOfWar::GetEntitiesVisibleArea(int limit)
 
 	// Update the data matrix in order to draw 
 	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
-		data[it->y*App->map->data.width + it->x] = 2;
+		data[it->y*App->map->data.width + it->x] = dim_clear;
 	
 	return frontier; 
 	// ----
@@ -200,12 +197,12 @@ void FogOfWar::UpdateMatrix()
 					dim = false;
 									 	
 			if (data[y*App->map->data.width + x] == 0 && dim)
-				data[y*App->map->data.width + x] = 0;
+				data[y*App->map->data.width + x] = fow_null;
 			else
-				data[y*App->map->data.width + x] = 2462;
+				data[y*App->map->data.width + x] = dim_middle;
 
 			if (!dim)
-				data[y*App->map->data.width + x] = 2;
+				data[y*App->map->data.width + x] = dim_clear;
 		}
 	}
 }
@@ -252,4 +249,17 @@ void FogOfWar::MoveArea(int player_id, fow_directions direction, vector<iPoint>&
 
 		break;
 	}
+}
+
+SDL_Rect FogOfWar::GetRect(int fow_id)
+{
+	SDL_Rect rect_ret = { 0, 0, 32, 32 };
+
+	if( fow_id > 0)
+	{
+		rect_ret.y = 0;
+		rect_ret.x = 32 * (fow_id - 1); 	
+	}
+
+	return rect_ret;
 }

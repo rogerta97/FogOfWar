@@ -80,10 +80,13 @@ void j1Map::Draw()
 						SDL_Rect r = tileset->GetTileRect(tile_id);
 						iPoint pos = MapToWorld(x, y);
 
-						if (layer->name == "FogOfWar" && visibility == 2)
-							continue; 
-
 						App->view->LayerBlit(1, tileset->texture, pos, r, i);
+
+						if(visibility != 14)
+						{
+							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
+							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
+						}
 											
 					}
 				}

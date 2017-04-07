@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#define FOW_RADIUM 7
+#define FOW_RADIUM 4
 
 // This is not necessary, but will make a more readable code and will simplify stuff
 
@@ -28,7 +28,7 @@ public:
 
 	void Start(); 
 
-	void Update(vector<iPoint>& current_points); 
+	void Update(); 
 
 	~FogOfWar();
 
@@ -47,7 +47,7 @@ public:
 
 	void UpdateEntitiesVisibleArea();
 
-	// This function updates the matrix in order to draw properly 
+	// This function updates the matrix and the frontier in order to draw properly 
 
 	void UpdateMatrix(); 
 
@@ -55,8 +55,13 @@ public:
 
 	void MoveArea(int player_id, fow_directions axis, vector<iPoint>& current_points);
 
-	vector<iPoint>		current_visited_points;
-	uint*				data;
+	// This will get the rect corresponding to the tile 
+
+	SDL_Rect GetRect(int fow_id); 
+
+
+
+	SDL_Texture*		fog_of_war_texture;
 
 private:
 
@@ -64,6 +69,10 @@ private:
 	vector<Player*>		players_on_fog;
 
 	list<iPoint>		frontier; 
+
+	vector<iPoint>		current_visited_points;
+	uint*				data;
+
 
 	 
 
