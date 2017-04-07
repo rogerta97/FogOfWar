@@ -59,7 +59,9 @@ public:
 
 	SDL_Rect GetRect(int fow_id); 
 
+	// Check if one tile is the border for making it softer
 
+	bool IsBorder(const char* dir);
 
 	SDL_Texture*		fog_of_war_texture;
 
