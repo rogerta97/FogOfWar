@@ -64,7 +64,9 @@ uint FogOfWar::Get(int x, int y)
 void FogOfWar::Start()
 {
 	frontier = GetEntitiesVisibleArea(radium);
-	//RemoveJaggies(frontier);
+
+	UpdateMatrix();
+	// RemoveJaggies(frontier);
 }
 
 void FogOfWar::Update()
@@ -76,34 +78,23 @@ void FogOfWar::Update()
 
 list<iPoint> FogOfWar::GetEntitiesVisibleArea(int limit)
 {
-
-	list<iPoint> frontier; 
-
 	vector<iPoint> seen_nodes;
-	bool repeated = false;
-	bool opaque = false;
 
 	// We BFS the first time for knowing the tiles we must blit! 
 	for (list<iPoint>::iterator it = players_on_fog_pos.begin(); it != players_on_fog_pos.end(); it++)
 	{
 		frontier = App->map->PropagateBFS(iPoint((*it).x, (*it).y), seen_nodes, limit);
 
-		// We delete the picks 
-		
-		DeletePicks(); 
-
 		// Passing each visible area to the total amount of visible tiles (if they are not yet)
 
 		for (vector<iPoint>::iterator it = seen_nodes.begin(); it != seen_nodes.end(); it++)
 			current_visited_points.push_back(*it);	
+
 	}
 
-	// Update the data matrix in order to draw 
-	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
-		data[(*it).y*App->map->data.width + (*it).y] = dim_clear;
+	DeletePicks(); 
 	
 	return frontier; 
-	// ----
 }
 
 uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
@@ -326,12 +317,31 @@ SDL_Rect FogOfWar::GetRect(int fow_id)
 
 void FogOfWar::DeletePicks()
 {
-	/*for(list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
+
+	iPoint player_pos = players_on_fog_pos.front();
+
+	for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
 	{
-		if((*it) =)
-	
-	
-	}*/
+		if ((*it) == iPoint(player_pos.x, player_pos.y + radium))		
+			(*it) = iPoint((*it).x, (*it).y - 1); 
+
+		else if ((*it) == iPoint(player_pos.x, player_pos.y - radium))
+			(*it) = iPoint((*it).x, (*it).y - 1);
+
+		else if ((*it) == iPoint(player_pos.x + radium, player_pos.y))
+			(*it) = iPoint((*it).x, (*it).y - 1);
+
+		else if ((*it) == iPoint(player_pos.x - radium, player_pos.y))
+			(*it) = iPoint((*it).x, (*it).y - 1);
+	}
+
+	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
+	{
+		if ((*it) == iPoint(player_pos.x, player_pos.y + radium) || (*it) == iPoint(player_pos.x, player_pos.y - radium) || (*it) == iPoint(player_pos.x + radium, player_pos.y) || (*it) == iPoint(player_pos.x - radium, player_pos.y))
+			current_visited_points.erase(it);
+
+	}
+
 }
 
 
