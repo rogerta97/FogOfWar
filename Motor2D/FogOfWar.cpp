@@ -64,14 +64,15 @@ uint FogOfWar::Get(int x, int y)
 void FogOfWar::Start()
 {
 	GetEntitiesVisibleArea();
-	RemoveJaggies();
+	FillFrontier(); 
+	//RemoveJaggies();
 }
 
 void FogOfWar::Update()
 {
 	MoveFrontier();
 	FillFrontier();
-	RemoveJaggies(); 
+	//RemoveJaggies(); 
 }
 
 void FogOfWar::GetEntitiesVisibleArea()
@@ -187,18 +188,18 @@ void FogOfWar::FillFrontier()
 		{
 			for (int x = ini_p.x; x < end_p.x; x++)
 			{
+			 for(list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
+			 {
+				 if (iPoint(x, y) == *it && (*it).x < players_on_fog_pos.begin()->x)
+				 {
+					/*while(data[y*App->map->data.width + x + 2] != fow_null)
+					 {
+						data[y*App->map->data.width + x++] = dim_clear; 
+					 }
 
-				if (data[y*App->map->data.width + x] ==  dim_clear)
-						while(data[y*App->map->data.width + x] != dim_clear)
-						{
-							data[y*App->map->data.width + x++] = dim_clear;						
-						}
-
-				
-				else
-					data[y*App->map->data.width + x] = dim_middle;
-
-					data[y*App->map->data.width + x] = dim_clear;
+					data[y*App->map->data.width + x++] = dim_clear;*/
+				 }		 
+			 }
 			}
 		
 		}
@@ -206,6 +207,10 @@ void FogOfWar::FillFrontier()
 
 void FogOfWar::MoveArea(int player_id, fow_directions direction)
 {
+
+	for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
+		data[(*it).y * App->map->data.width + (*it).x] = dim_middle;
+
 	// When adding more players manage with player_id 
 
 	switch(direction)
@@ -243,6 +248,9 @@ void FogOfWar::MoveArea(int player_id, fow_directions direction)
 
 		break;
 	}
+
+	for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
+		data[(*it).y * App->map->data.width + (*it).x] = dim_clear;
 }
 
 SDL_Rect FogOfWar::GetRect(int fow_id)
@@ -281,18 +289,6 @@ void FogOfWar::DeletePicks()
 	bool done = false;
 	int count = 0; 
 
-	//for (vector<iPoint>::iterator it = current_visited_points.begin();; it++)
-	//{
-	//	if ((*it) == iPoint(player_pos.x, player_pos.y + radium) || (*it) == iPoint(player_pos.x, player_pos.y - radium) || (*it) == iPoint(player_pos.x + radium, player_pos.y) || (*it) == iPoint(player_pos.x - radium, player_pos.y))
-	//	{
-	//		current_visited_points.erase(it);
-	//		count++; 
-	//	}
-	//		
-	//	if (count == 4)
-	//		break; 
-
-	//}
 
 }
 

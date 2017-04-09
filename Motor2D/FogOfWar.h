@@ -68,13 +68,11 @@ public:
 
 private:
 
-	int	radium = FOW_RADIUM; 
+	int	radium =		FOW_RADIUM; 
 
 	list<iPoint>		players_on_fog_pos;
 
 	list<iPoint>		frontier; 
-
-	vector<iPoint>		current_visited_points;
 	uint*				data;
 
 
