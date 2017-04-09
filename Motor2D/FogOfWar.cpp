@@ -52,7 +52,7 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 	if (new_entity == nullptr)
 		return false;
 
-	players_on_fog.push_back(new_entity);
+	players_on_fog_pos.push_back(App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y));
 	return true;
 }
 
@@ -64,14 +64,14 @@ uint FogOfWar::Get(int x, int y)
 void FogOfWar::Start()
 {
 	frontier = GetEntitiesVisibleArea(radium);
-	RemoveJaggies(frontier);
+	//RemoveJaggies(frontier);
 }
 
 void FogOfWar::Update()
 {
 	UpdateEntitiesVisibleArea(); 
 	UpdateMatrix(); 
-	RemoveJaggies(frontier); 
+	//RemoveJaggies(frontier); 
 }
 
 list<iPoint> FogOfWar::GetEntitiesVisibleArea(int limit)
@@ -84,9 +84,13 @@ list<iPoint> FogOfWar::GetEntitiesVisibleArea(int limit)
 	bool opaque = false;
 
 	// We BFS the first time for knowing the tiles we must blit! 
-	for (vector<Player*>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
+	for (list<iPoint>::iterator it = players_on_fog_pos.begin(); it != players_on_fog_pos.end(); it++)
 	{
-		frontier = App->map->PropagateBFS(App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y), seen_nodes, limit);
+		frontier = App->map->PropagateBFS(iPoint((*it).x, (*it).y), seen_nodes, limit);
+
+		// We delete the picks 
+		
+		DeletePicks(); 
 
 		// Passing each visible area to the total amount of visible tiles (if they are not yet)
 
@@ -96,7 +100,7 @@ list<iPoint> FogOfWar::GetEntitiesVisibleArea(int limit)
 
 	// Update the data matrix in order to draw 
 	for (vector<iPoint>::iterator it = current_visited_points.begin(); it != current_visited_points.end(); it++)
-		data[it->y*App->map->data.width + it->x] = dim_clear;
+		data[(*it).y*App->map->data.width + (*it).y] = dim_clear;
 	
 	return frontier; 
 	// ----
@@ -195,11 +199,6 @@ uint FogOfWar::RemoveJaggies(list<iPoint> frontier)
 	data[left.y*App->map->data.width + left.x] = dim_middle;
 	data[left.y*App->map->data.width + left.x + 1] = dim_left;
 
-
-
-
-
-
 	return 0; 
 }
 
@@ -207,10 +206,10 @@ void FogOfWar::UpdateEntitiesVisibleArea()
 {
 	int id = 0; 
 
-	for (vector<Player*>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
+	for (list<iPoint>::iterator it = players_on_fog_pos.begin(); it != players_on_fog_pos.end(); it++)
 	{
 
-		string direction = (*it)->player_go->animator->GetCurrentAnimation()->GetName(); 
+		string direction = App->scene->main_scene->player->player_go->animator->GetCurrentAnimation()->GetName(); 
 
 		if (direction == "run_down")
 			MoveArea(id, fow_down, current_visited_points);
@@ -218,7 +217,7 @@ void FogOfWar::UpdateEntitiesVisibleArea()
 		else if (direction == "run_up")
 			MoveArea(id, fow_up, current_visited_points);
 
-		else if (direction == "run_lateral" && (*it)->flip == true)
+		else if (direction == "run_lateral" && App->scene->main_scene->player->flip == true)
 			MoveArea(id, fow_left, current_visited_points);
 
 		else if (direction == "run_lateral")
@@ -232,10 +231,10 @@ void FogOfWar::UpdateMatrix()
 {
 	bool dim = true;
 
-	iPoint ini_p = App->map->WorldToMap(players_on_fog.at(0)->player_go->GetPos().x, players_on_fog.at(0)->player_go->GetPos().y);
+	iPoint ini_p = iPoint(players_on_fog_pos.begin()->x, players_on_fog_pos.begin()->y);
 	ini_p.y -= radium + 1; ini_p.x -= radium + 1;
 
-	iPoint end_p = App->map->WorldToMap(players_on_fog.at(0)->player_go->GetPos().x, players_on_fog.at(0)->player_go->GetPos().y);
+	iPoint end_p = iPoint(players_on_fog_pos.begin()->x, players_on_fog_pos.begin()->y);
 	end_p.y += radium + 2; end_p.x += radium + 2;
 
 	for (int x = ini_p.x; x < end_p.x; x++)
@@ -267,37 +266,46 @@ void FogOfWar::MoveArea(int player_id, fow_directions direction, vector<iPoint>&
 	{
 	case fow_up: 
 		for (vector<iPoint>::iterator it = current_points.begin(); it != current_points.end(); it++)
-			it->y -= 1; 
+			(*it).y -= 1; 
 
 		for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
-			it->y -= 1;
+			(*it).y -= 1;
+
+		players_on_fog_pos.begin()->y -= 1; 
 
 		break; 
 
 	case fow_down:
 		for (vector<iPoint>::iterator it = current_points.begin(); it != current_points.end(); it++)
-			it->y += 1;
+			(*it).y += 1;
 
 		for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
-			it->y += 1;
+			(*it).y += 1;
+
+		players_on_fog_pos.begin()->y += 1;
+
 
 		break;
 
 	case fow_left:
 		for (vector<iPoint>::iterator it = current_points.begin(); it != current_points.end(); it++)
-			it->x -= 1;
+			(*it).x -= 1;
 
 		for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
-			it->x -= 1;
+			(*it).x -= 1;
+
+		players_on_fog_pos.begin()->x -= 1;
 
 		break;
 
 	case fow_right:
 		for (vector<iPoint>::iterator it = current_points.begin(); it != current_points.end(); it++)
-			it->x += 1;
+			(*it).x += 1;
 
 		for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
-			it->x += 1;
+			(*it).x += 1;
+
+		players_on_fog_pos.begin()->x += 1;
 
 		break;
 	}
@@ -316,8 +324,14 @@ SDL_Rect FogOfWar::GetRect(int fow_id)
 	return rect_ret;
 }
 
-bool FogOfWar::IsBorder(const char* dir)
+void FogOfWar::DeletePicks()
 {
+	/*for(list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
+	{
+		if((*it) =)
 	
-	return false;
+	
+	}*/
 }
+
+

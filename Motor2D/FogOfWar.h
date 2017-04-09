@@ -61,14 +61,16 @@ public:
 
 	// Check if one tile is the border for making it softer
 
-	bool IsBorder(const char* dir);
+	void DeletePicks();
+
 
 	SDL_Texture*		fog_of_war_texture;
 
 private:
 
-	int					radium = FOW_RADIUM; 
-	vector<Player*>		players_on_fog;
+	int	radium = FOW_RADIUM; 
+
+	list<iPoint>		players_on_fog_pos;
 
 	list<iPoint>		frontier; 
 

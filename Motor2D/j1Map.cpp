@@ -84,8 +84,7 @@ void j1Map::Draw()
 
 						if(visibility != 18)
 						{
-							if (visibility == 16)
-								LOG("");
+
 							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
 							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
 						}
