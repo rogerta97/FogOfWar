@@ -37,11 +37,11 @@ public:
 
 	// Called at the beggining for knowing the first clear tiles 
 
-	list<iPoint> GetEntitiesVisibleArea(int limit);
+	void GetEntitiesVisibleArea();
 
 	// This function will soft the edges
 
-	uint RemoveJaggies(list<iPoint> point);
+	uint RemoveJaggies();
 
 	// Called for modifying the position of the clear area (without BFS (opt.))
 
