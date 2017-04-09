@@ -45,15 +45,15 @@ public:
 
 	// Called for modifying the position of the clear area (without BFS (opt.))
 
-	void UpdateEntitiesVisibleArea();
+	void MoveFrontier();
 
 	// This function updates the matrix and the frontier in order to draw properly 
 
-	void UpdateMatrix(); 
+	void FillFrontier(); 
 
 	// This is the core function of moving areas
 
-	void MoveArea(int player_id, fow_directions axis, vector<iPoint>& current_points);
+	void MoveArea(int player_id, fow_directions axis);
 
 	// This will get the rect corresponding to the tile 
 
