@@ -65,14 +65,14 @@ void FogOfWar::Start()
 {
 	GetEntitiesVisibleArea();
 	FillFrontier(); 
-	//RemoveJaggies();
+	RemoveJaggies();
 }
 
 void FogOfWar::Update()
 {
 	MoveFrontier();
 	FillFrontier();
-	//RemoveJaggies(); 
+	RemoveJaggies(); 
 }
 
 void FogOfWar::GetEntitiesVisibleArea()
@@ -182,26 +182,16 @@ void FogOfWar::FillFrontier()
 
 	iPoint end_p = iPoint(players_on_fog_pos.begin()->x, players_on_fog_pos.begin()->y);
 	end_p.y += radium + 2; end_p.x += radium + 2;
-
 	
 		for (int y = ini_p.y; y < end_p.y; y++)
 		{
 			for (int x = ini_p.x; x < end_p.x; x++)
 			{
-			 for(list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
-			 {
-				 if (iPoint(x, y) == *it && (*it).x < players_on_fog_pos.begin()->x)
-				 {
-					/*while(data[y*App->map->data.width + x + 2] != fow_null)
-					 {
-						data[y*App->map->data.width + x++] = dim_clear; 
-					 }
-
-					data[y*App->map->data.width + x++] = dim_clear;*/
-				 }		 
-			 }
-			}
-		
+				if (iPoint(x, y).DistanceTo(*players_on_fog_pos.begin()) < FOW_RADIUM - 1)
+				{
+					data[y*App->map->data.width + x] = dim_clear; 
+			    }
+			}		
 		}
 }
 
