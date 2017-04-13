@@ -29,6 +29,7 @@ public:
 	fPoint pos;
 
 	Player* player;
+	Player* simple_player; 
 
 	//Research
 	FogOfWar*				fog_of_war = nullptr; 

@@ -128,7 +128,7 @@ public:
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
 
 	//Research
-	list<iPoint> PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int limit);
+	list<iPoint> PropagateBFS(iPoint origin, int limit);
 
 private:
 

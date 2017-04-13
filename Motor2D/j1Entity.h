@@ -11,12 +11,12 @@ class PhysBody;
 enum entity_name
 {
 	player,
-	player2
+	simple_entity, 
 };
 
 class Entity;
 class Player;
-class Player2;
+class SimpleEntity;
 class j1Entity : public j1Module
 {
 public:

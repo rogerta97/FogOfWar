@@ -631,7 +631,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	return ret;
 }
 
-list<iPoint> j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int field_of_view)
+list<iPoint> j1Map::PropagateBFS(iPoint origin, int field_of_view)
 {
 
 	list<iPoint>		frontier; 
@@ -690,7 +690,6 @@ list<iPoint> j1Map::PropagateBFS(iPoint origin, vector<iPoint>& seen_nodes, int 
 		}
 	}
 
-	seen_nodes = visited; 
 	return frontier; 
 
 	}

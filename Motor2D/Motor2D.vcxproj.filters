@@ -65,7 +65,7 @@
       <Filter>Engine\4. Entities ==========</Filter>
     </ClCompile>
     <ClCompile Include="Player.cpp">
-      <Filter>Engine\4. Entities ==========\Player1</Filter>
+      <Filter>Engine\4. Entities ==========\Player</Filter>
     </ClCompile>
     <ClCompile Include="j1Scene.cpp">
       <Filter>Engine\3. Scenes ==========</Filter>
@@ -81,6 +81,9 @@
     </ClCompile>
     <ClCompile Include="FogOfWar.cpp">
       <Filter>Engine\2. Components ======</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleEntity.cpp">
+      <Filter>Engine\4. Entities ==========\Simple Entity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -178,7 +181,7 @@
       <Filter>Engine\4. Entities ==========</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Engine\4. Entities ==========\Player1</Filter>
+      <Filter>Engine\4. Entities ==========\Player</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Engine\2. Components ======</Filter>
@@ -194,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="FogOfWar.h">
       <Filter>Engine\2. Components ======</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleEntity.h">
+      <Filter>Engine\4. Entities ==========\Simple Entity</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,13 +227,16 @@
     <Filter Include="Engine\5. Tools ===========\PuguiXML">
       <UniqueIdentifier>{7cb78d67-17cc-45eb-af97-e2106becce7b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\4. Entities ==========\Player1">
+    <Filter Include="Engine\4. Entities ==========\Player">
       <UniqueIdentifier>{649f33ab-cba0-4e3f-9d04-df22ae53d381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\4. Entities ==========\Simple Entity">
+      <UniqueIdentifier>{1eb95017-c91a-4bd5-9e37-efe6a782dd1f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\player.xml">
-      <Filter>Engine\4. Entities ==========\Player1</Filter>
+      <Filter>Engine\4. Entities ==========\Player</Filter>
     </Xml>
   </ItemGroup>
 </Project>

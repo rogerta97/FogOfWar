@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#define FOW_RADIUM 5
+#define FOW_RADIUM 4
 
 // This is not necessary, but will make a more readable code and will simplify stuff
 
@@ -18,6 +18,11 @@ enum fow_directions
 	fow_down, 
 	fow_left, 
 	fow_right
+};
+
+struct player_frontier
+{
+	list<iPoint>	data; 
 };
 
 class FogOfWar 
@@ -54,7 +59,7 @@ public:
 
 	// This is the core function of moving areas
 
-	void MoveArea(int player_id, fow_directions axis);
+	void MoveArea(list<iPoint>& player_id, fow_directions axis);
 
 	// This will get the rect corresponding to the tile 
 
@@ -62,7 +67,7 @@ public:
 
 	// Check if one tile is the border for making it softer
 
-	void DeletePicks();
+	void DeletePicks(list<iPoint>& frontier, int player_id);
 
 
 	SDL_Texture*		fog_of_war_texture;
@@ -71,9 +76,10 @@ private:
 
 	int	radium =		FOW_RADIUM; 
 
-	list<iPoint>		players_on_fog_pos;
+	list<iPoint>				players_on_fog_pos;
 
-	list<iPoint>		frontier; 
+	vector<player_frontier>		frontiers;
+
 	uint*				data;
 
 
