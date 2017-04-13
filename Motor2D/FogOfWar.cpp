@@ -10,6 +10,8 @@
 
 enum fow_id
 {
+	// Dim 
+
 	fow_null,
 	dim_middle,
 	dim_left,
@@ -24,11 +26,43 @@ enum fow_id
 	dim_inner_top_right,
 	dim_inner_bottom_left,
 	dim_inner_bottom_right, 
-	dim_closed_up,
-	dim_closed_down, 
-	dim_closed_right, 
-	dim_closed_left,
-	dim_clear, 
+
+	// Dark->clear 
+
+	darkc_middle,
+	darkc_left,
+	darkc_right,
+	darkc_up,
+	darkc_down,
+	darkc_bottom_right,
+	darkc_bottom_left,
+	darkc_top_right,
+	darkc_top_left,
+	darkc_inner_top_left,
+	darkc_inner_top_right,
+	darkc_inner_bottom_left,
+	darkc_inner_bottom_right,
+
+	// Dark->dim
+
+	darkd_middle,
+	darkd_left,
+	darkd_right,
+	darkd_up,
+	darkd_down,
+	darkd_bottom_right,
+	darkd_bottom_left,
+	darkd_top_right,
+	darkd_top_left,
+	darkd_inner_top_left,
+	darkd_inner_top_right,
+	darkd_inner_bottom_left,
+	darkd_inner_bottom_right,
+
+	// No mask 
+
+	dim_clear,
+
 };
 
 FogOfWar::FogOfWar()
@@ -65,14 +99,14 @@ void FogOfWar::Start()
 {
 	GetEntitiesVisibleArea();
 	FillFrontier(); 
-	RemoveJaggies();
+	RemoveDimJaggies();
 }
 
 void FogOfWar::Update()
 {
 	MoveFrontier();
 	FillFrontier();
-	RemoveJaggies(); 
+	RemoveDimJaggies(); 
 }
 
 void FogOfWar::GetEntitiesVisibleArea()
@@ -94,16 +128,22 @@ void FogOfWar::GetEntitiesVisibleArea()
 	 
 }
 
-uint FogOfWar::RemoveJaggies()
+uint FogOfWar::RemoveDimJaggies()
 {
 	for (list<iPoint>::iterator it = frontier.begin(); it != frontier.end(); it++)
 	{
 
-		if (Get((*it).x - 1, (*it).y) == dim_middle)
+		if (Get((*it).x, (*it).y + 1) == dim_middle || Get((*it).x, (*it).y + 1) == fow_null)
+			data[(*it).y*App->map->data.width + (*it).x] = dim_down;
+
+		if (Get((*it).x, (*it).y - 1) == dim_middle || Get((*it).x, (*it).y - 1) == fow_null)
+			data[(*it).y*App->map->data.width + (*it).x] = dim_up;
+
+		if (Get((*it).x - 1, (*it).y) == dim_middle || Get((*it).x - 1, (*it).y) == fow_null)
 		{
 			data[(*it).y*App->map->data.width + ((*it).x)] = dim_left;
 
-			if (Get((*it).x, (*it).y - 1) == dim_middle)
+			if (Get((*it).x, (*it).y - 1) == dim_middle || Get((*it).x, (*it).y - 1) == fow_null)
 			{
 				data[((*it).y)*App->map->data.width + (*it).x] = dim_inner_top_left;
 
@@ -111,20 +151,20 @@ uint FogOfWar::RemoveJaggies()
 					data[((*it).y)*App->map->data.width + ((*it).x + 1)] = dim_top_left;
 			}
 				
-			else if (Get((*it).x, (*it).y + 1) == dim_middle) 
+			else if (Get((*it).x, (*it).y + 1) == dim_middle || Get((*it).x, (*it).y + 1) == fow_null)
 			{
 				data[((*it).y)*App->map->data.width + (*it).x] = dim_inner_bottom_left;
 
-				if (Get(((*it).x + 1), (*it).y + 1) != dim_middle)
+				if (Get(((*it).x + 1), (*it).y + 1) != dim_middle && Get((*it).x + 1, (*it).y + 1) != fow_null)
 					data[((*it).y)*App->map->data.width + ((*it).x + 1)] = dim_bottom_left;
 			}
 				
 		}
-		else if (Get((*it).x + 1, (*it).y) == dim_middle)
+		else if (Get((*it).x + 1, (*it).y) == dim_middle || Get((*it).x + 1, (*it).y) == fow_null)
 		{
 			data[(*it).y*App->map->data.width + ((*it).x)] = dim_right;
 
-			if (Get((*it).x, (*it).y - 1) == dim_middle)
+			if (Get((*it).x, (*it).y - 1) == dim_middle || Get((*it).x, (*it).y - 1) == fow_null)
 			{
 				data[((*it).y)*App->map->data.width + (*it).x] = dim_inner_top_right;
 
@@ -132,23 +172,142 @@ uint FogOfWar::RemoveJaggies()
 					data[((*it).y)*App->map->data.width + ((*it).x - 1)] = dim_top_right;
 			}
 
-			else if (Get((*it).x, (*it).y + 1) == dim_middle)
+			else if (Get((*it).x, (*it).y + 1) == dim_middle || Get((*it).x, (*it).y + 1) == fow_null)
 			{
 				data[((*it).y)*App->map->data.width + (*it).x] = dim_inner_bottom_right;
 
-				if (Get(((*it).x - 1), (*it).y + 1) != dim_middle)
+				if (Get(((*it).x - 1), (*it).y + 1) != dim_middle && Get(((*it).x - 1), (*it).y + 1) != fow_null)
 					data[((*it).y)*App->map->data.width + ((*it).x - 1)] = dim_bottom_right;
 			}
 		}
-		else if (Get((*it).x, (*it).y + 1) == dim_middle)
-			data[(*it).y*App->map->data.width + (*it).x] = dim_down; 
-	
-		else if (Get((*it).x, (*it).y - 1) == dim_middle)
-			data[(*it).y*App->map->data.width + (*it).x] = dim_up;
+
 	}
 
  return 0; 
 
+}
+
+void FogOfWar::RemoveDarkJaggies(iPoint curr)
+{
+
+
+
+
+
+
+//	// Soft from black area to dim area 
+//	if (data[curr.y*App->map->data.width + curr.x] == fow_null && data[(curr.y + 1)*App->map->data.width + curr.x] == dim_middle)
+//	{
+//		data[(curr.y + 1)*App->map->data.width + curr.x] = darkd_up;
+//	}
+//
+//	if (data[curr.y*App->map->data.width + curr.x] == fow_null && data[(curr.y - 1)*App->map->data.width + curr.x] == dim_middle)
+//	{
+//		data[(curr.y - 1)*App->map->data.width + curr.x] = darkd_down; 
+//	}
+//
+//	if (data[curr.y*App->map->data.width + curr.x] == fow_null && data[curr.y*App->map->data.width + curr.x + 1] == dim_middle)
+//	{
+//		curr.x++; 
+//		if (data[curr.y*App->map->data.width + curr.x] != dim_clear)
+//		{
+//			data[curr.y*App->map->data.width + curr.x] = darkd_left;
+//
+//			if(data[(curr.y - 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkd_inner_top_left;
+//
+//				if(data[(curr.y - 1)*App->map->data.width + curr.x + 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x + 1] = darkd_top_left;
+//			}
+//
+//			else if (data[(curr.y + 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkd_inner_bottom_left;
+//
+//				if (data[(curr.y + 1)*App->map->data.width + curr.x + 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x + 1] = darkd_bottom_left;
+//			}		
+//		}
+//	}
+//	else if (data[curr.y*App->map->data.width + curr.x] == fow_null && data[curr.y*App->map->data.width + curr.x - 1] != fow_null)
+//	{
+//		curr.x--; 
+//		if (data[curr.y*App->map->data.width + curr.x] != dim_clear)
+//		{
+//			data[curr.y*App->map->data.width + curr.x] = darkd_right;
+//
+//			if (data[(curr.y - 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkd_inner_top_right;
+//
+//				if (data[(curr.y - 1)*App->map->data.width + curr.x - 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x - 1] = darkd_top_right;
+//			}
+//
+//			else if (data[(curr.y + 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkd_inner_bottom_right;
+//
+//				if (data[(curr.y + 1)*App->map->data.width + curr.x - 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x - 1] = darkd_bottom_right;
+//			}
+//		}
+//	}
+//
+//	// ----
+//
+//
+//	// Soft from black area to clear area 
+//
+//	if (data[curr.y*App->map->data.width + curr.x] == fow_null && data[curr.y*App->map->data.width + curr.x + 1] == dim_clear)
+//	{
+//		curr.x++;
+//	
+//		data[curr.y*App->map->data.width + curr.x] = darkc_left;
+//
+//			if (data[(curr.y - 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkc_inner_top_left;
+//
+//				if (data[(curr.y - 1)*App->map->data.width + curr.x + 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x + 1] = darkc_top_left;
+//			}
+//
+//			else if (data[(curr.y + 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkc_inner_bottom_left;
+//
+//				if (data[(curr.y + 1)*App->map->data.width + curr.x + 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x + 1] = darkc_bottom_left;
+//			}
+//		
+//	}
+//	else if (data[curr.y*App->map->data.width + curr.x] == fow_null && data[curr.y*App->map->data.width + curr.x - 1] != fow_null)
+//	{
+//		curr.x--;
+//		
+//		data[curr.y*App->map->data.width + curr.x] = darkc_right;
+//
+//			if (data[(curr.y - 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkc_inner_top_right;
+//
+//				if (data[(curr.y - 1)*App->map->data.width + curr.x - 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x - 1] = darkc_top_right;
+//			}
+//
+//			else if (data[(curr.y + 1)*App->map->data.width + curr.x] == fow_null)
+//			{
+//				data[curr.y*App->map->data.width + curr.x] = darkc_inner_bottom_right;
+//
+//				if (data[(curr.y + 1)*App->map->data.width + curr.x - 1] != fow_null)
+//					data[curr.y*App->map->data.width + curr.x - 1] = darkc_bottom_right;
+//		}
+//		
+//	}
+//
+//
 }
 
 void FogOfWar::MoveFrontier()
@@ -191,6 +350,11 @@ void FogOfWar::FillFrontier()
 				{
 					data[y*App->map->data.width + x] = dim_clear; 
 			    }
+
+			
+				RemoveDarkJaggies({x,y});
+
+		
 			}		
 		}
 }
@@ -247,10 +411,25 @@ SDL_Rect FogOfWar::GetRect(int fow_id)
 {
 	SDL_Rect rect_ret = { 0, 0, 32, 32 };
 
-	if( fow_id > 0)
+	int columns = 13; 
+
+	if(fow_id > 0 && fow_id <= dim_inner_bottom_right)
 	{
 		rect_ret.y = 0;
 		rect_ret.x = 32 * (fow_id - 1); 	
+	}
+	else if (fow_id > dim_inner_bottom_right && fow_id <= darkc_inner_bottom_right)
+	{
+		fow_id -= columns; 
+		rect_ret.y = 32;
+		rect_ret.x = 32 * (fow_id - 1);
+	}
+
+	else if (fow_id > darkc_inner_bottom_right && fow_id <= darkd_inner_bottom_right)
+	{
+		fow_id -= (columns*2);
+		rect_ret.y = 64;
+		rect_ret.x = 32 * (fow_id - 1);
 	}
 
 	return rect_ret;

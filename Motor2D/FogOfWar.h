@@ -8,7 +8,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#define FOW_RADIUM 4
+#define FOW_RADIUM 5
 
 // This is not necessary, but will make a more readable code and will simplify stuff
 
@@ -41,7 +41,8 @@ public:
 
 	// This function will soft the edges
 
-	uint RemoveJaggies();
+	uint RemoveDimJaggies();
+	void RemoveDarkJaggies(iPoint curr); 
 
 	// Called for modifying the position of the clear area (without BFS (opt.))
 
