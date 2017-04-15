@@ -99,7 +99,7 @@ void FogOfWar::Start()
 {
 	GetEntitiesVisibleArea();
 	FillFrontier(); 
-	RemoveDimJaggies();
+	//RemoveDimJaggies();
 }
 
 void FogOfWar::Update()

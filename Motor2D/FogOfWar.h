@@ -77,8 +77,9 @@ private:
 	int	radium =		FOW_RADIUM; 
 
 	list<iPoint>				players_on_fog_pos;
-
 	vector<player_frontier>		frontiers;
+
+	list<iPoint>				simple_char_on_fog_pos; 
 
 	uint*				data;
 
