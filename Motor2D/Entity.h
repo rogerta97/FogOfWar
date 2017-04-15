@@ -3,6 +3,7 @@
 
 #include "j1App.h"
 #include "j1Render.h"
+#include "j1Entity.h"
 #include "PugiXml\src\pugixml.hpp"
 #include "j1Physics.h"
 #include "Animation.h"
@@ -38,6 +39,8 @@ public:
 	virtual void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB) {};
 
 public:
+
+	entity_name type; 
 
 };
 

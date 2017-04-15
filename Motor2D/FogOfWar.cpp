@@ -86,7 +86,12 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 	if (new_entity == nullptr)
 		return false;
 
-	players_on_fog_pos.push_back(App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y));
+	else if (new_entity->type == entity_name::player)
+		players_on_fog_pos.push_back(App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y));
+
+	else
+		simple_char_on_fog_pos.push_back(App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y));
+
 	return true;
 }
 

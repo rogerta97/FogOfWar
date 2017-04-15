@@ -41,6 +41,8 @@ bool SimpleEntity::LoadEntity()
 
 	last_height = player_go->fGetPos().y;
 
+	type = simple_entity; 
+
 	return ret;
 }
 
@@ -83,7 +85,7 @@ bool SimpleEntity::Update(float dt)
 	//	flip = false;
 	//}
 
-	//App->view->CenterCamera(player_go->GetPos().x - App->view->win_w / 4, player_go->GetPos().y - App->view->win_h / 4);
+	App->view->CenterCamera(player_go->GetPos().x - App->view->win_w / 4, player_go->GetPos().y - App->view->win_h / 4);
 
 	return ret;
 }
