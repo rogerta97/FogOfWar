@@ -46,7 +46,6 @@ public:
 	
 	bool on_ground = false;
 	bool going_up = false;
-	bool is_on_fog = false; 
 
 	float last_height = 0.0f;
 private:

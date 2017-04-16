@@ -46,7 +46,7 @@ bool j1Entity::Update(float dt)
 
 	for (list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); it++)
 	{
-		if((*it) == App->scene->main_scene->fog_of_war->curr_character)
+		if((*it) == App->scene->main_scene->fog_of_war->curr_character || (*it)->type == entity_name::simple_entity)
 			ret = (*it)->Update(dt);
 
 		(*it)->Draw(dt);
@@ -78,6 +78,11 @@ bool j1Entity::CleanUp()
 list<Entity*> j1Entity::GetList()
 {
 	return entity_list;
+}
+
+void j1Entity::SetList(list<Entity*> new_list)
+{
+	entity_list = new_list; 
 }
 
 void j1Entity::OnCollision(PhysBody * bodyA, PhysBody * bodyB, b2Fixture * fixtureA, b2Fixture * fixtureB)

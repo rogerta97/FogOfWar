@@ -92,7 +92,6 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 
 	else if (new_entity->type == entity_name::player)
 	{
-		new_entity->is_on_fog = true; 
 		new_player.player_pos = App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y);
 		GetEntitiesVisibleArea(new_player); 
 		players_on_fog.push_back(new_player); 
@@ -121,6 +120,8 @@ void FogOfWar::Update(iPoint prev_pos)
 	MoveFrontier(prev_pos);
 	FillFrontier();
 	RemoveDimJaggies(); 
+
+	ManageCharacters(); 
 
 }
 
@@ -508,6 +509,48 @@ void FogOfWar::ChangeCharacter(iPoint prev_pos)
 		if (App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y) == next_character_pos)
 			curr_character = (Player*)*it; 		
 	}
+
+}
+
+void FogOfWar::ManageCharacters()
+{
+	bool entered = false; 
+
+	list<Entity*> entities = App->entity->GetList();
+
+	for(list<iPoint>::iterator it = simple_char_on_fog_pos.begin(); it != simple_char_on_fog_pos.end(); it++)
+	{
+		for (vector<player_frontier>::iterator it2 = players_on_fog.begin(); it2 != players_on_fog.end(); it2++)
+		{
+			
+			if (it->DistanceTo(it2->player_pos) < FOW_RADIUM)
+			{
+				for (list<Entity*>::iterator it3 = entities.begin(); it3 != entities.end(); it3++)
+				{
+					if (App->map->WorldToMap((*it3)->player_go->GetPos().x, (*it3)->player_go->GetPos().y) == *it)
+					{
+						(*it3)->active = true;
+						entered = true; 
+					}
+						
+				}
+			}
+
+		}
+
+		if (!entered)
+		{
+			for (list<Entity*>::iterator it3 = entities.begin(); it3 != entities.end(); it3++)
+			{
+				if (App->map->WorldToMap((*it3)->player_go->GetPos().x, (*it3)->player_go->GetPos().y) == *it)
+					(*it3)->active = false;
+			}
+		}
+			
+		
+	}
+
+	App->entity->SetList(entities); 
 
 }
 

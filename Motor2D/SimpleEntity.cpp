@@ -42,6 +42,7 @@ bool SimpleEntity::LoadEntity()
 	last_height = player_go->fGetPos().y;
 
 	type = simple_entity; 
+	active = true; 
 
 	return ret;
 }
@@ -71,7 +72,8 @@ bool SimpleEntity::Draw(float dt)
 {
 	bool ret = true;
 
-	App->view->LayerBlit(2, player_go->GetTexture(), { player_go->GetPos().x - 23, player_go->GetPos().y - 35 }, player_go->GetCurrentAnimationRect(dt), 0, -1.0f, SDL_FLIP_NONE);
+	if (active)
+		App->view->LayerBlit(2, player_go->GetTexture(), { player_go->GetPos().x - 23, player_go->GetPos().y - 35 }, player_go->GetCurrentAnimationRect(dt), 0, -1.0f, SDL_FLIP_NONE);
 
 	return ret;
 }

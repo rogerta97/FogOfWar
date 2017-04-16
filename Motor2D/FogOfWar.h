@@ -70,7 +70,13 @@ public:
 
 	void DeletePicks(player_frontier& frontier);
 
+	//This will switch between the players that has fog of war activated
+
 	void ChangeCharacter(iPoint prev_pos);
+
+	// This will hide the characters or not 
+
+	void ManageCharacters(); 
 
 
 	SDL_Texture*				fog_of_war_texture;

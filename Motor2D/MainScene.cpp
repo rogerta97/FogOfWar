@@ -88,8 +88,6 @@ bool MainScene::Update(float dt)
 		fog_of_war->Update(prev_pos); 
 		prev_pos = next_pos;
 	}
-
-
 		
 	App->map->Draw();
 
