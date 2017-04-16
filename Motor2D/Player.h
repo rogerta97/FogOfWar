@@ -43,7 +43,6 @@ public:
 	bool flip = false;
 
 public:
-	GameObject* player_go = nullptr;
 
 	
 	bool on_ground = false;

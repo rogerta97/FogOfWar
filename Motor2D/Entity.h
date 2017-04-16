@@ -10,6 +10,7 @@
 
 class b2Fixture;
 class PhysBody;
+class GameObject; 
 
 class Entity
 {
@@ -39,6 +40,8 @@ public:
 	virtual void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB) {};
 
 public:
+
+	GameObject* player_go = nullptr;
 
 	entity_name type; 
 

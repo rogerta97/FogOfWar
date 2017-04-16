@@ -111,11 +111,12 @@ uint FogOfWar::Get(int x, int y)
 void FogOfWar::Start()
 {
 	FillFrontier(); 
-	//RemoveDimJaggies();
+	RemoveDimJaggies();
 }
 
 void FogOfWar::Update()
 {
+
 	MoveFrontier();
 	FillFrontier();
 	RemoveDimJaggies(); 
@@ -124,13 +125,15 @@ void FogOfWar::Update()
 void FogOfWar::GetEntitiesVisibleArea(player_frontier& new_player)
 {
 
-	// We BFS the first time for knowing the tiles we must blit! 
+	// We BFS the for knowing the tiles we must blit! 
 	
 	new_player.frontier = App->map->PropagateBFS({ new_player.player_pos.x, new_player.player_pos.y }, FOW_RADIUM);
 
-		// Passing each visible area to the total amount of visible tiles (if they are not yet)
+		// Once we have the frontier we delete the picks
 
 		DeletePicks(new_player);
+
+		// With that, we modify the data container
 
 		for (list<iPoint>::iterator it = new_player.frontier.begin(); it != new_player.frontier.end(); it++)
 			data[(*it).y * App->map->data.width + (*it).x] = dim_clear;	
@@ -189,19 +192,10 @@ uint FogOfWar::RemoveDimJaggies()
 						if (Get(((*it).x - 1), (*it).y + 1) != dim_middle && Get(((*it).x - 1), (*it).y + 1) != fow_null)
 							data[((*it).y)*App->map->data.width + ((*it).x - 1)] = dim_bottom_right;
 					}
-
-
 				}
-			
+			}
 		}
-	}
-
-
-
-		
-
- return 0; 
-
+	 return 0; 
 }
 
 void FogOfWar::RemoveDarkJaggies(iPoint curr)
@@ -470,5 +464,19 @@ void FogOfWar::DeletePicks(player_frontier& player)
 	}
 
 }
+
+vector<iPoint> FogOfWar::GetState()
+{
+
+	vector<iPoint> curr_state; 
+
+	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
+	{
+		curr_state.push_back(it->player_pos); 
+	}
+
+	return curr_state;
+}
+
 
 

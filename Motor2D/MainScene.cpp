@@ -29,10 +29,12 @@ bool MainScene::Start()
 
 	LOG("Start MainScene");
 	
-
+	// Creating the entities
 
 	player = (Player*)App->entity->CreateEntity(entity_name::player);
+
 	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
+	player_2->player_go->SetPos({ 700,700 }); 
 
 	simple_player = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
 
@@ -45,15 +47,21 @@ bool MainScene::Start()
 	//Load Map
 	App->map->Load("zelda_moba2.tmx");
 
+	// Start the fog of war
+
 	fog_of_war = new FogOfWar(); 
 
 	fog_of_war->AddPlayer(player); 
 	fog_of_war->AddPlayer(player_2); 
-	fog_of_war->AddPlayer(simple_player); 
+	fog_of_war->AddPlayer(simple_player);
+
+	fog_of_war->curr_character = player;
 
 	fog_of_war->Start();
 
-	prev_pos = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
+	// ----
+
+	prev_state_pos = fog_of_war->GetState();
 
 	return ret;
 }
@@ -69,10 +77,10 @@ bool MainScene::Update(float dt)
 {
 	bool ret = true;
 	
-	if (prev_pos != App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y))
+	if (IsPosChanged())
 		fog_of_war->Update();
 
-	prev_pos = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
+	next_state_pos = fog_of_war->GetState();
 
 	App->map->Draw();
 
@@ -148,5 +156,24 @@ void MainScene::OnCommand(std::list<std::string>& tokens)
 	default:
 		break;
 	}
+}
+
+
+bool MainScene::IsPosChanged()
+{
+	for (vector<iPoint>::iterator it = prev_state_pos.begin(); it != prev_state_pos.end();)
+	{
+		for (vector<iPoint>::iterator it2 = next_state_pos.begin(); it2 != next_state_pos.end();)
+		{
+			if (*it != *it2)
+				return true; 
+
+			it++; it2++; 
+		}
+
+		return false; 
+	}
+
+	return false; 
 }
 

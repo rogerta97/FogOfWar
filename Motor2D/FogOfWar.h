@@ -70,8 +70,13 @@ public:
 
 	void DeletePicks(player_frontier& frontier);
 
+	// Returns current players
 
-	SDL_Texture*		fog_of_war_texture;
+	vector<iPoint> GetState(); 
+
+	SDL_Texture*				fog_of_war_texture;
+
+	Entity*						curr_character = nullptr; 
 
 private:
 

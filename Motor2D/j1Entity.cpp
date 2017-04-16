@@ -1,5 +1,8 @@
 #include "j1Entity.h"
 #include "Player.h"
+#include "j1App.h"
+#include "j1Scene.h"
+#include "MainScene.h"
 #include "SimpleEntity.h"
 #include "p2Log.h"
 
@@ -43,7 +46,9 @@ bool j1Entity::Update(float dt)
 
 	for (list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); it++)
 	{
-		ret = (*it)->Update(dt);
+		if((*it) == App->scene->main_scene->fog_of_war->curr_character)
+			ret = (*it)->Update(dt);
+
 		(*it)->Draw(dt);
 	}
 
@@ -105,6 +110,13 @@ Entity* j1Entity::CreateEntity(entity_name entity)
 
 	return ret;
 }
+
+vector<iPoint> j1Entity::GetEntitiesPos()
+{
+	return vector<iPoint>();
+}
+
+
 
 void j1Entity::DeleteEntity(Entity* entity)
 {
