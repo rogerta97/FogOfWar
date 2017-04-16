@@ -17,6 +17,7 @@ enum entity_name
 class Entity;
 class Player;
 class SimpleEntity;
+
 class j1Entity : public j1Module
 {
 public:
@@ -47,8 +48,6 @@ public:
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
 
 	Entity* CreateEntity(entity_name entity);
-	
-	vector<iPoint> GetEntitiesPos();
 
 	void DeleteEntity(Entity* entity);
 

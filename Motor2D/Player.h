@@ -44,6 +44,7 @@ public:
 
 public:
 
+	GameObject* player_go = nullptr; 
 	
 	bool on_ground = false;
 	bool going_up = false;

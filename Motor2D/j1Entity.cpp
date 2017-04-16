@@ -111,10 +111,11 @@ Entity* j1Entity::CreateEntity(entity_name entity)
 	return ret;
 }
 
-vector<iPoint> j1Entity::GetEntitiesPos()
-{
-	return vector<iPoint>();
-}
+
+//vector<iPoint> j1Entity::GetEntitiesPos()
+//{
+//	return vector<iPoint>();
+//}
 
 
 
