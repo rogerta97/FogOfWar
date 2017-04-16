@@ -40,7 +40,6 @@ bool MainScene::Start()
 
 	simple_player->player_go->SetPos({ 700, 1000 });
 	
-
 	player->SetCamera(1);
 	App->console->AddCommand("scene.set_player_camera", App->scene, 2, 2, "Set to player the camera number. Min_args: 2. Max_args: 2. Args: 1, 2, 3, 4");
 
@@ -55,13 +54,13 @@ bool MainScene::Start()
 	fog_of_war->AddPlayer(player_2); 
 	fog_of_war->AddPlayer(simple_player);
 
-	fog_of_war->curr_character = player;
+	fog_of_war->curr_character = player_2;
 
 	fog_of_war->Start();
 
 	// ----
 
-	prev_state_pos = fog_of_war->GetState();
+	prev_pos = App->map->WorldToMap(fog_of_war->curr_character->player_go->GetPos().x, fog_of_war->curr_character->player_go->GetPos().y);
 
 	return ret;
 }
@@ -77,11 +76,21 @@ bool MainScene::Update(float dt)
 {
 	bool ret = true;
 	
-	if (IsPosChanged())
-		fog_of_war->Update();
+	next_pos = App->map->WorldToMap(fog_of_war->curr_character->player_go->GetPos().x, fog_of_war->curr_character->player_go->GetPos().y);
 
-	next_state_pos = fog_of_war->GetState();
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE  && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE)
+	{
+		fog_of_war->ChangeCharacter(prev_pos);
+	}
 
+	if (prev_pos != next_pos)
+	{
+		fog_of_war->Update(prev_pos); 
+		prev_pos = next_pos;
+	}
+
+
+		
 	App->map->Draw();
 
 
@@ -159,21 +168,4 @@ void MainScene::OnCommand(std::list<std::string>& tokens)
 }
 
 
-bool MainScene::IsPosChanged()
-{
-	for (vector<iPoint>::iterator it = prev_state_pos.begin(); it != prev_state_pos.end();)
-	{
-		for (vector<iPoint>::iterator it2 = next_state_pos.begin(); it2 != next_state_pos.end();)
-		{
-			if (*it != *it2)
-				return true; 
-
-			it++; it2++; 
-		}
-
-		return false; 
-	}
-
-	return false; 
-}
 

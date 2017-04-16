@@ -43,14 +43,12 @@ public:
 	bool flip = false;
 
 public:
-
-	GameObject* player_go = nullptr; 
 	
 	bool on_ground = false;
 	bool going_up = false;
+	bool is_on_fog = false; 
 
 	float last_height = 0.0f;
-
 private:
 	uint gamepad_num = 20;
 	int camera = 1;

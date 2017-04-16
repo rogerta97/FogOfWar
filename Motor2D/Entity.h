@@ -46,6 +46,8 @@ public:
 
 	entity_name type; 
 
+
+
 };
 
 #endif

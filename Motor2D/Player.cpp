@@ -85,16 +85,7 @@ bool Player::Update(float dt)
 		flip = false;
 	}
 
-	App->view->CenterCamera(player_go->GetPos().x - App->view->win_w/4, player_go->GetPos().y - App->view->win_h / 4);
-
-	return ret;
-}
-
-bool Player::Draw(float dt)
-{
-	bool ret = true;
-
-	if(player_go->animator->IsCurrentAnimation("run_lateral"))
+	if (player_go->animator->IsCurrentAnimation("run_lateral"))
 		player_go->SetAnimation("idle_lateral");
 
 	if (player_go->animator->IsCurrentAnimation("run_up"))
@@ -119,6 +110,15 @@ bool Player::Draw(float dt)
 	{
 		player_go->SetAnimation("run_down");
 	}
+
+	App->view->CenterCamera(player_go->GetPos().x - App->view->win_w/4, player_go->GetPos().y - App->view->win_h / 4);
+
+	return ret;
+}
+
+bool Player::Draw(float dt)
+{
+	bool ret = true;
 	
 	
 	if(flip)

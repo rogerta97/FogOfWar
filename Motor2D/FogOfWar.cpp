@@ -1,6 +1,7 @@
 #include "FogOfWar.h"
 #include "j1Scene.h"
 #include "p2Log.h"
+#include "j1Input.h"
 #include "Entity.h"
 #include "j1Textures.h"
 #include "MainScene.h"
@@ -91,6 +92,7 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 
 	else if (new_entity->type == entity_name::player)
 	{
+		new_entity->is_on_fog = true; 
 		new_player.player_pos = App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y);
 		GetEntitiesVisibleArea(new_player); 
 		players_on_fog.push_back(new_player); 
@@ -114,12 +116,12 @@ void FogOfWar::Start()
 	RemoveDimJaggies();
 }
 
-void FogOfWar::Update()
+void FogOfWar::Update(iPoint prev_pos)
 {
-
-	MoveFrontier();
+	MoveFrontier(prev_pos);
 	FillFrontier();
 	RemoveDimJaggies(); 
+
 }
 
 void FogOfWar::GetEntitiesVisibleArea(player_frontier& new_player)
@@ -321,25 +323,16 @@ void FogOfWar::RemoveDarkJaggies(iPoint curr)
 //
 }
 
-void FogOfWar::MoveFrontier()
+void FogOfWar::MoveFrontier(iPoint prev_pos)
 {
-
-	string direction = App->scene->main_scene->player->player_go->animator->GetCurrentAnimation()->GetName();
+	string direction = curr_character->player_go->animator->GetCurrentAnimation()->GetName();
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
-	{
-		if (direction == "run_down")
-			MoveArea(*it, fow_down);
-
-		else if (direction == "run_up")
-			MoveArea(*it, fow_up);
-
-		else if (direction == "run_lateral" && App->scene->main_scene->player->flip == true)
-			MoveArea(*it, fow_left);
-
-		else if (direction == "run_lateral")
-			MoveArea(*it, fow_right);
+	{	
+		if (prev_pos == it->player_pos)
+			MoveArea(*it, direction);
 	}
+	
 }
 
 void FogOfWar::FillFrontier()
@@ -370,11 +363,28 @@ void FogOfWar::FillFrontier()
 			
 }
 
-void FogOfWar::MoveArea(player_frontier& player, fow_directions direction)
+void FogOfWar::MoveArea(player_frontier& player, string direction_str)
 {
+
+	int direction = -1; 
+
+	if (direction_str == "run_down")
+		direction = fow_down;
+
+	else if (direction_str == "run_up")
+		direction = fow_up;
+
+	else if (direction_str == "run_lateral" && curr_character->flip == true)
+		direction = fow_left;
+
+	else if (direction_str == "run_lateral")
+		direction = fow_right;
+	else
+		LOG(""); 
+
+
 	for (list<iPoint>::iterator it = player.frontier.begin(); it != player.frontier.end(); it++)
 		data[(*it).y * App->map->data.width + (*it).x] = dim_middle;
-	// When adding more players manage with player_id 
 
 	switch(direction)
 	{
@@ -465,18 +475,44 @@ void FogOfWar::DeletePicks(player_frontier& player)
 
 }
 
-vector<iPoint> FogOfWar::GetState()
+void FogOfWar::ChangeCharacter(iPoint prev_pos)
 {
+	iPoint next_character_pos; 
 
-	vector<iPoint> curr_state; 
+	int count = 1; 
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{
-		curr_state.push_back(it->player_pos); 
+		if (prev_pos == it->player_pos) 
+		{
+
+			if (count < players_on_fog.size()) 
+			{
+				it++; 
+				next_character_pos = it->player_pos;
+			}
+				
+			else
+			{
+				next_character_pos = players_on_fog.begin()->player_pos; 
+			}
+		}	
+
+		count++; 
 	}
 
-	return curr_state;
+	list<Entity*> entities = App->entity->GetList(); 
+
+	for (list<Entity*>::iterator it = entities.begin(); it != entities.end(); it++)
+	{
+		if (App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y) == next_character_pos)
+			curr_character = (Player*)*it; 		
+	}
+
 }
+
+
+
 
 
 

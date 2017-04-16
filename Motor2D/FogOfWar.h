@@ -34,7 +34,7 @@ public:
 
 	void Start(); 
 
-	void Update(); 
+	void Update(iPoint prev_pos); 
 
 	~FogOfWar();
 
@@ -52,7 +52,7 @@ public:
 
 	// Called for modifying the position of the clear area (without BFS (opt.))
 
-	void MoveFrontier();
+	void MoveFrontier(iPoint prev_pos);
 
 	// This function updates the matrix and the frontier in order to draw properly 
 
@@ -60,7 +60,7 @@ public:
 
 	// This is the core function of moving areas
 
-	void MoveArea(player_frontier& player_id, fow_directions axis);
+	void MoveArea(player_frontier& player_id, string direction);
 
 	// This will get the rect corresponding to the tile 
 
@@ -70,13 +70,12 @@ public:
 
 	void DeletePicks(player_frontier& frontier);
 
-	// Returns current players
+	void ChangeCharacter(iPoint prev_pos);
 
-	vector<iPoint> GetState(); 
 
 	SDL_Texture*				fog_of_war_texture;
 
-	Entity*						curr_character = nullptr; 
+	Player*						curr_character = nullptr; 
 
 private:
 

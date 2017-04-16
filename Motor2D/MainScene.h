@@ -23,7 +23,6 @@ public:
 
 	void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
 	void OnCommand(std::list<std::string>& tokens);
-	bool IsPosChanged();
 
 	GameObject* go = nullptr;
 
@@ -35,8 +34,8 @@ public:
 
 	FogOfWar*		fog_of_war = nullptr; 
 
-	vector<iPoint>	prev_state_pos;
-	vector<iPoint>	next_state_pos;
+	iPoint	prev_pos;
+	iPoint	next_pos;
 
 };
 

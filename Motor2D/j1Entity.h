@@ -45,6 +45,8 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	list<Entity*> GetList(); 
+
 	void OnCollision(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
 
 	Entity* CreateEntity(entity_name entity);
