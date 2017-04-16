@@ -22,7 +22,8 @@ enum fow_directions
 
 struct player_frontier
 {
-	list<iPoint>	data; 
+	list<iPoint>	frontier; 
+	iPoint			player_pos; 
 };
 
 class FogOfWar 
@@ -42,7 +43,7 @@ public:
 
 	// Called at the beggining for knowing the first clear tiles 
 
-	void GetEntitiesVisibleArea();
+	void GetEntitiesVisibleArea(player_frontier& new_player);
 
 	// This function will soft the edges
 
@@ -59,7 +60,7 @@ public:
 
 	// This is the core function of moving areas
 
-	void MoveArea(list<iPoint>& player_id, fow_directions axis);
+	void MoveArea(player_frontier& player_id, fow_directions axis);
 
 	// This will get the rect corresponding to the tile 
 
@@ -67,17 +68,14 @@ public:
 
 	// Check if one tile is the border for making it softer
 
-	void DeletePicks(list<iPoint>& frontier, int player_id);
+	void DeletePicks(player_frontier& frontier);
 
 
 	SDL_Texture*		fog_of_war_texture;
 
 private:
 
-	int	radium =		FOW_RADIUM; 
-
-	list<iPoint>				players_on_fog_pos;
-	vector<player_frontier>		frontiers;
+	vector<player_frontier>		players_on_fog;
 
 	list<iPoint>				simple_char_on_fog_pos; 
 

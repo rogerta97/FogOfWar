@@ -32,7 +32,8 @@ bool MainScene::Start()
 
 
 	player = (Player*)App->entity->CreateEntity(entity_name::player);
-	
+	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
+
 	simple_player = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
 
 	simple_player->player_go->SetPos({ 700, 1000 });
@@ -47,6 +48,7 @@ bool MainScene::Start()
 	fog_of_war = new FogOfWar(); 
 
 	fog_of_war->AddPlayer(player); 
+	fog_of_war->AddPlayer(player_2); 
 	fog_of_war->AddPlayer(simple_player); 
 
 	fog_of_war->Start();

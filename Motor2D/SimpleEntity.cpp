@@ -62,30 +62,7 @@ bool SimpleEntity::Update(float dt)
 {
 	bool ret = true;
 
-	//float speed = (200 * dt);
-
-	//if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_LEFT) > 12000)
-	//{
-	//	player_go->SetPos({ player_go->fGetPos().x - speed, player_go->fGetPos().y });
-	//	flip = true;
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_RIGHT) > 12000)
-	//{
-	//	player_go->SetPos({ player_go->fGetPos().x + speed, player_go->fGetPos().y });
-	//	flip = false;
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_UP) > 12000)
-	//{
-	//	player_go->SetPos({ player_go->fGetPos().x, player_go->fGetPos().y - speed });
-	//	flip = false;
-	//}
-	//else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_DOWN) > 12000)
-	//{
-	//	player_go->SetPos({ player_go->fGetPos().x, player_go->fGetPos().y + speed });
-	//	flip = false;
-	//}
-
-	App->view->CenterCamera(player_go->GetPos().x - App->view->win_w / 4, player_go->GetPos().y - App->view->win_h / 4);
+	//App->view->CenterCamera(player_go->GetPos().x - App->view->win_w / 4, player_go->GetPos().y - App->view->win_h / 4);
 
 	return ret;
 }
@@ -93,37 +70,6 @@ bool SimpleEntity::Update(float dt)
 bool SimpleEntity::Draw(float dt)
 {
 	bool ret = true;
-
-	/*if (player_go->animator->IsCurrentAnimation("run_lateral"))
-		player_go->SetAnimation("idle_lateral");
-
-	if (player_go->animator->IsCurrentAnimation("run_up"))
-		player_go->SetAnimation("idle_up");
-
-	if (player_go->animator->IsCurrentAnimation("run_down"))
-		player_go->SetAnimation("idle_down");
-
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_LEFT) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_LEFT) > 12000)
-	{
-		player_go->SetAnimation("run_lateral");
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_RIGHT) > 12000)
-	{
-		player_go->SetAnimation("run_lateral");
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_UP) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_UP) > 12000)
-	{
-		player_go->SetAnimation("run_up");
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT || App->input->GetControllerButton(gamepad_num, SDL_CONTROLLER_BUTTON_DPAD_DOWN) == KEY_REPEAT || App->input->GetControllerJoystickMove(gamepad_num, LEFTJOY_DOWN) > 12000)
-	{
-		player_go->SetAnimation("run_down");
-	}
-
-
-	if (flip)
-		App->view->LayerBlit(2, player_go->GetTexture(), { player_go->GetPos().x - 26, player_go->GetPos().y - 35 }, player_go->GetCurrentAnimationRect(dt), 0, -1.0f, SDL_FLIP_HORIZONTAL);
-	else*/
 
 	App->view->LayerBlit(2, player_go->GetTexture(), { player_go->GetPos().x - 23, player_go->GetPos().y - 35 }, player_go->GetCurrentAnimationRect(dt), 0, -1.0f, SDL_FLIP_NONE);
 
