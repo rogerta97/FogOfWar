@@ -54,8 +54,8 @@ uint FogOfWar::Get(int x, int y)
 
 void FogOfWar::Start()
 {
-	FillFrontier(); 
-	RemoveDimJaggies();
+	//FillFrontier(); 
+	//RemoveDimJaggies();
 	ManageCharacters(); 
 }
 

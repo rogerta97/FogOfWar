@@ -147,7 +147,7 @@ private:
 
 	list<iPoint>				simple_char_on_fog_pos; 
 
-	uint*				data;
+	uint*						data;
 
 
 	 
