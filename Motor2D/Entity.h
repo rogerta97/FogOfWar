@@ -46,7 +46,7 @@ public:
 
 	entity_name type; 
 
-	bool active = true; 
+	bool active = false;
 
 };
 

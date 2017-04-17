@@ -36,6 +36,7 @@ bool MainScene::Start()
 	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
 	player_2->player_go->SetPos({ 700,700 }); 
 
+
 	simple_player = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
 
 	simple_player->player_go->SetPos({ 700, 1000 });

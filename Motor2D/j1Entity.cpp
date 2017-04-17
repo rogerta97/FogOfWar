@@ -75,15 +75,6 @@ bool j1Entity::CleanUp()
 	return ret;
 }
 
-list<Entity*> j1Entity::GetList()
-{
-	return entity_list;
-}
-
-void j1Entity::SetList(list<Entity*> new_list)
-{
-	entity_list = new_list; 
-}
 
 void j1Entity::OnCollision(PhysBody * bodyA, PhysBody * bodyB, b2Fixture * fixtureA, b2Fixture * fixtureB)
 {

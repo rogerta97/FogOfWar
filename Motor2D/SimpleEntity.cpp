@@ -26,6 +26,7 @@ bool SimpleEntity::LoadEntity()
 	bool ret = true;
 
 	player_go = new GameObject(iPoint(330, 750), App->cf->CATEGORY_PLAYER, App->cf->MASK_PLAYER, pbody_type::p_t_player, 0);
+	player_go->pbody->body->SetType(b2_staticBody); 
 
 	player_go->CreateCollision(iPoint(-3, -5), 22, 35, fixture_type::f_t_null);
 	player_go->SetListener((j1Module*)App->entity);
@@ -72,7 +73,7 @@ bool SimpleEntity::Draw(float dt)
 {
 	bool ret = true;
 
-	if (active)
+	if (this->active)
 		App->view->LayerBlit(2, player_go->GetTexture(), { player_go->GetPos().x - 23, player_go->GetPos().y - 35 }, player_go->GetCurrentAnimationRect(dt), 0, -1.0f, SDL_FLIP_NONE);
 
 	return ret;

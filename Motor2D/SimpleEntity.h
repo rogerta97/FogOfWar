@@ -41,7 +41,6 @@ public:
 	void SetCamera(int id);
 
 	bool flip = false;
-	bool active = false; 
 
 public:
 
