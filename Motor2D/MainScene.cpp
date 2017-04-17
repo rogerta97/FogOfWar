@@ -32,10 +32,10 @@ bool MainScene::Start()
 	// Creating the entities
 
 	player = (Player*)App->entity->CreateEntity(entity_name::player);
+	player->player_go->SetPos({ 1200,700 });
 
 	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
-	player_2->player_go->SetPos({ 700,700 }); 
-
+	player_2->player_go->SetPos({ 1500,700 }); 
 
 	simple_player = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
 
@@ -46,6 +46,10 @@ bool MainScene::Start()
 
 	//Load Map
 	App->map->Load("zelda_moba2.tmx");
+
+
+	iPoint joker = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
+	joker.x += 3;
 
 	// Start the fog of war
 
