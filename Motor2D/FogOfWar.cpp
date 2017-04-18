@@ -261,7 +261,7 @@ void FogOfWar::RemoveDarkJaggies()
 				if ((Get(x, y) == dim_inner_bottom_left &&  Get(x - 1, y) == fow_null))
 					data[y*App->map->data.width + x] = darkc_inner_bottom_left;
 
-				else if ((Get(x, y) == dim_inner_top_left &&  Get(x - 1, y) == fow_null))
+				else if ((Get(x, y) == dim_inner_top_left && Get(x - 1, y) == fow_null))
 					data[y*App->map->data.width + x] = darkc_inner_top_left;
 
 				 if ((Get(x, y) == dim_inner_bottom_right &&  Get(x + 1, y) == fow_null))
@@ -401,7 +401,7 @@ void FogOfWar::MoveFrontier(iPoint prev_pos)
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{	
-		if (prev_pos == it->player_pos)
+		if (curr_character == it->character)
 		{
 			MoveArea(*it, direction);
 			break;
@@ -607,11 +607,11 @@ void FogOfWar::ManageCharacters()
 	{		
 			if (IsVisible(*it))
 			{
-				for (list<Entity*>::iterator it3 = App->entity->entity_list.begin(); it3 != App->entity->entity_list.end(); it3++)
+				for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)
 				{
-					if (App->map->WorldToMap((*it3)->player_go->GetPos().x, (*it3)->player_go->GetPos().y) == *it)
+					if (App->map->WorldToMap((*it2)->player_go->GetPos().x, (*it2)->player_go->GetPos().y) == *it)
 					{
-						(*it3)->active = true;
+						(*it2)->active = true;
 						entered = true; 
 					}
 						
@@ -620,10 +620,10 @@ void FogOfWar::ManageCharacters()
 
 		if (!entered)
 		{
-			for (list<Entity*>::iterator it3 = App->entity->entity_list.begin(); it3 != App->entity->entity_list.end(); it3++)
+			for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)
 			{
-				if (App->map->WorldToMap((*it3)->player_go->GetPos().x, (*it3)->player_go->GetPos().y) == *it)
-					(*it3)->active = false;
+				if (App->map->WorldToMap((*it2)->player_go->GetPos().x, (*it2)->player_go->GetPos().y) == *it)
+					(*it2)->active = false;
 			}
 		}
 			
@@ -635,14 +635,17 @@ void FogOfWar::ManageCharacters()
 bool FogOfWar::IsVisible(iPoint char_pos)
 {
 
-	if (Get(char_pos.x, char_pos.y) == fow_null)
-		return false;
+	if (Get(char_pos.x, char_pos.y) > dim_middle && Get(char_pos.x, char_pos.y) < darkd_middle)		
+		return true;
 
-	else if (Get(char_pos.x, char_pos.y) == dim_middle)
-		return false;
+	if (Get(char_pos.x, char_pos.y) >= darkc_middle && Get(char_pos.x, char_pos.y) < darkc_inner_bottom_right)
+		return true; 
+
+	if (Get(char_pos.x, char_pos.y) == dim_clear)
+		return true; 
 
 	else
-		return true; 
+		return false; 
 
 }
 
