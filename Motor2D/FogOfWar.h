@@ -30,7 +30,23 @@ enum fow_id
 	dim_inner_bottom_left,
 	dim_inner_bottom_right,
 
-	// Dark->clear 
+	// Dark->dim 
+
+	darkd_middle,
+	darkd_left,
+	darkd_right,
+	darkd_up,
+	darkd_down,
+	darkd_bottom_right,
+	darkd_bottom_left,
+	darkd_top_right,
+	darkd_top_left,
+	darkd_inner_top_left,
+	darkd_inner_top_right,
+	darkd_inner_bottom_left,
+	darkd_inner_bottom_right,
+
+	// Dark->clear
 
 	darkc_middle,
 	darkc_left,
@@ -46,21 +62,7 @@ enum fow_id
 	darkc_inner_bottom_left,
 	darkc_inner_bottom_right,
 
-	// Dark->dim
 
-	darkd_middle,
-	darkd_left,
-	darkd_right,
-	darkd_up,
-	darkd_down,
-	darkd_bottom_right,
-	darkd_bottom_left,
-	darkd_top_right,
-	darkd_top_left,
-	darkd_inner_top_left,
-	darkd_inner_top_right,
-	darkd_inner_bottom_left,
-	darkd_inner_bottom_right,
 
 	// No mask 
 
@@ -80,6 +82,7 @@ struct player_frontier
 {
 	list<iPoint>	frontier; 
 	iPoint			player_pos; 
+	Player*			character = nullptr; 
 };
 
 class FogOfWar 
@@ -104,7 +107,7 @@ public:
 	// This function will soft the edges
 
 	uint RemoveDimJaggies();
-	void RemoveDarkJaggies(iPoint curr); 
+	void RemoveDarkJaggies();
 
 	// Called for modifying the position of the clear area (without BFS (opt.))
 

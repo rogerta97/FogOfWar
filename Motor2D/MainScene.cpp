@@ -57,9 +57,10 @@ bool MainScene::Start()
 
 	fog_of_war->AddPlayer(player); 
 	fog_of_war->AddPlayer(player_2); 
+
 	fog_of_war->AddPlayer(simple_player);
 
-	fog_of_war->curr_character = player_2;
+	fog_of_war->curr_character = player;
 
 	fog_of_war->Start();
 

@@ -82,9 +82,24 @@ void j1Map::Draw()
 
 						App->view->LayerBlit(1, tileset->texture, pos, r, i);
 
-						if(visibility != 40)
+						if(visibility != 40 /*&& visibility < dark_middle*/)
 						{
+							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
+							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
+	
+						}
 
+						if (visibility >= darkd_middle && visibility <= darkd_inner_bottom_right)
+						{
+							r = App->scene->main_scene->fog_of_war->GetRect(1);
+							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
+
+							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
+							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
+						}
+
+						if (visibility >= darkc_middle && visibility <= darkc_inner_bottom_right)
+						{
 							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
 							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
 						}
