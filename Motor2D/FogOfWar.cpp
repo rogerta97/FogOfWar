@@ -195,7 +195,7 @@ void FogOfWar::RemoveDarkJaggies()
 		ini_p.y -= FOW_RADIUM + 1; ini_p.x -= FOW_RADIUM + 1;
 
 		iPoint end_p = iPoint(it->player_pos.x, it->player_pos.y);
-		end_p.y += FOW_RADIUM + 2; end_p.x += FOW_RADIUM + 2;
+		end_p.y += FOW_RADIUM + 1; end_p.x += FOW_RADIUM + 1;
 
 		// Horitzontals ----
 
@@ -288,111 +288,108 @@ void FogOfWar::RemoveDarkJaggies()
 
 	// Corners (Not pertain to the frontier)
 
-		for (int y = ini_p.y; y < end_p.y; y++)
-		{
-			for (int x = ini_p.x; x < end_p.x; x++)
-			{
+	//for (int y = ini_p.y; y < end_p.y; y++)
+	//{
+	//	for (int x = ini_p.x; x < end_p.x; x++)
+	//	{
 
-				//Dark -> Dim
+	//		//Dark -> Dim
 
-				// Creating the corners 
+	//		// Creating the corners 
 
-				if (Get(x, y) == darkd_inner_bottom_right)
-				{
-					if (Get(x + 1, y - 1) == darkd_down || Get(x + 1, y - 1) == darkd_inner_bottom_right)
-						data[(y - 1)*App->map->data.width + x] = darkd_bottom_right;
+	//		if (Get(x, y) == darkd_inner_bottom_right)
+	//		{
+	//			if (Get(x + 1, y - 1) == darkd_down || Get(x + 1, y - 1) == darkd_inner_bottom_right)
+	//				data[(y - 1)*App->map->data.width + x] = darkd_bottom_right;
 
-					if (Get(x - 1, y + 1) == darkd_right || Get(x - 1, y + 1) == darkd_inner_bottom_right)
-						data[(y)*App->map->data.width + x - 1] = darkd_bottom_right;
-				}
-				else if (Get(x, y) == darkd_inner_bottom_left)
-				{
-					if (Get(x - 1, y - 1) == darkd_down || Get(x - 1, y - 1) == darkd_inner_bottom_left)
-						data[(y - 1)*App->map->data.width + x] = darkd_bottom_left;
+	//			if (Get(x - 1, y + 1) == darkd_right || Get(x - 1, y + 1) == darkd_inner_bottom_right)
+	//				data[(y)*App->map->data.width + x - 1] = darkd_bottom_right;
+	//		}
+	//		else if (Get(x, y) == darkd_inner_bottom_left)
+	//		{
+	//			if (Get(x - 1, y - 1) == darkd_down || Get(x - 1, y - 1) == darkd_inner_bottom_left)
+	//				data[(y - 1)*App->map->data.width + x] = darkd_bottom_left;
 
-					if (Get(x + 1, y + 1) == darkd_left || Get(x + 1, y + 1) == darkd_inner_bottom_left)
-						data[(y)*App->map->data.width + x + 1] = darkd_bottom_left;
-				}
-				else if (Get(x, y) == darkd_inner_top_right)
-				{
-					if (Get(x + 1, y + 1) == darkd_up || Get(x + 1, y - 1) == darkd_inner_top_right)
-						data[(y + 1)*App->map->data.width + x] = darkd_top_right;
+	//			if (Get(x + 1, y + 1) == darkd_left || Get(x + 1, y + 1) == darkd_inner_bottom_left)
+	//				data[(y)*App->map->data.width + x + 1] = darkd_bottom_left;
+	//		}
+	//		else if (Get(x, y) == darkd_inner_top_right)
+	//		{
+	//			if (Get(x + 1, y + 1) == darkd_up || Get(x + 1, y - 1) == darkd_inner_top_right)
+	//				data[(y + 1)*App->map->data.width + x] = darkd_top_right;
 
-					if (Get(x - 1, y - 1) == darkd_right || Get(x - 1, y - 1) == darkd_inner_top_right)
-						data[(y)*App->map->data.width + x - 1] = darkd_top_right;
-				}
-				else if (Get(x, y) == darkd_inner_top_left)
-				{
-					if (Get(x + 1, y - 1) == darkd_left || Get(x + 1, y - 1) == darkd_inner_top_left)
-						data[(y)*App->map->data.width + x + 1] = darkd_top_left;
+	//			if (Get(x - 1, y - 1) == darkd_right || Get(x - 1, y - 1) == darkd_inner_top_right)
+	//				data[(y)*App->map->data.width + x - 1] = darkd_top_right;
+	//		}
+	//		else if (Get(x, y) == darkd_inner_top_left)
+	//		{
+	//			if (Get(x + 1, y - 1) == darkd_left || Get(x + 1, y - 1) == darkd_inner_top_left)
+	//				data[(y)*App->map->data.width + x + 1] = darkd_top_left;
 
-					if (Get(x - 1, y + 1) == darkd_up || Get(x - 1, y + 1) == darkd_inner_top_left)
-						data[y + 1*App->map->data.width + x] = darkd_top_left;
-				}
-			
-				//Corners between stright walls 
-				
-				else if (Get(x, y) == darkd_up)
-				{
-					if(Get(x + 1, y - 1) == darkd_left)
-						data[y* App->map->data.width + x + 1] = darkd_top_left;
+	//			if (Get(x - 1, y + 1) == darkd_up || Get(x - 1, y + 1) == darkd_inner_top_left)
+	//				data[y + 1*App->map->data.width + x] = darkd_top_left;
+	//		}
+	//	
+	//		//Corners between stright walls 
+	//		
+	//		else if (Get(x, y) == darkd_up)
+	//		{
+	//			if(Get(x + 1, y - 1) == darkd_left)
+	//				data[y* App->map->data.width + x + 1] = darkd_top_left;
 
-					if (Get(x - 1, y - 1) == darkd_right)
-						data[y* App->map->data.width + x - 1] = darkd_top_right;
-				}
+	//			if (Get(x - 1, y - 1) == darkd_right)
+	//				data[y* App->map->data.width + x - 1] = darkd_top_right;
+	//		}
 
-				else if (Get(x, y) == darkd_down)
-				{
-					if (Get(x + 1, y + 1) == darkd_left)
-						data[y* App->map->data.width + x + 1] = darkd_bottom_left;
+	//		else if (Get(x, y) == darkd_down)
+	//		{
+	//			if (Get(x + 1, y + 1) == darkd_left)
+	//				data[y* App->map->data.width + x + 1] = darkd_bottom_left;
 
-					if (Get(x - 1, y + 1) == darkd_right)
-						data[y* App->map->data.width + x - 1] = darkd_bottom_right;
-				}
+	//			if (Get(x - 1, y + 1) == darkd_right)
+	//				data[y* App->map->data.width + x - 1] = darkd_bottom_right;
+	//		}
 
-				// ------------- Dark->Dim
+	//		// ------------- Dark->Dim
 
-				// Dark->Clear
+	//		// Dark->Clear
 
-				if (Get(x, y) == darkc_inner_bottom_right)
-				{
-					if (Get(x + 1, y - 1) == darkc_inner_bottom_right)
-						data[(y - 1)*App->map->data.width + x] = darkc_bottom_right;
+	//		if (Get(x, y) == darkc_inner_bottom_right)
+	//		{
+	//			if (Get(x + 1, y - 1) == darkc_inner_bottom_right)
+	//				data[(y - 1)*App->map->data.width + x] = darkc_bottom_right;
 
-					if (Get(x - 1, y + 1) == darkc_inner_bottom_right)
-						data[(y)*App->map->data.width + x - 1] = darkc_bottom_right;
+	//			if (Get(x - 1, y + 1) == darkc_inner_bottom_right)
+	//				data[(y)*App->map->data.width + x - 1] = darkc_bottom_right;
+	//		}
+	//		else if (Get(x, y) == darkc_inner_bottom_left)
+	//		{
+	//			if (Get(x - 1, y - 1) == darkc_down || Get(x - 1, y - 1) == darkc_inner_bottom_left)
+	//				data[(y - 1)*App->map->data.width + x] = darkc_bottom_left;
 
-					if(Get(x, y + 2) == darkc_right)
-						data[(y)*App->map->data.width + x] = darkd_inner_bottom_right;
-				}
-				else if (Get(x, y) == darkc_inner_bottom_left)
-				{
-					if (Get(x - 1, y - 1) == darkc_down || Get(x - 1, y - 1) == darkc_inner_bottom_left)
-						data[(y - 1)*App->map->data.width + x] = darkc_bottom_left;
+	//			if (Get(x + 1, y + 1) == darkc_left || Get(x + 1, y + 1) == darkc_inner_bottom_left)
+	//				data[y*App->map->data.width + x + 1] = darkc_bottom_left;
+	//		}
+	//		else if (Get(x, y) == darkc_inner_top_right)
+	//		{
+	//			if (Get(x + 1, y + 1) == darkc_up || Get(x + 1, y - 1) == darkc_inner_top_right)
+	//				data[(y + 1)*App->map->data.width + x] = darkc_top_right;
 
-					if (Get(x + 1, y + 1) == darkc_left || Get(x + 1, y + 1) == darkc_inner_bottom_left)
-						data[y*App->map->data.width + x + 1] = darkc_bottom_left;
-				}
-				else if (Get(x, y) == darkc_inner_top_right)
-				{
-					if (Get(x + 1, y + 1) == darkc_up || Get(x + 1, y - 1) == darkc_inner_top_right)
-						data[(y + 1)*App->map->data.width + x] = darkc_top_right;
+	//			if (Get(x - 1, y - 1) == darkc_right || Get(x - 1, y - 1) == darkc_inner_top_right)
+	//				data[y*App->map->data.width + x - 1] = darkc_top_right;
+	//		}
+	//		else if (Get(x, y) == darkc_inner_top_left)
+	//		{
+	//			if (Get(x + 1, y - 1) == darkc_left || Get(x + 1, y - 1) == darkc_inner_top_left)
+	//				data[y*App->map->data.width + x + 1] = darkc_top_left;
 
-					if (Get(x - 1, y - 1) == darkc_right || Get(x - 1, y - 1) == darkc_inner_top_right)
-						data[y*App->map->data.width + x - 1] = darkc_top_right;
-				}
-				else if (Get(x, y) == darkc_inner_top_left)
-				{
-					if (Get(x + 1, y - 1) == darkc_left || Get(x + 1, y - 1) == darkc_inner_top_left)
-						data[y*App->map->data.width + x + 1] = darkc_top_left;
+	//			if (Get(x - 1, y + 1) == darkc_up || Get(x - 1, y + 1) == darkc_inner_top_left)
+	//				data[y + 1 * App->map->data.width + x] = darkc_top_left;
+	//		}
+	//
+	//	}
 
-					if (Get(x - 1, y + 1) == darkc_up || Get(x - 1, y + 1) == darkc_inner_top_left)
-						data[y + 1 * App->map->data.width + x] = darkc_top_left;
-				}
-	
-			}
-
-		}
+	//}
 	}
 
 }
@@ -426,7 +423,6 @@ void FogOfWar::FillFrontier()
 	end_p.y += FOW_RADIUM + 2; end_p.x += FOW_RADIUM + 2;
 
 
-	
 		for (int y = ini_p.y; y < end_p.y; y++)
 		{
 			for (int x = ini_p.x; x < end_p.x; x++)
@@ -435,8 +431,6 @@ void FogOfWar::FillFrontier()
 				{
 					data[y*App->map->data.width + x] = dim_clear;
 				}
-
-
 			}
 		}
 		
