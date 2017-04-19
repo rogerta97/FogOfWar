@@ -32,21 +32,48 @@ bool MainScene::Start()
 	// Creating the entities
 
 	player = (Player*)App->entity->CreateEntity(entity_name::player);
-	player->player_go->SetPos({ 1200,700 });
+	player->player_go->SetPos({ 1200,1000 });
+	player->player_go->pbody->type = pbody_type::p_t_player;
 
-	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
-	player_2->player_go->SetPos({ 1500,700 }); 
+	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_2->player_go->SetPos({ 1500,1000 }); 
+	player_2->player_go->pbody->type = pbody_type::p_t_player;
+
+	Player* player_3 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_3->player_go->SetPos({ 1600,1000 });
+	player_3->player_go->pbody->type = pbody_type::p_t_player;
+
+	Player* player_4 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_4->player_go->SetPos({ 1700,1000 });
+	player_4->player_go->pbody->type = pbody_type::p_t_player;
+
+	Player* player_5 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_5->player_go->SetPos({ 1800,1000 });
+	player_5->player_go->pbody->type = pbody_type::p_t_player;
+
+	Player* player_6 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_6->player_go->SetPos({ 1900,1000 });
+	player_6->player_go->pbody->type = pbody_type::p_t_player;
+
+	Player* player_7 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_7->player_go->SetPos({ 2000,1000 });
+	player_7->player_go->pbody->type = pbody_type::p_t_player;
+
+	Player* player_8 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_8->player_go->SetPos({ 2100,1000 });
+	player_8->player_go->pbody->type = pbody_type::p_t_player;
 
 	simple_player = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
 
-	simple_player->player_go->SetPos({ 700, 1000 });
+	simple_player->player_go->SetPos({ 600, 1200 });
 	
 	player->SetCamera(1);
 	App->console->AddCommand("scene.set_player_camera", App->scene, 2, 2, "Set to player the camera number. Min_args: 2. Max_args: 2. Args: 1, 2, 3, 4");
 
 	//Load Map
-	App->map->Load("zelda_moba2.tmx");
+	App->map->Load("zelda_moba.tmx");
 
+	CreateMapCollisions(); 
 
 	iPoint joker = App->map->WorldToMap(player->player_go->GetPos().x, player->player_go->GetPos().y);
 	joker.x += 3;
@@ -56,7 +83,14 @@ bool MainScene::Start()
 	fog_of_war = new FogOfWar(); 
 
 	fog_of_war->AddPlayer(player); 
+
 	fog_of_war->AddPlayer(player_2); 
+	fog_of_war->AddPlayer(player_3);
+	fog_of_war->AddPlayer(player_4);
+	fog_of_war->AddPlayer(player_5);
+	fog_of_war->AddPlayer(player_6);
+	fog_of_war->AddPlayer(player_7);
+	fog_of_war->AddPlayer(player_8);
 
 	fog_of_war->AddPlayer(simple_player);
 
@@ -169,6 +203,43 @@ void MainScene::OnCommand(std::list<std::string>& tokens)
 	default:
 		break;
 	}
+}
+
+void MainScene::CreateMapCollisions()
+{
+	pugi::xml_document doc;
+	App->LoadXML("MapCollisions.xml", doc);
+	pugi::xml_node collisions = doc.child("collisions");
+
+	for (pugi::xml_node chain = collisions.child("chain"); chain != NULL; chain = chain.next_sibling("chain"))
+	{
+		string points_string = chain.child_value();
+		int num_points = chain.attribute("vertex").as_int();
+		int* points = new int[num_points];
+
+		std::list<string> points_list;
+		Tokenize(points_string, ',', points_list);
+
+		int i = 0;
+		for (std::list<string>::iterator it = points_list.begin(); it != points_list.end(); it++)
+		{
+			if (i >= num_points)
+				break;
+
+			if (*it != "")
+			{
+				*(points + i) = stoi(*it);
+				i++;
+			}
+		}
+		PhysBody* b = App->physics->CreateStaticChain(0, 0, points, num_points, 1, 0, 0.0f, App->cf->CATEGORY_SCENERY, App->cf->MASK_SCENERY);
+		b->type = pbody_type::p_t_player;
+
+		map_collisions.push_back(b);
+		RELEASE_ARRAY(points);
+	}
+
+
 }
 
 

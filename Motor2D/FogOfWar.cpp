@@ -33,6 +33,8 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 	if (new_entity == nullptr)
 		return false;
 
+	// TODO 3 ---  If a player is added, fill the player frontier with the information and add it to the list 
+
 	else if (new_entity->type == entity_name::player)
 	{
 		new_player.player_pos = App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y);
@@ -41,9 +43,10 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 		players_on_fog.push_back(new_player); 
 	}
 		
-
 	else
 		simple_char_on_fog_pos.push_back(App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y));
+
+	// TODO 3 ----
 
 	return true;
 }
@@ -56,8 +59,10 @@ uint FogOfWar::Get(int x, int y)
 void FogOfWar::Start()
 {
 	FillFrontier(); 
+
 	RemoveDimJaggies();
 	RemoveDarkJaggies(); 
+
 	ManageCharacters(); 
 }
 
@@ -65,6 +70,7 @@ void FogOfWar::Update(iPoint prev_pos)
 {
 	MoveFrontier(prev_pos);
 	FillFrontier();
+
 	RemoveDimJaggies(); 
 	RemoveDarkJaggies(); 
 
@@ -76,10 +82,17 @@ void FogOfWar::GetEntitiesVisibleArea(player_frontier& new_player)
 {
 
 	// We BFS the for knowing the tiles we must blit! 
+
+	// TODO 1 ---- Modify BFS, it will have to return the frontier and expand untill a certain radius.
 	
 	new_player.frontier = App->map->PropagateBFS({ new_player.player_pos.x, new_player.player_pos.y }, FOW_RADIUM);
 
+	// TODO 1 ----
+
+
 		// Once we have the frontier we delete the picks
+
+	// TODO 2 ---- Delete the picks of the frontier and modify it on the current data of the FOW
 
 		DeletePicks(new_player);
 
@@ -88,6 +101,8 @@ void FogOfWar::GetEntitiesVisibleArea(player_frontier& new_player)
 		for (list<iPoint>::iterator it = new_player.frontier.begin(); it != new_player.frontier.end(); it++)
 			data[(*it).y * App->map->data.width + (*it).x] = dim_clear;	
 	 
+	
+	// TODO 2 -----
 }
 
 uint FogOfWar::RemoveDimJaggies()
@@ -277,119 +292,90 @@ void FogOfWar::RemoveDarkJaggies()
 				else if ((Get(x, y) == dim_down && Get(x, y + 1) == fow_null))
 					 data[y*App->map->data.width + x] = darkc_down;
 			}
-
-			
-
-	
-
 		}
 
 	// ----
 
-	// Corners (Not pertain to the frontier)
+	// Corners 
 
-	//for (int y = ini_p.y; y < end_p.y; y++)
-	//{
-	//	for (int x = ini_p.x; x < end_p.x; x++)
-	//	{
+		for (int y = ini_p.y; y < end_p.y; y++)
+		{
+			for (int x = ini_p.x; x < end_p.x; x++)
+			{
 
-	//		//Dark -> Dim
+				// When dark is next to the player
 
-	//		// Creating the corners 
 
-	//		if (Get(x, y) == darkd_inner_bottom_right)
-	//		{
-	//			if (Get(x + 1, y - 1) == darkd_down || Get(x + 1, y - 1) == darkd_inner_bottom_right)
-	//				data[(y - 1)*App->map->data.width + x] = darkd_bottom_right;
+				if (Get(x, y) == darkc_inner_bottom_right)
+				{
 
-	//			if (Get(x - 1, y + 1) == darkd_right || Get(x - 1, y + 1) == darkd_inner_bottom_right)
-	//				data[(y)*App->map->data.width + x - 1] = darkd_bottom_right;
-	//		}
-	//		else if (Get(x, y) == darkd_inner_bottom_left)
-	//		{
-	//			if (Get(x - 1, y - 1) == darkd_down || Get(x - 1, y - 1) == darkd_inner_bottom_left)
-	//				data[(y - 1)*App->map->data.width + x] = darkd_bottom_left;
+					if (Get(x - 1, y) != darkc_down)			
+						data[y*App->map->data.width + (x - 1)] = darkc_bottom_right;
+				}
 
-	//			if (Get(x + 1, y + 1) == darkd_left || Get(x + 1, y + 1) == darkd_inner_bottom_left)
-	//				data[(y)*App->map->data.width + x + 1] = darkd_bottom_left;
-	//		}
-	//		else if (Get(x, y) == darkd_inner_top_right)
-	//		{
-	//			if (Get(x + 1, y + 1) == darkd_up || Get(x + 1, y - 1) == darkd_inner_top_right)
-	//				data[(y + 1)*App->map->data.width + x] = darkd_top_right;
+				else if (Get(x, y) == darkc_inner_bottom_left)
+				{
+					if (Get(x + 1, y) != darkc_down)
+					data[y*App->map->data.width + (x + 1)] = darkc_bottom_left; 
+				}
 
-	//			if (Get(x - 1, y - 1) == darkd_right || Get(x - 1, y - 1) == darkd_inner_top_right)
-	//				data[(y)*App->map->data.width + x - 1] = darkd_top_right;
-	//		}
-	//		else if (Get(x, y) == darkd_inner_top_left)
-	//		{
-	//			if (Get(x + 1, y - 1) == darkd_left || Get(x + 1, y - 1) == darkd_inner_top_left)
-	//				data[(y)*App->map->data.width + x + 1] = darkd_top_left;
+				else if (Get(x, y) == darkc_inner_top_right)
+				{
+					if (Get(x - 1, y) != darkc_up)
+						data[y*App->map->data.width + (x - 1)] = darkc_top_right;
+				}
 
-	//			if (Get(x - 1, y + 1) == darkd_up || Get(x - 1, y + 1) == darkd_inner_top_left)
-	//				data[y + 1*App->map->data.width + x] = darkd_top_left;
-	//		}
-	//	
-	//		//Corners between stright walls 
-	//		
-	//		else if (Get(x, y) == darkd_up)
-	//		{
-	//			if(Get(x + 1, y - 1) == darkd_left)
-	//				data[y* App->map->data.width + x + 1] = darkd_top_left;
+				else if (Get(x, y) == darkc_inner_top_left)
+				{
+					if (Get(x + 1, y) != darkc_up)
+						data[y*App->map->data.width + (x + 1)] = darkc_top_left;
+				}
 
-	//			if (Get(x - 1, y - 1) == darkd_right)
-	//				data[y* App->map->data.width + x - 1] = darkd_top_right;
-	//		}
 
-	//		else if (Get(x, y) == darkd_down)
-	//		{
-	//			if (Get(x + 1, y + 1) == darkd_left)
-	//				data[y* App->map->data.width + x + 1] = darkd_bottom_left;
 
-	//			if (Get(x - 1, y + 1) == darkd_right)
-	//				data[y* App->map->data.width + x - 1] = darkd_bottom_right;
-	//		}
+				// corners already visited
 
-	//		// ------------- Dark->Dim
 
-	//		// Dark->Clear
+				if (Get(x, y) == darkd_inner_bottom_right)
+				{
 
-	//		if (Get(x, y) == darkc_inner_bottom_right)
-	//		{
-	//			if (Get(x + 1, y - 1) == darkc_inner_bottom_right)
-	//				data[(y - 1)*App->map->data.width + x] = darkc_bottom_right;
+					if (Get(x - 1, y) != darkd_down )
+						data[y*App->map->data.width + (x - 1)] = darkd_bottom_right;
+				}
 
-	//			if (Get(x - 1, y + 1) == darkc_inner_bottom_right)
-	//				data[(y)*App->map->data.width + x - 1] = darkc_bottom_right;
-	//		}
-	//		else if (Get(x, y) == darkc_inner_bottom_left)
-	//		{
-	//			if (Get(x - 1, y - 1) == darkc_down || Get(x - 1, y - 1) == darkc_inner_bottom_left)
-	//				data[(y - 1)*App->map->data.width + x] = darkc_bottom_left;
+				else if (Get(x, y) == darkd_inner_bottom_left)
+				{
+					if (Get(x + 1, y) != darkd_down)
+						data[y*App->map->data.width + (x + 1)] = darkd_bottom_left;
+				}
 
-	//			if (Get(x + 1, y + 1) == darkc_left || Get(x + 1, y + 1) == darkc_inner_bottom_left)
-	//				data[y*App->map->data.width + x + 1] = darkc_bottom_left;
-	//		}
-	//		else if (Get(x, y) == darkc_inner_top_right)
-	//		{
-	//			if (Get(x + 1, y + 1) == darkc_up || Get(x + 1, y - 1) == darkc_inner_top_right)
-	//				data[(y + 1)*App->map->data.width + x] = darkc_top_right;
+				else if (Get(x, y) == darkd_inner_top_right)
+				{
+					if (Get(x - 1, y) != darkd_up)
+						data[y*App->map->data.width + (x - 1)] = darkd_top_right;
+				}
 
-	//			if (Get(x - 1, y - 1) == darkc_right || Get(x - 1, y - 1) == darkc_inner_top_right)
-	//				data[y*App->map->data.width + x - 1] = darkc_top_right;
-	//		}
-	//		else if (Get(x, y) == darkc_inner_top_left)
-	//		{
-	//			if (Get(x + 1, y - 1) == darkc_left || Get(x + 1, y - 1) == darkc_inner_top_left)
-	//				data[y*App->map->data.width + x + 1] = darkc_top_left;
+				else if (Get(x, y) == darkd_inner_top_left)
+				{
+					if (Get(x + 1, y) != darkd_up)
+						data[y*App->map->data.width + (x + 1)] = darkd_top_left;
+				}
 
-	//			if (Get(x - 1, y + 1) == darkc_up || Get(x - 1, y + 1) == darkc_inner_top_left)
-	//				data[y + 1 * App->map->data.width + x] = darkc_top_left;
-	//		}
-	//
-	//	}
+				else if (Get(x, y) == darkd_up && Get(x + 1, y - 1) == darkd_left)
+					data[y*App->map->data.width + (x + 1)] = darkd_top_left;
 
-	//}
+				else if (Get(x, y) == darkd_up && Get(x - 1, y - 1) == darkd_right)
+					data[y*App->map->data.width + (x - 1)] = darkd_top_right;
+
+				else if (Get(x, y) == darkd_down && Get(x + 1, y + 1) == darkd_left)
+					data[y*App->map->data.width + (x + 1)] = darkd_bottom_left;
+
+				else if (Get(x, y) == darkd_down && Get(x - 1, y + 1) == darkd_right)
+					data[y*App->map->data.width + (x - 1)] = darkd_bottom_right;
+			}
+		}
+
+	
 	}
 
 }
@@ -403,7 +389,7 @@ void FogOfWar::MoveFrontier(iPoint prev_pos)
 	{	
 		if (curr_character == it->character)
 		{
-			MoveArea(*it, direction);
+			MoveArea(*it, direction); // TODO 5 --- Actually Move the frontier of each player in case of update 
 			break;
 		}			
 	}
@@ -412,6 +398,9 @@ void FogOfWar::MoveFrontier(iPoint prev_pos)
 
 void FogOfWar::FillFrontier()
 {
+
+
+	// TODO 4 ---- Make a function for filling the position near to the player with visible area. HINT: Think on iPoint distances 
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{
@@ -435,6 +424,8 @@ void FogOfWar::FillFrontier()
 		}
 		
 	}
+
+	// TODO 4 -----
 			
 }
 
@@ -601,10 +592,14 @@ void FogOfWar::ChangeCharacter(iPoint prev_pos)
 
 void FogOfWar::ManageCharacters()
 {
-	bool entered = false; 
+	
+
+	// TODO 6 --- Make simple characters appear or disappear if they are close to one of the players in the FOW
 
 	for(list<iPoint>::iterator it = simple_char_on_fog_pos.begin(); it != simple_char_on_fog_pos.end(); it++)
 	{		
+		bool entered = false;
+
 			if (IsVisible(*it))
 			{
 				for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)

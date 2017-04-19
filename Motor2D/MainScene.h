@@ -21,12 +21,16 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+	void CreateMapCollisions(); 
+
 	void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
 	void OnCommand(std::list<std::string>& tokens);
 
 	GameObject* go = nullptr;
 
 	fPoint pos;
+
+	vector<PhysBody*>	map_collisions;
 
 	//Research
 	Player*			player;
