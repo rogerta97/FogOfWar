@@ -58,8 +58,6 @@ bool MainScene::Start()
 
 	fog_of_war->AddPlayer(player_2); 
 
-	fog_of_war->AddPlayer(simple_player);
-
 	App->entity->curr_entity = player;
 
 	fog_of_war->Start();
@@ -82,9 +80,12 @@ bool MainScene::Update(float dt)
 {
 	bool ret = true;
 
+	j1PerfTimer timer; 
+
 
 	if (prev_pos != next_pos)
 	{
+
 		fog_of_war->Update(prev_pos, next_pos); 
 		prev_pos = next_pos;
 	}

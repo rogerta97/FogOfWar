@@ -101,34 +101,42 @@ public:
 	~FogOfWar();
 
 	bool AddPlayer(Player* new_entity);
-	uint Get(int x, int y); 
-
-	void GetEntitiesCircleArea(player_frontier& new_player);
-	void GetEntitiesRectangleFrontier(player_frontier& new_player);
 
 	uint RemoveDimJaggies();
 	void RemoveDarkJaggies();
 
+	// Update Methods
+
 	void MoveFrontier(iPoint prev_pos, const char* direction);
-
-	void GetCurrentPointsFromFrontier(player_frontier& player);
-
-	void FillFrontier(); 
 
 	void MoveArea(player_frontier& player, string direction);
 
 	SDL_Rect GetRect(int fow_id); 
 
+	// Create Areas ---
+
+	void FillFrontier();
+
+	void GetEntitiesCircleArea(player_frontier& new_player);
+	void GetEntitiesRectangleFrontier(player_frontier& new_player, int with, int height);
+
 	void DeletePicks(player_frontier& frontier);
 
+	void GetCurrentPointsFromFrontier(player_frontier& player);
+
+	// Characters --
+
 	void ManageCharacters();
+
+	// Utilility --
 
 	bool IsVisible(iPoint char_pos); 
 
 	bool IsFrontier(iPoint point, player_frontier& player); 
 
+	uint Get(int x, int y);
 
-
+	// Atlas ---
 
 	SDL_Texture*				fog_of_war_texture;
 
