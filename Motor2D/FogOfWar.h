@@ -81,6 +81,9 @@ enum fow_directions
 struct player_frontier
 {
 	list<iPoint>	frontier; 
+
+	list<iPoint>	current_points; 
+
 	iPoint			player_pos; 
 	int				id = -1; 
 };
@@ -93,50 +96,38 @@ public:
 
 	void Start(); 
 
-	void Update(iPoint prev_pos); 
+	void Update(iPoint prev_pos, iPoint next_pos); 
 
 	~FogOfWar();
 
 	bool AddPlayer(Player* new_entity);
 	uint Get(int x, int y); 
 
-	// Called at the beggining for knowing the first clear tiles 
-
-	void GetEntitiesVisibleArea(player_frontier& new_player);
-
-	// This function will soft the edges
+	void GetEntitiesCircleArea(player_frontier& new_player);
+	void GetEntitiesRectangleFrontier(player_frontier& new_player);
 
 	uint RemoveDimJaggies();
 	void RemoveDarkJaggies();
 
-	// Called for modifying the position of the clear area (without BFS (opt.))
+	void MoveFrontier(iPoint prev_pos, const char* direction);
 
-	void MoveFrontier(iPoint prev_pos);
-
-	// This function updates the matrix and the frontier in order to draw properly 
+	void GetCurrentPointsFromFrontier(player_frontier& player);
 
 	void FillFrontier(); 
 
-	// This is the core function of moving areas
-
-	void MoveArea(player_frontier& player_id, string direction);
-
-	// This will get the rect corresponding to the tile 
+	void MoveArea(player_frontier& player, string direction);
 
 	SDL_Rect GetRect(int fow_id); 
 
-	// Check if one tile is the border for making it softer
-
 	void DeletePicks(player_frontier& frontier);
-
-	//This will switch between the players that has fog of war activated
-
-
-	// This will hide the characters or not 
 
 	void ManageCharacters();
 
 	bool IsVisible(iPoint char_pos); 
+
+	bool IsFrontier(iPoint point, player_frontier& player); 
+
+
 
 
 	SDL_Texture*				fog_of_war_texture;

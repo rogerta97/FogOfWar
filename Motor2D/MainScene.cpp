@@ -61,12 +61,12 @@ bool MainScene::Start()
 	fog_of_war->AddPlayer(simple_player);
 
 	App->entity->curr_entity = player;
-	App->entity->SetPrevCurrPos(); 
 
 	fog_of_war->Start();
 
 	// ----
 
+	prev_pos = App->map->WorldToMap(App->entity->curr_entity->player_go->GetPos().x, App->entity->curr_entity->player_go->GetPos().y);
 
 	return ret;
 }
@@ -85,12 +85,13 @@ bool MainScene::Update(float dt)
 
 	if (prev_pos != next_pos)
 	{
-		fog_of_war->Update(prev_pos); 
+		fog_of_war->Update(prev_pos, next_pos); 
 		prev_pos = next_pos;
 	}
 		
 	App->map->Draw();
 
+	next_pos = App->map->WorldToMap(App->entity->curr_entity->player_go->GetPos().x, App->entity->curr_entity->player_go->GetPos().y);
 
 	return ret;
 }

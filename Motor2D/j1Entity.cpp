@@ -49,7 +49,8 @@ bool j1Entity::Update(float dt)
 	bool ret = true;
 
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE  && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE)
-		ChangeFOWCharacter();
+		if(curr_entity->is_on_fow)
+			ChangeFOWCharacter();
 
 
 	for (list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); it++)
@@ -141,10 +142,7 @@ void j1Entity::DeleteEntity(Entity* entity)
 	RELEASE(entity);
 }
 
-void j1Entity::SetPrevCurrPos()
-{
-	prev_curr_pos = App->map->MapToWorld(curr_entity->player_go->GetPos().x, curr_entity->player_go->GetPos().y); 
-}
+
 
 void j1Entity::ChangeFOWCharacter()
 {
@@ -163,7 +161,6 @@ void j1Entity::ChangeFOWCharacter()
 					curr_entity = *it;
 					break;
 				}
-
 			}
 		}
 			

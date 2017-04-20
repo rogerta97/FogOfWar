@@ -26,20 +26,19 @@ public:
 	void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB);
 	void OnCommand(std::list<std::string>& tokens);
 
-	GameObject* go = nullptr;
+	FogOfWar*			fog_of_war = nullptr;
 
-	fPoint pos;
+	iPoint				prev_pos;
+	iPoint				next_pos;
 
-	vector<PhysBody*>	map_collisions;
+private: 
 
-	//Research
-	Player*			player;
-	Player*			simple_player;
+	Player*				player;
+	Player*				simple_player;
 
-	FogOfWar*		fog_of_war = nullptr; 
+	
 
-	iPoint	prev_pos;
-	iPoint	next_pos;
+	vector<PhysBody*>	map_collisions; 
 
 };
 
