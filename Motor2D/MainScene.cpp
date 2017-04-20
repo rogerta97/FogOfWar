@@ -35,38 +35,10 @@ bool MainScene::Start()
 	player->player_go->SetPos({ 1200,1000 });
 	player->player_go->pbody->type = pbody_type::p_t_player;
 
-	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
 	player_2->player_go->SetPos({ 1500,1000 }); 
 	player_2->player_go->pbody->type = pbody_type::p_t_player;
 
-	Player* player_3 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-	player_3->player_go->SetPos({ 1600,1000 });
-	player_3->player_go->pbody->type = pbody_type::p_t_player;
-
-	Player* player_4 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-	player_4->player_go->SetPos({ 1700,1000 });
-	player_4->player_go->pbody->type = pbody_type::p_t_player;
-
-	Player* player_5 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-	player_5->player_go->SetPos({ 1800,1000 });
-	player_5->player_go->pbody->type = pbody_type::p_t_player;
-
-	Player* player_6 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-	player_6->player_go->SetPos({ 1900,1000 });
-	player_6->player_go->pbody->type = pbody_type::p_t_player;
-
-	Player* player_7 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-	player_7->player_go->SetPos({ 2000,1000 });
-	player_7->player_go->pbody->type = pbody_type::p_t_player;
-
-	Player* player_8 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-	player_8->player_go->SetPos({ 2100,1000 });
-	player_8->player_go->pbody->type = pbody_type::p_t_player;
-
-	simple_player = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
-
-	simple_player->player_go->SetPos({ 600, 1200 });
-	
 	player->SetCamera(1);
 	App->console->AddCommand("scene.set_player_camera", App->scene, 2, 2, "Set to player the camera number. Min_args: 2. Max_args: 2. Args: 1, 2, 3, 4");
 
@@ -85,22 +57,16 @@ bool MainScene::Start()
 	fog_of_war->AddPlayer(player); 
 
 	fog_of_war->AddPlayer(player_2); 
-	fog_of_war->AddPlayer(player_3);
-	fog_of_war->AddPlayer(player_4);
-	fog_of_war->AddPlayer(player_5);
-	fog_of_war->AddPlayer(player_6);
-	fog_of_war->AddPlayer(player_7);
-	fog_of_war->AddPlayer(player_8);
 
 	fog_of_war->AddPlayer(simple_player);
 
-	fog_of_war->curr_character = player;
+	App->entity->curr_entity = player;
+	App->entity->SetPrevCurrPos(); 
 
 	fog_of_war->Start();
 
 	// ----
 
-	prev_pos = App->map->WorldToMap(fog_of_war->curr_character->player_go->GetPos().x, fog_of_war->curr_character->player_go->GetPos().y);
 
 	return ret;
 }
@@ -115,13 +81,7 @@ bool MainScene::PreUpdate()
 bool MainScene::Update(float dt)
 {
 	bool ret = true;
-	
-	next_pos = App->map->WorldToMap(fog_of_war->curr_character->player_go->GetPos().x, fog_of_war->curr_character->player_go->GetPos().y);
 
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE  && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE)
-	{
-		fog_of_war->ChangeCharacter(prev_pos);
-	}
 
 	if (prev_pos != next_pos)
 	{

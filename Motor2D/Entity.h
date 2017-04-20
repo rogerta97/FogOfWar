@@ -40,6 +40,8 @@ public:
 	virtual void OnColl(PhysBody* bodyA, PhysBody* bodyB, b2Fixture* fixtureA, b2Fixture* fixtureB) {};
 
 
+
+
 public:
 
 	GameObject* player_go = nullptr;
@@ -47,6 +49,10 @@ public:
 	entity_name type; 
 
 	bool active = false;
+
+	bool is_on_fow = false; 
+
+	int id = -1; 
 
 };
 

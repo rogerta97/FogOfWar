@@ -28,7 +28,7 @@ FogOfWar::~FogOfWar()
 bool FogOfWar::AddPlayer(Player* new_entity)
 {
 
-	player_frontier new_player; 
+	player_frontier new_player;
 
 	if (new_entity == nullptr)
 		return false;
@@ -38,11 +38,12 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 	else if (new_entity->type == entity_name::player)
 	{
 		new_player.player_pos = App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y);
-		GetEntitiesVisibleArea(new_player); 
-		new_player.character = new_entity; 
-		players_on_fog.push_back(new_player); 
+		GetEntitiesVisibleArea(new_player);
+		new_player.id = new_entity->id;
+		new_entity->is_on_fow = true; 
+		players_on_fog.push_back(new_player);
 	}
-		
+
 	else
 		simple_char_on_fog_pos.push_back(App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y));
 
@@ -383,15 +384,15 @@ void FogOfWar::RemoveDarkJaggies()
 
 void FogOfWar::MoveFrontier(iPoint prev_pos)
 {
-	string direction = curr_character->player_go->animator->GetCurrentAnimation()->GetName();
+	string direction = App->entity->curr_entity->player_go->animator->GetCurrentAnimation()->GetName();
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{	
-		if (curr_character == it->character)
-		{
-			MoveArea(*it, direction); // TODO 5 --- Actually Move the frontier of each player in case of update 
-			break;
-		}			
+		//if (curr_character == it->character)
+		//{
+		//	MoveArea(*it, direction); // TODO 5 --- Actually Move the frontier of each player in case of update 
+		//	break;
+		//}			
 	}
 	
 }
@@ -440,7 +441,7 @@ void FogOfWar::MoveArea(player_frontier& player, string direction_str)
 	else if (direction_str == "run_up")
 		direction = fow_up;
 
-	else if (direction_str == "run_lateral" && curr_character->flip == true)
+	else if (direction_str == "run_lateral" /*curr_character->flip == true*/)
 		direction = fow_left;
 
 	else if (direction_str == "run_lateral")
@@ -497,7 +498,7 @@ void FogOfWar::MoveArea(player_frontier& player, string direction_str)
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++) 
 	{
-		if (it->character != curr_character)
+		if (it->id != App->entity->curr_entity->id)
 		{
 			for (list<iPoint>::iterator it2 = it->frontier.begin(); it2 != it->frontier.end(); it2++)
 			{
@@ -556,9 +557,8 @@ void FogOfWar::DeletePicks(player_frontier& player)
 
 }
 
-void FogOfWar::ChangeCharacter(iPoint prev_pos)
-{
-	iPoint next_character_pos; 
+
+	/*iPoint next_character_pos; 
 
 	int count = 1; 
 
@@ -586,9 +586,9 @@ void FogOfWar::ChangeCharacter(iPoint prev_pos)
 	{
 		if (App->map->WorldToMap((*it)->player_go->GetPos().x, (*it)->player_go->GetPos().y) == next_character_pos)
 			curr_character = (Player*)*it; 		
-	}
+	}*/
 
-}
+
 
 void FogOfWar::ManageCharacters()
 {
@@ -596,34 +596,34 @@ void FogOfWar::ManageCharacters()
 
 	// TODO 6 --- Make simple characters appear or disappear if they are close to one of the players in the FOW
 
-	for(list<iPoint>::iterator it = simple_char_on_fog_pos.begin(); it != simple_char_on_fog_pos.end(); it++)
-	{		
-		bool entered = false;
+	//for(list<iPoint>::iterator it = simple_char_on_fog_pos.begin(); it != simple_char_on_fog_pos.end(); it++)
+	//{		
+	//	bool entered = false;
 
-			if (IsVisible(*it))
-			{
-				for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)
-				{
-					if (App->map->WorldToMap((*it2)->player_go->GetPos().x, (*it2)->player_go->GetPos().y) == *it)
-					{
-						(*it2)->active = true;
-						entered = true; 
-					}
-						
-				}
-		}
+	//		if (IsVisible(*it))
+	//		{
+	//			for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)
+	//			{
+	//				if (App->map->WorldToMap((*it2)->player_go->GetPos().x, (*it2)->player_go->GetPos().y) == *it)
+	//				{
+	//					(*it2)->active = true;
+	//					entered = true; 
+	//				}
+	//					
+	//			}
+	//	}
 
-		if (!entered)
-		{
-			for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)
-			{
-				if (App->map->WorldToMap((*it2)->player_go->GetPos().x, (*it2)->player_go->GetPos().y) == *it)
-					(*it2)->active = false;
-			}
-		}
-			
-		
-	}
+	//	if (!entered)
+	//	{
+	//		for (list<Entity*>::iterator it2 = App->entity->entity_list.begin(); it2 != App->entity->entity_list.end(); it2++)
+	//		{
+	//			if (App->map->WorldToMap((*it2)->player_go->GetPos().x, (*it2)->player_go->GetPos().y) == *it)
+	//				(*it2)->active = false;
+	//		}
+	//	}
+	//		
+	//	
+	//}
 
 }
 

@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "p2Defs.h"
 #include "p2List.h"
+#include "p2Point.h"
 
 class b2Fixture;
 class PhysBody;
@@ -51,11 +52,25 @@ public:
 
 	void DeleteEntity(Entity* entity);
 
+	void SetPrevCurrPos(); 
+
+	Entity* curr_entity = nullptr;
+
+	bool is_on_fow = false; 
+
+	iPoint prev_curr_pos = NULLPOINT;
+	iPoint next_curr_pos = NULLPOINT;
+
+	bool update_fow = false;
+
 private:
 
-public:
-	// List with all entities
-	list<Entity*> entity_list;
+	void ChangeFOWCharacter();
+	void ManageCharacters();
+
+private:
+
+	list<Entity*> entity_list; 
 
 };
 

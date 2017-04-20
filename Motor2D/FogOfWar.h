@@ -82,7 +82,7 @@ struct player_frontier
 {
 	list<iPoint>	frontier; 
 	iPoint			player_pos; 
-	Player*			character = nullptr; 
+	int				id = -1; 
 };
 
 class FogOfWar 
@@ -131,7 +131,6 @@ public:
 
 	//This will switch between the players that has fog of war activated
 
-	void ChangeCharacter(iPoint prev_pos);
 
 	// This will hide the characters or not 
 
@@ -141,8 +140,6 @@ public:
 
 
 	SDL_Texture*				fog_of_war_texture;
-
-	Player*						curr_character = nullptr; 
 
 private:
 

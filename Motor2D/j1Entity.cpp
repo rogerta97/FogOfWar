@@ -3,7 +3,10 @@
 #include "j1App.h"
 #include "j1Scene.h"
 #include "MainScene.h"
+#include "GameObject.h"
 #include "SimpleEntity.h"
+#include "j1Map.h"
+#include "j1Input.h"
 #include "p2Log.h"
 
 j1Entity::j1Entity()
@@ -42,15 +45,25 @@ bool j1Entity::PreUpdate()
 
 bool j1Entity::Update(float dt)
 {
+
 	bool ret = true;
+
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN && App->input->GetKey(SDL_SCANCODE_W) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE && App->input->GetKey(SDL_SCANCODE_S) == KEY_IDLE  && App->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE)
+		ChangeFOWCharacter();
+
 
 	for (list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); it++)
 	{
-		if((*it) == App->scene->main_scene->fog_of_war->curr_character || (*it)->type == entity_name::simple_entity)
+		// Not doing the update when the player have a fog of war but it's not the current, all other entities will update :)
+		if ((*it)->is_on_fow == false)
+			ret = (*it)->Update(dt);
+
+		else if ((*it) == curr_entity)
 			ret = (*it)->Update(dt);
 
 		(*it)->Draw(dt);
 	}
+	return ret;
 
 	return ret;
 }
@@ -104,6 +117,7 @@ Entity* j1Entity::CreateEntity(entity_name entity)
 	{
 		ret->LoadEntity();
 		ret->Start();
+		ret->id = entity_list.size(); 
 		entity_list.push_back(ret);
 	}
 	else
@@ -125,6 +139,39 @@ void j1Entity::DeleteEntity(Entity* entity)
 	entity->CleanUp();
 	entity_list.remove(entity);
 	RELEASE(entity);
+}
+
+void j1Entity::SetPrevCurrPos()
+{
+	prev_curr_pos = App->map->MapToWorld(curr_entity->player_go->GetPos().x, curr_entity->player_go->GetPos().y); 
+}
+
+void j1Entity::ChangeFOWCharacter()
+{
+	for (list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); it++)
+	{
+		if ((*it)->id == curr_entity->id)
+		{
+
+			if ((*++it) == nullptr)
+				it = entity_list.begin();
+
+			for (it;; it++)
+			{
+				if ((*it)->is_on_fow)
+				{
+					curr_entity = *it;
+					break;
+				}
+
+			}
+		}
+			
+	}
+}
+
+void j1Entity::ManageCharacters()
+{
 }
 
 
