@@ -35,11 +35,20 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 
 	else if (new_entity->type == entity_name::player)
 	{
+
+		
+
 		new_player.player_pos = App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y);
+
+		// TODO 1 ---- Fill the frontier on the player_unit 
 		GetEntitiesCircleArea(new_player);
+		// ----
+
 		new_player.id = new_entity->id;
 		new_entity->is_on_fow = true; 
 		players_on_fog.push_back(new_player);
+
+
 	}
 
 	else
@@ -57,8 +66,8 @@ void FogOfWar::Start()
 {
 	FillFrontier();
 
-	RemoveDimJaggies();
-	RemoveDarkJaggies(); 
+	//RemoveDimJaggies();
+	//RemoveDarkJaggies(); 
 
 	ManageCharacters(); 
 }
@@ -66,6 +75,8 @@ void FogOfWar::Start()
 void FogOfWar::Update(iPoint prev_pos, iPoint next_pos)
 {
 	// We look for the direction that the player is moving
+
+	// TODO 4 ---- Update the character current position in case they move 
 
 	if(prev_pos.x + 1 == next_pos.x)
 		MoveFrontier(prev_pos, "right");
@@ -79,11 +90,13 @@ void FogOfWar::Update(iPoint prev_pos, iPoint next_pos)
 	else if (prev_pos.y - 1 == next_pos.y)
 		MoveFrontier(prev_pos, "up");
 
+	// ----
+
 
 	FillFrontier();
 
-	RemoveDimJaggies(); 
-	RemoveDarkJaggies(); 
+	//RemoveDimJaggies(); 
+	//RemoveDarkJaggies(); 
 
 	ManageCharacters(); 
 
@@ -445,6 +458,9 @@ void FogOfWar::GetCurrentPointsFromFrontier(player_frontier& player)
 			}
 		}
 	}
+
+	for (list<iPoint>::iterator it = player.current_points.begin(); it != player.current_points.end(); it++)
+		data[(*it).y * App->map->data.width + (*it).x] = dim_clear;
 	
 }
 
@@ -453,17 +469,18 @@ void FogOfWar::GetCurrentPointsFromFrontier(player_frontier& player)
 void FogOfWar::FillFrontier()
 {
 
-	// TODO 4 ---- Make a function for filling the frontier. 
+
 
 	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{
-
+		// TODO 2 ---- Fill the frontier 
 		GetCurrentPointsFromFrontier(*it);
+		// ----
 
 		
 	}
 
-	// TODO 4 -----
+
 			
 }
 
