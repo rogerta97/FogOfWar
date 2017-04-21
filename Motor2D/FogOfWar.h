@@ -78,7 +78,7 @@ enum fow_directions
 	fow_right
 };
 
-struct player_frontier
+struct player_unit
 {
 	list<iPoint>	frontier; 
 
@@ -86,6 +86,13 @@ struct player_frontier
 
 	iPoint			player_pos; 
 	int				id = -1; 
+};
+
+struct simple_player_unit
+{
+	iPoint player_pos; 
+	bool visible = false; 
+	int id = -1; 
 };
 
 class FogOfWar 
@@ -109,7 +116,7 @@ public:
 
 	void MoveFrontier(iPoint prev_pos, const char* direction);
 
-	void MoveArea(player_frontier& player, string direction);
+	void MoveArea(player_unit& player, string direction);
 
 	SDL_Rect GetRect(int fow_id); 
 
@@ -117,12 +124,12 @@ public:
 
 	void FillFrontier();
 
-	void GetEntitiesCircleArea(player_frontier& new_player);
-	void GetEntitiesRectangleFrontier(player_frontier& new_player, int with, int height);
+	void GetEntitiesCircleArea(player_unit& new_player);
+	void GetEntitiesRectangleFrontier(player_unit& new_player, int with, int height);
 
-	void DeletePicks(player_frontier& frontier);
+	void DeletePicks(player_unit& frontier);
 
-	void GetCurrentPointsFromFrontier(player_frontier& player);
+	void GetCurrentPointsFromFrontier(player_unit& player);
 
 	// Characters --
 
@@ -132,7 +139,7 @@ public:
 
 	bool IsVisible(iPoint char_pos); 
 
-	bool IsFrontier(iPoint point, player_frontier& player); 
+	bool IsFrontier(iPoint point, player_unit& player);
 
 	uint Get(int x, int y);
 
@@ -140,11 +147,11 @@ public:
 
 	SDL_Texture*				fog_of_war_texture;
 
+	list<simple_player_unit>	simple_char_on_fog_pos;
+
 private:
 
-	vector<player_frontier>		players_on_fog;
-
-	list<iPoint>				simple_char_on_fog_pos; 
+	vector<player_unit>			players_on_fog;
 
 	uint*						data;
 

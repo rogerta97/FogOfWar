@@ -43,6 +43,7 @@ bool Player::LoadEntity()
 	last_height = player_go->fGetPos().y;
 
 	type = player; 
+	active = true; 
 
 	return ret;
 }

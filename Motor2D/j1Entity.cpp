@@ -62,8 +62,11 @@ bool j1Entity::Update(float dt)
 		else if ((*it) == curr_entity)
 			ret = (*it)->Update(dt);
 
-		(*it)->Draw(dt);
+		if((*it)->active)
+			(*it)->Draw(dt);
 	}
+
+	ManageCharactersVisibility(); 
 
 	return ret;
 }
@@ -166,8 +169,28 @@ void j1Entity::ChangeFOWCharacter()
 	}
 }
 
-void j1Entity::ManageCharacters()
+void j1Entity::ManageCharactersVisibility()
 {
+
+	//Cheking for the FOW
+
+
+		for (list<simple_player_unit>::iterator it = App->scene->main_scene->fog_of_war->simple_char_on_fog_pos.begin(); it != App->scene->main_scene->fog_of_war->simple_char_on_fog_pos.end(); it++)
+		{
+			if (it->visible == false)
+			{
+				for (list<Entity*>::iterator it2 = entity_list.begin(); it2 != entity_list.end(); it2++)
+				{
+					if (it->id == (*it2)->id)
+					{
+						(*it2)->active = false;
+						break;
+					}
+						
+				}
+			}
+		}
+	
 }
 
 

@@ -54,12 +54,10 @@ public:
 
 	Entity* curr_entity = nullptr;
 
-	bool is_on_fow = false; 
-
 private:
 
 	void ChangeFOWCharacter();
-	void ManageCharacters();
+	void ManageCharactersVisibility();
 
 private:
 

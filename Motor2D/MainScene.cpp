@@ -35,9 +35,9 @@ bool MainScene::Start()
 	player->player_go->SetPos({ 1200,1000 });
 	player->player_go->pbody->type = pbody_type::p_t_player;
 
-	//Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::player);
-	//player_2->player_go->SetPos({ 1500,1000 }); 
-	//player_2->player_go->pbody->type = pbody_type::p_t_player;
+	Player* player_2 = (Player*)App->entity->CreateEntity(entity_name::simple_entity);
+	player_2->player_go->SetPos({ 1500,1000 }); 
+	player_2->player_go->pbody->type = pbody_type::p_t_player;
 
 	player->SetCamera(1);
 	App->console->AddCommand("scene.set_player_camera", App->scene, 2, 2, "Set to player the camera number. Min_args: 2. Max_args: 2. Args: 1, 2, 3, 4");
@@ -56,7 +56,7 @@ bool MainScene::Start()
 
 	fog_of_war->AddPlayer(player); 
 
-	//fog_of_war->AddPlayer(player_2); 
+	fog_of_war->AddPlayer(player_2); 
 
 	App->entity->curr_entity = player;
 

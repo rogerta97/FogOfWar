@@ -64,7 +64,6 @@ bool SimpleEntity::Update(float dt)
 {
 	bool ret = true;
 
-	//App->view->CenterCamera(player_go->GetPos().x - App->view->win_w / 4, player_go->GetPos().y - App->view->win_h / 4);
 
 	return ret;
 }
