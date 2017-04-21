@@ -82,6 +82,8 @@ void j1Map::Draw()
 
 						App->view->LayerBlit(1, tileset->texture, pos, r, i);
 
+						// TODO 1 ------ Modify the Draw function in order to take care of the fog of war container
+
 						if(visibility != 40 /*&& visibility < dark_middle*/)
 						{
 							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
@@ -103,6 +105,8 @@ void j1Map::Draw()
 							r = App->scene->main_scene->fog_of_war->GetRect(visibility);
 							App->view->LayerBlit(1, App->scene->main_scene->fog_of_war->fog_of_war_texture, pos, r, i);
 						}
+
+						// ----
 											
 					}
 				}

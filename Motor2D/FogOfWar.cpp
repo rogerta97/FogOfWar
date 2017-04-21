@@ -37,7 +37,7 @@ bool FogOfWar::AddPlayer(Player* new_entity)
 		
 		new_player.player_pos = App->map->WorldToMap(new_entity->player_go->GetPos().x, new_entity->player_go->GetPos().y);
 
-		// TODO 1 ---- Fill the frontier on the player_unit 
+		// TODO 2 ---- Get the frontier and put it on the player_unit 
 		GetEntitiesCircleArea(new_player);
 		// ----
 
@@ -69,8 +69,8 @@ void FogOfWar::Start()
 {
 	FillFrontier();
 
-	//RemoveDimJaggies();
-	//RemoveDarkJaggies(); 
+	RemoveDimJaggies();
+	RemoveDarkJaggies(); 
 
 	ManageCharacters(); 
 }
@@ -472,7 +472,7 @@ void FogOfWar::FillFrontier()
 
 	for (vector<player_unit>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{
-		// TODO 2 ---- Fill the frontier 
+		// TODO  3---- Fill the inner part of the frontier  
 		GetCurrentPointsFromFrontier(*it);
 		// ----
 		
