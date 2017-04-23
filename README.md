@@ -137,11 +137,14 @@ The code will be based on the BFS method at the beginning for finding the tiles 
 
 * **Fog Of War Unity**:  is needed to keep track of some data of the players that are inside of the fog of war, for example, what is its frontier or what is its current position, luckily there is no need to store a pointer to the player entity, keeping track of its position will be enough.
 
-       struct player_unity
-
+```
+        struct player_unity
+	{
 	list<iPoint>	frontier 
-
-	iPoint	        player_pos        
+	iPoint	        player_pos
+	int		id;
+	};         
+```
 
 * **Algorithm**: obviously the core algorithm for making the Fog Of War happen. 
 
@@ -198,13 +201,15 @@ If we have in count the enum created on FogOfWar.h instead of a 2 it will behave
 
 We have a player_unit for the fog of war that contains: 
 
- list<iPoint>   frontier; 
+```
+ 	list<iPoint>    frontier; 
 
 	list<iPoint>	current_points; 
 
 	iPoint	        player_pos; 
 
 	int		id; 
+```
 
 Our objective is to fill all of this data before starting with the core of the Fog Of War, it needs to be set before the system starts to update. the function for creating the player_unit and adding it to the list is already created and 'player_pos' and 'id' are already set, so: Fill the frontier list with points forming a closed frontier. 
 
@@ -253,9 +258,10 @@ Jagged edges are a common problem in the Tile-Based method since the map is buil
 Right now we have the Fog Of War fully implemented, we have the struct `player_unit` that contains the frontier but we just used it at the beginning for filling the inner points of that frontier. If we want to implement this algorithm we should take care about the frontier too when te player is moving, this is because we will check each tile on the frontier and its surroundings. 
 
 The way to do it is iterating through the frontier of the player and checking what are its neighbor tiles, but make it orderly. First, we will check for left and right since they will never overlap. The way of making checkings will be accessing to the Fog Of War data container through `Get()` function:  
-
+```
     if (Get((*it).x - 1, (*it).y) == dim_middle) && Get((*it).x, (*it).y) == dim_clear)); 
 
+```
 Once we made that checking for left and right we should obtain this: 
 
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/Soft_Sides.jpg?raw=true)
