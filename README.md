@@ -138,12 +138,13 @@ The code will be based on the BFS method at the beginning for finding the tiles 
 * **Fog Of War Unity**:  is needed to keep track of some data of the players that are inside of the fog of war, for example, what is its frontier or what is its current position, luckily there is no need to store a pointer to the player entity, keeping track of its position will be enough.
 
 ```
-        struct player_unity
-	{
-	list<iPoint>	frontier 
-	iPoint	        player_pos
-	int		id;
-	};         
+    struct player_unit
+{
+	list<iPoint>	frontier; 
+	list<iPoint>	current_points; 
+	iPoint			player_pos; 
+	int				id = -1; 
+};       
 ```
 
 * **Algorithm**: obviously the core algorithm for making the Fog Of War happen. 
@@ -202,13 +203,10 @@ If we have in count the enum created on FogOfWar.h instead of a 2 it will behave
 We have a player_unit for the fog of war that contains: 
 
 ```
- 	list<iPoint>    frontier; 
-
+ list<iPoint>	frontier; 
 	list<iPoint>	current_points; 
-
-	iPoint	        player_pos; 
-
-	int		id; 
+	iPoint			player_pos; 
+	int				id = -1; 
 ```
 
 Our objective is to fill all of this data before starting with the core of the Fog Of War, it needs to be set before the system starts to update. the function for creating the player_unit and adding it to the list is already created and 'player_pos' and 'id' are already set, so: Fill the frontier list with points forming a closed frontier. 
@@ -236,6 +234,12 @@ Now we will have to move the field of view of the Fog of War, the hard part of i
 If you did it well, you should have the Fog Of War already working in your program, with player beeing able to move and the system being able to hide terrains or print them darker. 
 
 ### TODO 5 --- Update the players
+
+We must take in account the `simple_player_unit`
+
+iPoint		player_pos = NULLPOINT; 
+	bool		visible = false; 
+	int			id = -1; 
 
 Now we must focus on other characters in order to print them or not. Make a function `ManageCharacters()` that checks if a simple character is visible or not, then modify the whatever needed for this action beeing able to happen. 
 
