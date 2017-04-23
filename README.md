@@ -131,17 +131,19 @@ The code will be based on the BFS method at the beginning for finding the tiles 
 
 ## Pillars of the implementation
 
-* **Generating the edge texture:** apart of containing the translucid square we will use this for making the edge softened drawing a different section of the image depending on what the number is in the FOW array. This implies that the FOW container will not just be filled with 0, 1 and 2, we will use a number for every tile in the image, I strongly recommend to make an `enum` out of that.  
+* **Generating the edge texture**: apart of containing the translucid square we will use this for making the edge softened drawing a different section of the image depending on what the number is in the FOW array. This implies that the FOW container will not just be filled with 0, 1 and 2, we will use a number for every tile in the image, I strongly recommend to make an `enum` out of that.  
 
-* **Fog Of War Container:** this is a 2D container inside the FOW class with the same dimensions as the map, for now, it will be filled with 0 if it is a black area, 1 if it is dim area and 2 if the character is currently in that place. At the time of drawing this container will be checked, depending on what number the FOW vector contains different FOW tilesets will be drawn on top.  
+* **Fog Of War Container**: this is a 2D container inside the FOW class with the same dimensions as the map, for now, it will be filled with 0 if it is a black area, 1 if it is dim area and 2 if the character is currently in that place. At the time of drawing this container will be checked, depending on what number the FOW vector contains different FOW tilesets will be drawn on top.  
 
-* **Fog Of War Unity:** is needed to keep track of some data of the players that are inside of the fog of war, for example, what is its frontier or what is its current position, luckily there is no need to store a pointer to the player entity, keeping track of its position will be enough.
+* **Fog Of War Unity**:  is needed to keep track of some data of the players that are inside of the fog of war, for example, what is its frontier or what is its current position, luckily there is no need to store a pointer to the player entity, keeping track of its position will be enough.
 
        struct player_unity
+
 	list<iPoint>	frontier 
+
 	iPoint	        player_pos        
 
-* **Algorithm:**: obviously the core algorithm for making the Fog Of War happen. 
+* **Algorithm**: obviously the core algorithm for making the Fog Of War happen. 
 
 Adding container lists to store the entities and some functions to manage them will be enough for having the pillars of the algorithm. Moreover, in this method, there are 2 different basic types of entities created, `player` and `simple_character`, the first one are those that the player can move with the keyboard while the others are considered enemies and will hide if the player is not near.  
 
@@ -196,7 +198,7 @@ If we have in count the enum created on FogOfWar.h instead of a 2 it will behave
 
 We have a player_unit for the fog of war that contains: 
 
-   list<iPoint>   frontier; 
+ list<iPoint>   frontier; 
 
 	list<iPoint>	current_points; 
 
