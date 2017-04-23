@@ -21,7 +21,9 @@ That is the main reason why fog of war exists, players must be ready for facing 
 As the core of FOW is to limit the visibility, obviously yes, there are a lot of ways to cut the field of view of a player. Let's say that the designer just wants the black area to be displayed, without any Dim area, it will be also fog of war, or even if he/she just wants Dim area, it will also be keeping the fog of war essence. The main difference is how the programmer can implement FOW but this will be seen on the following lines. To sum up, everything limiting the player's visibility that is directly affecting to the gameplay is considered fog of war. 
 
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/fog_of_war-2.jpg?raw=true)
+
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/steamworkshop_webupload_previewfile_332927191_preview.jpg?raw=true)
+
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/amnesia-the-dark-descent-pc-023.gif.jpg?raw=true)
 
 # A little bit of history
@@ -129,13 +131,13 @@ The code will be based on the BFS method at the beginning for finding the tiles 
 
 ## Pillars of the implementation
 
-* ******Generating the edge texture:****** apart of containing the translucid square we will use this for making the edge softened drawing a different section of the image depending on what the number is in the FOW array. This implies that the FOW container will not just be filled with 0, 1 and 2, we will use a number for every tile in the image, I strongly recommend to make an `enum` out of that.  
+* **Generating the edge texture:** apart of containing the translucid square we will use this for making the edge softened drawing a different section of the image depending on what the number is in the FOW array. This implies that the FOW container will not just be filled with 0, 1 and 2, we will use a number for every tile in the image, I strongly recommend to make an `enum` out of that.  
 
-* ******Fog Of War Container:****** this is a 2D container inside the FOW class with the same dimensions as the map, for now, it will be filled with 0 if it is a black area, 1 if it is dim area and 2 if the character is currently in that place. At the time of drawing this container will be checked, depending on what number the FOW vector contains different FOW tilesets will be drawn on top.  
+* **Fog Of War Container:** this is a 2D container inside the FOW class with the same dimensions as the map, for now, it will be filled with 0 if it is a black area, 1 if it is dim area and 2 if the character is currently in that place. At the time of drawing this container will be checked, depending on what number the FOW vector contains different FOW tilesets will be drawn on top.  
 
-* ******Fog Of War Unity:****** is needed to keep track of some data of the players that are inside of the fog of war, for example, what is its frontier or what is its current position, luckily there is no need to store a pointer to the player entity, keeping track of its position will be enough.
+* **Fog Of War Unity:** is needed to keep track of some data of the players that are inside of the fog of war, for example, what is its frontier or what is its current position, luckily there is no need to store a pointer to the player entity, keeping track of its position will be enough.
 
-        struct player_unity
+       struct player_unity
 	list<iPoint>	frontier 
 	iPoint	        player_pos        
 
@@ -194,7 +196,7 @@ If we have in count the enum created on FogOfWar.h instead of a 2 it will behave
 
 We have a player_unit for the fog of war that contains: 
 
-        list<iPoint>	frontier; 
+   list<iPoint>   frontier; 
 
 	list<iPoint>	current_points; 
 
@@ -250,7 +252,7 @@ Right now we have the Fog Of War fully implemented, we have the struct `player_u
 
 The way to do it is iterating through the frontier of the player and checking what are its neighbor tiles, but make it orderly. First, we will check for left and right since they will never overlap. The way of making checkings will be accessing to the Fog Of War data container through `Get()` function:  
 
-        if (Get((*it).x - 1, (*it).y) == dim_middle) && Get((*it).x, (*it).y) == dim_clear)); 
+    if (Get((*it).x - 1, (*it).y) == dim_middle) && Get((*it).x, (*it).y) == dim_clear)); 
 
 Once we made that checking for left and right we should obtain this: 
 
