@@ -54,11 +54,12 @@ public:
 
 	Entity* curr_entity = nullptr;
 
+	void ManageCharactersVisibility();
+
 private:
 
 	void ChangeFOWCharacter();
-	void ManageCharactersVisibility();
-
+	
 private:
 
 	list<Entity*> entity_list; 

@@ -69,8 +69,8 @@ void FogOfWar::Start()
 {
 	FillFrontier();
 
-	RemoveDimJaggies();
-	RemoveDarkJaggies(); 
+	//RemoveDimJaggies();
+	//RemoveDarkJaggies(); 
 
 	ManageCharacters(); 
 }
@@ -95,8 +95,8 @@ void FogOfWar::Update(iPoint prev_pos, iPoint next_pos)
 
 	// ----
 
-	//RemoveDimJaggies(); 
-	//RemoveDarkJaggies(); 
+	/*RemoveDimJaggies(); 
+	RemoveDarkJaggies(); */
 
 	ManageCharacters(); 
 
@@ -142,7 +142,7 @@ uint FogOfWar::RemoveDimJaggies()
 				data[(*it).y*App->map->data.width + (*it).x] = dim_right;
 		}
 
-	/*	for (list<iPoint>::iterator it = curr->frontier.begin(); it != curr->frontier.end(); it++)
+		for (list<iPoint>::iterator it = curr->frontier.begin(); it != curr->frontier.end(); it++)
 		{
 			if (Get((*it).x, (*it).y - 1) == dim_middle || Get((*it).x, (*it).y - 1) == fow_null )
 			{
@@ -169,236 +169,235 @@ uint FogOfWar::RemoveDimJaggies()
 					data[(*it).y* App->map->data.width + (*it).x] = dim_down;
 			}
 				
-		}*/
+		}
 	}
 
 	// ------
 
 	// Here we place the outermost corners 
 
-//	for (vector<player_frontier>::iterator curr = players_on_fog.begin(); curr != players_on_fog.end(); curr++)
-//	{
-//		for (list<iPoint>::iterator it = curr->frontier.begin(); it != curr->frontier.end(); it++)
-//		{
-//			if (Get((*it).x, (*it).y) == dim_inner_top_left)
-//			{
-//				if (data[(*it).y* App->map->data.width + (*it).x + 1] == dim_clear)
-//					data[(*it).y * App->map->data.width + (*it).x + 1] = dim_top_left;
-//
-//
-//			}
-//
-//			else if (Get((*it).x, (*it).y) == dim_inner_top_right)
-//			{
-//				if (data[(*it).y* App->map->data.width + (*it).x - 1] == dim_clear)
-//					data[(*it).y * App->map->data.width + (*it).x - 1] = dim_top_right;
-//
-//			}
-//
-//			else if (Get((*it).x, (*it).y) == dim_inner_bottom_right)
-//			{
-//				if (data[(*it).y* App->map->data.width + (*it).x - 1] == dim_clear)
-//					data[(*it).y * App->map->data.width + (*it).x - 1] = dim_bottom_right;
-//
-//			}
-//
-//			else if (Get((*it).x, (*it).y) == dim_inner_bottom_left)
-//			{
-//				if (data[(*it).y* App->map->data.width + (*it).x + 1] == dim_clear)
-//					data[(*it).y * App->map->data.width + (*it).x + 1] = dim_bottom_left;
-//
-//			}
-//
-//			else if (Get((*it).x, (*it).y) == dim_up && Get((*it).x + 1, (*it).y - 1) == dim_left &&Get((*it).x, (*it).y) == dim_inner_top_left)
-//				data[(*it).y* App->map->data.width + (*it).x + 1] = dim_top_left; 
-//
-//			
-//		}
-//	}
-//
-//	// ------
-//
+	for (vector<player_unit>::iterator curr = players_on_fog.begin(); curr != players_on_fog.end(); curr++)
+	{
+		for (list<iPoint>::iterator it = curr->frontier.begin(); it != curr->frontier.end(); it++)
+		{
+			if (Get((*it).x, (*it).y) == dim_inner_top_left)
+			{
+				if (data[(*it).y* App->map->data.width + (*it).x + 1] == dim_clear)
+					data[(*it).y * App->map->data.width + (*it).x + 1] = dim_top_left;
+
+
+			}
+
+			else if (Get((*it).x, (*it).y) == dim_inner_top_right)
+			{
+				if (data[(*it).y* App->map->data.width + (*it).x - 1] == dim_clear)
+					data[(*it).y * App->map->data.width + (*it).x - 1] = dim_top_right;
+
+			}
+
+			else if (Get((*it).x, (*it).y) == dim_inner_bottom_right)
+			{
+				if (data[(*it).y* App->map->data.width + (*it).x - 1] == dim_clear)
+					data[(*it).y * App->map->data.width + (*it).x - 1] = dim_bottom_right;
+
+			}
+
+			else if (Get((*it).x, (*it).y) == dim_inner_bottom_left)
+			{
+				if (data[(*it).y* App->map->data.width + (*it).x + 1] == dim_clear)
+					data[(*it).y * App->map->data.width + (*it).x + 1] = dim_bottom_left;
+
+			}
+
+			else if (Get((*it).x, (*it).y) == dim_up && Get((*it).x + 1, (*it).y - 1) == dim_left &&Get((*it).x, (*it).y) == dim_inner_top_left)
+				data[(*it).y* App->map->data.width + (*it).x + 1] = dim_top_left; 
+
+			
+		}
+	}
+
+	// ------
+
 	 return 0; 
 }
 //
 void FogOfWar::RemoveDarkJaggies()
 {
-//
-//	for (vector<player_frontier>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
-//	{
-//
-//		iPoint ini_p = iPoint(it->player_pos.x, it->player_pos.y);
-//		ini_p.y -= FOW_RADIUM + 1; ini_p.x -= FOW_RADIUM + 1;
-//
-//		iPoint end_p = iPoint(it->player_pos.x, it->player_pos.y);
-//		end_p.y += FOW_RADIUM + 1; end_p.x += FOW_RADIUM + 1;
-//
-//		// Horitzontals ----
-//
-//		for (int y = ini_p.y; y < end_p.y; y++)
-//		{
-//			for (int x = ini_p.x; x < end_p.x; x++)
-//			{
-//
-//				if (Get(x, y) == dim_middle && Get(x - 1, y) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_left;
-//
-//				else if (Get(x, y) == dim_middle && Get(x + 1, y) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_right;
-//
-//				if (Get(x, y) == dim_right  &&  Get(x + 1, y) == fow_null)
-//					data[y*App->map->data.width + x] = darkc_right;
-//
-//				if ((Get(x, y) == dim_left &&  Get(x - 1, y) == fow_null))
-//					data[y*App->map->data.width + x] = darkc_left;
-//
-//	
-//			}
-//		}
-//
-//		// -----
-//
-//		// Verticals (ading corner in case of overlaping) 
-//
-//
-//		for (int y = ini_p.y; y < end_p.y; y++)
-//		{
-//			for (int x = ini_p.x; x < end_p.x; x++)
-//			{
-//
-//			// Dark->dim
-//
-//				// Comparing upper
-//
-//				if (Get(x, y) == darkd_right && Get(x, y - 1) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_inner_top_right;
-//
-//				else if (Get(x, y) == darkd_left && Get(x, y - 1) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_inner_top_left;
-//
-//				else if (Get(x, y) == dim_middle && Get(x, y - 1) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_up;
-//
-//				// Comparing lower
-//
-//				if (Get(x, y) == darkd_right && Get(x, y + 1) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_inner_bottom_right;
-//
-//				else if (Get(x, y) == darkd_left && Get(x, y + 1) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_inner_bottom_left;
-//
-//				else if (Get(x, y) == dim_middle && Get(x, y + 1) == fow_null)
-//					data[y*App->map->data.width + x] = darkd_down;
-//
-//				// ----
-//
-//				// Dark->clear
-//
-//				if ((Get(x, y) == dim_inner_bottom_left &&  Get(x - 1, y) == fow_null))
-//					data[y*App->map->data.width + x] = darkc_inner_bottom_left;
-//
-//				else if ((Get(x, y) == dim_inner_top_left && Get(x - 1, y) == fow_null))
-//					data[y*App->map->data.width + x] = darkc_inner_top_left;
-//
-//				 if ((Get(x, y) == dim_inner_bottom_right &&  Get(x + 1, y) == fow_null))
-//				data[y*App->map->data.width + x] = darkc_inner_bottom_right;
-//
-//				else if ((Get(x, y) == dim_inner_top_right &&  Get(x + 1, y) == fow_null))
-//				data[y*App->map->data.width + x] = darkc_inner_top_right;
-//
-//
-//				if((Get(x, y) == dim_up &&  Get(x, y - 1) == fow_null))
-//					 data[y*App->map->data.width + x] = darkc_up;
-//
-//				else if ((Get(x, y) == dim_down && Get(x, y + 1) == fow_null))
-//					 data[y*App->map->data.width + x] = darkc_down;
-//			}
-//		}
-//
-//	// ----
-//
-//	// Corners 
-//
-//		for (int y = ini_p.y; y < end_p.y; y++)
-//		{
-//			for (int x = ini_p.x; x < end_p.x; x++)
-//			{
-//
-//				// When dark is next to the player
-//
-//
-//				if (Get(x, y) == darkc_inner_bottom_right)
-//				{
-//
-//					if (Get(x - 1, y) != darkc_down)			
-//						data[y*App->map->data.width + (x - 1)] = darkc_bottom_right;
-//				}
-//
-//				else if (Get(x, y) == darkc_inner_bottom_left)
-//				{
-//					if (Get(x + 1, y) != darkc_down)
-//					data[y*App->map->data.width + (x + 1)] = darkc_bottom_left; 
-//				}
-//
-//				else if (Get(x, y) == darkc_inner_top_right)
-//				{
-//					if (Get(x - 1, y) != darkc_up)
-//						data[y*App->map->data.width + (x - 1)] = darkc_top_right;
-//				}
-//
-//				else if (Get(x, y) == darkc_inner_top_left)
-//				{
-//					if (Get(x + 1, y) != darkc_up)
-//						data[y*App->map->data.width + (x + 1)] = darkc_top_left;
-//				}
-//
-//
-//
-//				// corners already visited
-//
-//
-//				if (Get(x, y) == darkd_inner_bottom_right)
-//				{
-//
-//					if (Get(x - 1, y) != darkd_down )
-//						data[y*App->map->data.width + (x - 1)] = darkd_bottom_right;
-//				}
-//
-//				else if (Get(x, y) == darkd_inner_bottom_left)
-//				{
-//					if (Get(x + 1, y) != darkd_down)
-//						data[y*App->map->data.width + (x + 1)] = darkd_bottom_left;
-//				}
-//
-//				else if (Get(x, y) == darkd_inner_top_right)
-//				{
-//					if (Get(x - 1, y) != darkd_up)
-//						data[y*App->map->data.width + (x - 1)] = darkd_top_right;
-//				}
-//
-//				else if (Get(x, y) == darkd_inner_top_left)
-//				{
-//					if (Get(x + 1, y) != darkd_up)
-//						data[y*App->map->data.width + (x + 1)] = darkd_top_left;
-//				}
-//
-//				else if (Get(x, y) == darkd_up && Get(x + 1, y - 1) == darkd_left)
-//					data[y*App->map->data.width + (x + 1)] = darkd_top_left;
-//
-//				else if (Get(x, y) == darkd_up && Get(x - 1, y - 1) == darkd_right)
-//					data[y*App->map->data.width + (x - 1)] = darkd_top_right;
-//
-//				else if (Get(x, y) == darkd_down && Get(x + 1, y + 1) == darkd_left)
-//					data[y*App->map->data.width + (x + 1)] = darkd_bottom_left;
-//
-//				else if (Get(x, y) == darkd_down && Get(x - 1, y + 1) == darkd_right)
-//					data[y*App->map->data.width + (x - 1)] = darkd_bottom_right;
-//			}
-//		}
-//
-//	
-//	}
-//
+
+	for (vector<player_unit>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
+	{
+
+		iPoint ini_p = iPoint(it->player_pos.x, it->player_pos.y);
+		ini_p.y -= FOW_RADIUM + 1; ini_p.x -= FOW_RADIUM + 1;
+
+		iPoint end_p = iPoint(it->player_pos.x, it->player_pos.y);
+		end_p.y += FOW_RADIUM + 1; end_p.x += FOW_RADIUM + 1;
+
+		// Horitzontals ----
+
+		for (int y = ini_p.y; y < end_p.y; y++)
+		{
+			for (int x = ini_p.x; x < end_p.x; x++)
+			{
+
+				if (Get(x, y) == dim_middle && Get(x - 1, y) == fow_null)
+					data[y*App->map->data.width + x] = darkd_left;
+
+				if (Get(x, y) == dim_middle && Get(x + 1, y) == fow_null)
+					data[y*App->map->data.width + x] = darkd_right;
+
+				if (Get(x, y) == dim_right  &&  Get(x + 1, y) == fow_null)
+					data[y*App->map->data.width + x] = darkc_right;
+
+				if ((Get(x, y) == dim_left &&  Get(x - 1, y) == fow_null))
+					data[y*App->map->data.width + x] = darkc_left;
+			}
+		}
+
+				// -----
+		
+				// Verticals (ading corner in case of overlaping) 
+		
+		
+				for (int y = ini_p.y; y < end_p.y; y++)
+				{
+					for (int x = ini_p.x; x < end_p.x; x++)
+					{
+		
+					// Dark->dim
+		
+						// Comparing upper
+		
+						if (Get(x, y) == darkd_right && Get(x, y - 1) == fow_null)
+							data[y*App->map->data.width + x] = darkd_inner_top_right;
+		
+						else if (Get(x, y) == darkd_left && Get(x, y - 1) == fow_null)
+							data[y*App->map->data.width + x] = darkd_inner_top_left;
+		
+						else if (Get(x, y) == dim_middle && Get(x, y - 1) == fow_null)
+							data[y*App->map->data.width + x] = darkd_up;
+		
+						// Comparing lower
+		
+						if (Get(x, y) == darkd_right && Get(x, y + 1) == fow_null)
+							data[y*App->map->data.width + x] = darkd_inner_bottom_right;
+		
+						else if (Get(x, y) == darkd_left && Get(x, y + 1) == fow_null)
+							data[y*App->map->data.width + x] = darkd_inner_bottom_left;
+		
+						else if (Get(x, y) == dim_middle && Get(x, y + 1) == fow_null)
+							data[y*App->map->data.width + x] = darkd_down;
+		
+						// ----
+		
+						// Dark->clear
+		
+						if ((Get(x, y) == dim_inner_bottom_left &&  Get(x - 1, y) == fow_null))
+							data[y*App->map->data.width + x] = darkc_inner_bottom_left;
+		
+						else if ((Get(x, y) == dim_inner_top_left && Get(x - 1, y) == fow_null))
+							data[y*App->map->data.width + x] = darkc_inner_top_left;
+		
+						 if ((Get(x, y) == dim_inner_bottom_right &&  Get(x + 1, y) == fow_null))
+						data[y*App->map->data.width + x] = darkc_inner_bottom_right;
+		
+						else if ((Get(x, y) == dim_inner_top_right &&  Get(x + 1, y) == fow_null))
+						data[y*App->map->data.width + x] = darkc_inner_top_right;
+		
+		
+						if((Get(x, y) == dim_up &&  Get(x, y - 1) == fow_null))
+							 data[y*App->map->data.width + x] = darkc_up;
+		
+						else if ((Get(x, y) == dim_down && Get(x, y + 1) == fow_null))
+							 data[y*App->map->data.width + x] = darkc_down;
+					}
+				}
+		
+			// ----
+		
+			// Corners 
+		
+				for (int y = ini_p.y; y < end_p.y; y++)
+				{
+					for (int x = ini_p.x; x < end_p.x; x++)
+					{
+		
+						// When dark is next to the player
+		
+		
+						if (Get(x, y) == darkc_inner_bottom_right)
+						{
+		
+							if (Get(x - 1, y) != darkc_down)			
+								data[y*App->map->data.width + (x - 1)] = darkc_bottom_right;
+						}
+		
+						else if (Get(x, y) == darkc_inner_bottom_left)
+						{
+							if (Get(x + 1, y) != darkc_down)
+							data[y*App->map->data.width + (x + 1)] = darkc_bottom_left; 
+						}
+		
+						else if (Get(x, y) == darkc_inner_top_right)
+						{
+							if (Get(x - 1, y) != darkc_up)
+								data[y*App->map->data.width + (x - 1)] = darkc_top_right;
+						}
+		
+						else if (Get(x, y) == darkc_inner_top_left)
+						{
+							if (Get(x + 1, y) != darkc_up)
+								data[y*App->map->data.width + (x + 1)] = darkc_top_left;
+						}
+		
+		
+		
+						// corners already visited
+		
+		
+						if (Get(x, y) == darkd_inner_bottom_right)
+						{
+		
+							if (Get(x - 1, y) != darkd_down )
+								data[y*App->map->data.width + (x - 1)] = darkd_bottom_right;
+						}
+		
+						else if (Get(x, y) == darkd_inner_bottom_left)
+						{
+							if (Get(x + 1, y) != darkd_down)
+								data[y*App->map->data.width + (x + 1)] = darkd_bottom_left;
+						}
+		
+						else if (Get(x, y) == darkd_inner_top_right)
+						{
+							if (Get(x - 1, y) != darkd_up)
+								data[y*App->map->data.width + (x - 1)] = darkd_top_right;
+						}
+		
+						else if (Get(x, y) == darkd_inner_top_left)
+						{
+							if (Get(x + 1, y) != darkd_up)
+								data[y*App->map->data.width + (x + 1)] = darkd_top_left;
+						}
+		
+						else if (Get(x, y) == darkd_up && Get(x + 1, y - 1) == darkd_left)
+							data[y*App->map->data.width + (x + 1)] = darkd_top_left;
+		
+						else if (Get(x, y) == darkd_up && Get(x - 1, y - 1) == darkd_right)
+							data[y*App->map->data.width + (x - 1)] = darkd_top_right;
+		
+						else if (Get(x, y) == darkd_down && Get(x + 1, y + 1) == darkd_left)
+							data[y*App->map->data.width + (x + 1)] = darkd_bottom_left;
+		
+						else if (Get(x, y) == darkd_down && Get(x - 1, y + 1) == darkd_right)
+							data[y*App->map->data.width + (x - 1)] = darkd_bottom_right;
+					}
+				}
+		
+			
+			}
+		
+	
 }
 
 
@@ -467,19 +466,12 @@ void FogOfWar::GetCurrentPointsFromFrontier(player_unit& player)
 
 void FogOfWar::FillFrontier()
 {
-
-
-
 	for (vector<player_unit>::iterator it = players_on_fog.begin(); it != players_on_fog.end(); it++)
 	{
 		// TODO  3---- Fill the inner part of the frontier  
 		GetCurrentPointsFromFrontier(*it);
-		// ----
-		
-	}
-
-
-			
+		// ----		
+	}			
 }
 
 void FogOfWar::MoveArea(player_unit& player_unity, string direction_str)
@@ -492,6 +484,13 @@ void FogOfWar::MoveArea(player_unit& player_unity, string direction_str)
 		for (list<iPoint>::iterator it = player_unity.current_points.begin(); it != player_unity.current_points.end(); it++)
 			(*it).x += 1;
 
+		// Optional improvements ----
+
+		for (list<iPoint>::iterator it = player_unity.frontier.begin(); it != player_unity.frontier.end(); it++)
+			(*it).x += 1;
+
+		// ---
+
 		player_unity.player_pos.x += 1;
 	}
 
@@ -500,6 +499,13 @@ void FogOfWar::MoveArea(player_unit& player_unity, string direction_str)
 	{
 		for (list<iPoint>::iterator it = player_unity.current_points.begin(); it != player_unity.current_points.end(); it++)
 			(*it).x -= 1;
+
+		// Optional improvements ----
+
+		for (list<iPoint>::iterator it = player_unity.frontier.begin(); it != player_unity.frontier.end(); it++)
+			(*it).x -= 1;
+
+		// ---
 
 		player_unity.player_pos.x -= 1;
 	}
@@ -510,6 +516,13 @@ void FogOfWar::MoveArea(player_unit& player_unity, string direction_str)
 		for (list<iPoint>::iterator it = player_unity.current_points.begin(); it != player_unity.current_points.end(); it++)
 			(*it).y -= 1;
 
+		// Optional improvements ----
+
+		for (list<iPoint>::iterator it = player_unity.frontier.begin(); it != player_unity.frontier.end(); it++)
+			(*it).y -= 1;
+
+		// ---
+
 		player_unity.player_pos.y -= 1;
 	}
 	
@@ -518,6 +531,13 @@ void FogOfWar::MoveArea(player_unit& player_unity, string direction_str)
 	{
 		for (list<iPoint>::iterator it = player_unity.current_points.begin(); it != player_unity.current_points.end(); it++)
 			(*it).y += 1;
+
+		// Optional improvements ----
+
+		for (list<iPoint>::iterator it = player_unity.frontier.begin(); it != player_unity.frontier.end(); it++)
+			(*it).y += 1;
+
+		// ---
 
 		player_unity.player_pos.y += 1;
 	}
@@ -598,8 +618,11 @@ void FogOfWar::ManageCharacters()
 	
 	for (list<simple_player_unit>::iterator it = simple_char_on_fog_pos.begin(); it != simple_char_on_fog_pos.end(); it++)
 	{
-		if (Get(it->player_pos.x, it->player_pos.y) == dim_clear)
-			it->visible = true; 			
+		if (IsVisible((*it).player_pos))
+			it->visible = true; 
+
+		else
+			it->visible = false;
 	}
 
 }

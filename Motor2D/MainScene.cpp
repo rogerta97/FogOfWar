@@ -86,7 +86,8 @@ bool MainScene::Update(float dt)
 	if (prev_pos != next_pos)
 	{
 
-		fog_of_war->Update(prev_pos, next_pos); 
+		fog_of_war->Update(prev_pos, next_pos);			// This updates the FOW
+		App->entity->ManageCharactersVisibility();		// This updates the entities visibility
 		prev_pos = next_pos;
 	}
 		

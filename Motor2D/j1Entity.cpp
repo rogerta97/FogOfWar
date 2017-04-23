@@ -56,6 +56,7 @@ bool j1Entity::Update(float dt)
 	for (list<Entity*>::iterator it = entity_list.begin(); it != entity_list.end(); it++)
 	{
 		// Not doing the update when the player have a fog of war but it's not the current, all other entities will update :)
+
 		if ((*it)->is_on_fow == false)
 			ret = (*it)->Update(dt);
 
@@ -65,8 +66,6 @@ bool j1Entity::Update(float dt)
 		if((*it)->active)
 			(*it)->Draw(dt);
 	}
-
-	ManageCharactersVisibility(); 
 
 	return ret;
 }
@@ -156,11 +155,11 @@ void j1Entity::ChangeFOWCharacter()
 			if ((*++it) == nullptr)
 				it = entity_list.begin();
 
-			for (it;; it++)
+			for (list<Entity*>::iterator it2 = it; it2 != entity_list.end(); it2++)
 			{
-				if ((*it)->is_on_fow)
+				if ((*it2)->is_on_fow)
 				{
-					curr_entity = *it;
+					curr_entity = *it2;
 					break;
 				}
 			}
@@ -189,6 +188,19 @@ void j1Entity::ManageCharactersVisibility()
 						
 				}
 			}
+			else
+			{
+				for (list<Entity*>::iterator it2 = entity_list.begin(); it2 != entity_list.end(); it2++)
+				{
+					if (it->id == (*it2)->id)
+					{
+						(*it2)->active = true;
+						break;
+					}
+
+				}
+			}
+
 		}
 	
 }

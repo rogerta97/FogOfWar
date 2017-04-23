@@ -138,7 +138,7 @@ bool j1App::Start()
 
 	startup_time.Start();
 
-	debug_mode = true;
+	debug_mode = false;
 
 	debug_window = (UI_Window*)App->gui->UI_CreateWin(iPoint(0, 0), 200, 115, 1);
 	debug_colored_rect = (UI_ColoredRect*)debug_window->CreateColoredRect(iPoint(0, 0), 200, 115, { 20, 20, 20, 255 }, true);
