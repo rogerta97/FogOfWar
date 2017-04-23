@@ -165,7 +165,6 @@ We start from the simple base code where we have a map drawn by tilesets and a s
 
 NOTE: The only thing that makes the tiles be visible or not is the id of the data of the Fog Of War. When we talk about "set" or "fill" we mean modifying the id in order to be printed in a way or in another. 
 
-
 **1. Setting frontiers**
 
 The first thing we have to do is to know where is this player inside the map. Once we know that, we should create a function that set some points as a frontier, it needs to be a closed frontier.The points that form part of the frontier and the visible area can be stored in a container and then modify the value of the fog of war data, but they can also modify the data instantly. In this documentation, we will use the shape of a circle but any shape should work too. Summing up, we must look for that: 
@@ -189,6 +188,8 @@ This is what the program will have to do every iteration, we should have an id f
 Hidding terrain is not the only thing that Fog Of War can do, it would be capable of hiding stuff when the player is not near. I would simply recommend to keep a boolean variable related to the player and change it to 'true' or 'false' for knowing if it will have to be printed or not. 
 
 ## Code Implementation Exercice
+
+https://github.com/rogerta97/FogOfWar/releases/tag/v1.0
 
 This is an exercise for loosing the fear to implement it in your games:) Mind that this is a base code of the Fog Of War and it will need to be adapted to your game. 
 
