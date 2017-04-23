@@ -1,3 +1,5 @@
+# Fog Of War concept
+
 Fog Of War concept refers to enemy units, and often terrain, being hidden from the player; this is lifted once the area is explored, but the information is often fully or partially re-hidden whenever the player does not have a unit in that area: 
 
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/Fogofwar_parts.jpg?raw=true)
@@ -22,6 +24,8 @@ As the core of FOW is to limit the visibility, obviously yes, there are a lot of
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/steamworkshop_webupload_previewfile_332927191_preview.jpg?raw=true)
 ![](https://github.com/rogerta97/FogOfWar/blob/master/Wiki%20images/amnesia-the-dark-descent-pc-023.gif.jpg?raw=true)
 
+# A little bit of history
+
 ## Origins
 
 The word expression Fog Of War comes from the limitation of the field of view in the military conflict, the word "fog" expresses uncertainty in war and was introduced first by the Prussian military analyst Carl von Clausewitz in his posthumously published book, Vom Kriege (1832). 
@@ -38,6 +42,8 @@ https://www.youtube.com/watch?v=sH8eqPnSSEo
 After some time, an article wrote by Dave Arneson revealed that Fog Of War was "one of the biggest 'plus' factors in computer simulations", he used _Tanktics_ as an example, Chris Crawford also affirmed that games become less fun as the Fog Of War is more realistic. 
 
 From this moment Fow Of War will start to appear in most of the strategy games that will be programmed. 
+
+# Fog Of War Methods
  
 ## Tile-Based FOW
 
@@ -111,7 +117,9 @@ For implementing a gradient to the circle we could modify the texture of the 32x
 
 ### Drawbacks
 
-* If we want to apply FOW to bigger objects we should change the texture, that mean having a texture for every size of an entity inside the FOW. 
+* If we want to apply FOW to bigger objects we should change the texture, that mean having a texture for every size of an entity inside the FOW.
+
+# C++ Implementation
 
 The FOW is implemented following the Tile-Based method previously explained: 
 
@@ -227,6 +235,8 @@ IMPORTANT: The visibility of the characters must not be managed by the FogOfWar 
 ----------
 
 You already have Fog Of War working in your program! But we could do some improvements... Go to optional improvements if you want to add soft edges to your system! 
+
+# Optional improvements
 
 ## Jaggie Edges 
 
