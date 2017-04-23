@@ -70,29 +70,19 @@ enum fow_id
 
 };
 
-enum fow_directions
-{
-	fow_up,
-	fow_down, 
-	fow_left, 
-	fow_right
-};
-
 struct player_unit
 {
 	list<iPoint>	frontier; 
-
 	list<iPoint>	current_points; 
-
 	iPoint			player_pos; 
 	int				id = -1; 
 };
 
 struct simple_player_unit
 {
-	iPoint player_pos; 
-	bool visible = false; 
-	int id = -1; 
+	iPoint		player_pos = NULLPOINT; 
+	bool		visible = false; 
+	int			id = -1; 
 };
 
 class FogOfWar 
@@ -128,7 +118,6 @@ public:
 	void GetEntitiesRectangleFrontier(player_unit& new_player, int with, int height);
 
 	void DeletePicks(player_unit& frontier);
-
 	void GetCurrentPointsFromFrontier(player_unit& player);
 
 	// Characters --
@@ -153,7 +142,7 @@ private:
 
 	vector<player_unit>			players_on_fog;
 
-	uint*						data;
+	uint*						data = nullptr;
 
 
 	 
