@@ -189,7 +189,9 @@ Hidding terrain is not the only thing that Fog Of War can do, it would be capabl
 
 ## Code Implementation Exercice
 
-[Download The Exercice] (https://github.com/rogerta97/FogOfWar/blob/master/FogOfWar_Exercice.zip)
+Download The Exercice:
+
+https://github.com/rogerta97/FogOfWar/blob/master/FogOfWar_Exercice.zip
 
 This is an exercise for loosing the fear to implement it in your games:) Mind that this is a base code of the Fog Of War and it will need to be adapted to your game. 
 
