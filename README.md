@@ -155,7 +155,7 @@ Adding container lists to store the entities and some functions to manage them w
 
 --------
 
-_In this page the steps for implementing the FOW will not be detailed explained, the way function works is a personal implementation and can be done in multiple ways,  you can check the [code (https://github.com/rogerta97/FogOfWar/tree/master/Motor2D) for viewing the functionality that I personally implemented._ 
+_In this page the steps for implementing the FOW will not be detailed explained, the way function works is a personal implementation and can be done in multiple ways,  you can check the [code] (https://github.com/rogerta97/FogOfWar/tree/master/Motor2D) for viewing the functionality that I personally implemented._ 
  
 --------
 
@@ -189,7 +189,7 @@ Hidding terrain is not the only thing that Fog Of War can do, it would be capabl
 
 ## Code Implementation Exercice
 
-https://github.com/rogerta97/FogOfWar/releases/tag/v1.0
+[Download The Exercice] (https://github.com/rogerta97/FogOfWar/blob/master/FogOfWar_Exercice.zip)
 
 This is an exercise for loosing the fear to implement it in your games:) Mind that this is a base code of the Fog Of War and it will need to be adapted to your game. 
 
