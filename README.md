@@ -238,11 +238,14 @@ If you did it well, you should have the Fog Of War already working in your progr
 
 ### TODO 5 --- Update the players
 
-We must take in account the `simple_player_unit`
+We must take in account `simple_player_unit`:
 
+```
 iPoint		player_pos = NULLPOINT; 
 	bool		visible = false; 
-	int			id = -1; 
+	int
+	id = -1; 
+```
 
 Now we must focus on other characters in order to print them or not. Make a function `ManageCharacters()` that checks if a simple character is visible or not, then modify the whatever needed for this action beeing able to happen. 
 
